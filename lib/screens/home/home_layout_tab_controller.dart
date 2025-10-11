@@ -22,7 +22,7 @@ class HomeLayoutTabController extends StatelessWidget {
 contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
 
             tabs: [
-              Tab(text: "Accueils", icon: Icon(Icons.home_max_outlined)),
+              Tab(text: "Accueil", icon: Icon(Icons.home_max_outlined)),
               Tab(text: "Bibliothèque", icon: Icon(Icons.library_books_outlined)),
             ],
 
