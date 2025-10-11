@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="yt_player"
+        android:label="harmony_tube"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

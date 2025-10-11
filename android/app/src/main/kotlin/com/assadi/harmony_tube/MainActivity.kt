@@ -1,4 +1,4 @@
-package com.example.yt_player
+package com.assadi.harmony_tube
 
 import io.flutter.embedding.android.FlutterActivity
 
