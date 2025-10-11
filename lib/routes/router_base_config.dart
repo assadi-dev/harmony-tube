@@ -12,7 +12,7 @@ class RouterBaseConfig {
 
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
-          LayoutTabController(navigationShell: navigationShell),
+          LayoutScaffoldNavigation(navigationShell: navigationShell),
 
       branches: [
         StatefulShellBranch(

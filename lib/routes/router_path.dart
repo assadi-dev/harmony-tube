@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:harmony_flow/screens/home_screen.dart';
+import 'package:harmony_flow/screens/home/home_layout_tab_controller.dart';
 import 'package:harmony_flow/screens/playlist_screen.dart';
 
 class RouterObject {
@@ -24,7 +24,7 @@ class RouterPath {
       name: "home",
       path: '/home',
       title: "Accueil",
-      widget: const HomeScreen());
+      widget:  HomeLayoutTabController());
   static RouterObject search =
   RouterObject(name: "search", path: '/search', title: "Rechercher");
   static RouterObject library = RouterObject(

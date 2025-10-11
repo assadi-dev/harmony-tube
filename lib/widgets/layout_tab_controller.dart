@@ -14,20 +14,6 @@ class LayoutTabController extends StatelessWidget {
       length: 6,
       initialIndex: 0,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Harmony Flow"),
-          bottom: TabBar(
-
-            onTap: (index) {
-              print(index);
-              navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex,);
-            },
-            tabs: [
-              Tab(text: "Accueil", icon: Icon(Icons.home_max_outlined)),
-              Tab(text: "Bibliothèque", icon: Icon(Icons.live_help_outlined)),
-            ],
-          ),
-        ),
 
         body: navigationShell,
       ),
