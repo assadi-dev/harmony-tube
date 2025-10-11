@@ -1,4 +1,4 @@
-# yt_player
+# Harmonize Tube
 
 A new Flutter project.
 
