@@ -11,12 +11,13 @@ class LayoutTabController extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 6,
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Harmony Flow"),
           bottom: TabBar(
+
             onTap: (index) {
               print(index);
               navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex,);
