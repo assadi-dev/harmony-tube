@@ -1,6 +1,5 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:harmony_flow/config/app_config.dart';
 import 'package:harmony_flow/screens/home_screen.dart';
 import 'package:harmony_flow/screens/playlist_screen.dart';
@@ -19,18 +18,18 @@ class HomeLayoutTabController extends StatelessWidget {
         appBar: AppBar(
           title: Text(app_title),
           bottom: ButtonsTabBar(
-            onTap: (index) {
-              print(index);
-            },
+              unselectedBackgroundColor: Colors.transparent,
+contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
+
             tabs: [
               Tab(text: "Accueil", icon: Icon(Icons.home_max_outlined)),
-              Tab(text: "Bibliothèque", icon: Icon(Icons.live_help_outlined)),
+              Tab(text: "Bibliothèque", icon: Icon(Icons.library_books_outlined)),
             ],
 
           ),
         ),
 
-        body:  TabBarView(children:tabsViewList ),
+        body: Expanded(child: TabBarView(children: tabsViewList)),
       ),
 
     );
