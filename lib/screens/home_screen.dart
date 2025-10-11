@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/screens/home/all_songs_container.dart';
+import 'package:harmony_tube/themes/app_colors.dart';
 
 class HomeScreen extends StatelessWidget{
   const HomeScreen({super.key});
+
+  final textColor = AppColors.monochromatic;
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Accueil"),
-
-      ),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Text("Accueil")],
-        ),
-      ),
+      body:AllSongsContainer(),
     );
   }
  

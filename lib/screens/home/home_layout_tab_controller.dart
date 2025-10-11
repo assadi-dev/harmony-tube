@@ -29,7 +29,7 @@ contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
           ),
         ),
 
-        body: Expanded(child: TabBarView(children: tabsViewList)),
+        body: TabBarView(children: tabsViewList),
       ),
 
     );
