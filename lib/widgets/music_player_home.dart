@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:harmony_flow/themes/app_themes.dart';
+import 'package:harmony_tube/themes/app_themes.dart';
 
 class MusicPlayerApp extends StatelessWidget {
   const MusicPlayerApp({Key? key}) : super(key: key);

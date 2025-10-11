@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:harmony_flow/injections/injector.dart';
-import 'package:harmony_flow/widgets/app_provider.dart';
-import 'package:harmony_flow/widgets/music_player_home.dart';
+import 'package:harmony_tube/injections/injector.dart';
+import 'package:harmony_tube/widgets/app_provider.dart';
+import 'package:harmony_tube/widgets/music_player_home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

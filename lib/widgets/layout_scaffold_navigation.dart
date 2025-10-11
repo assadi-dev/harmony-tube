@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:harmony_flow/widgets/music_player_screen.dart';
+import 'package:harmony_tube/widgets/music_player_screen.dart';
 
 class LayoutScaffoldNavigation extends StatelessWidget {
   final StatefulNavigationShell navigationShell;

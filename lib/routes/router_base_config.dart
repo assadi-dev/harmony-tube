@@ -1,10 +1,10 @@
 
 import 'package:go_router/go_router.dart';
-import 'package:harmony_flow/models/router_args.dart';
-import 'package:harmony_flow/routes/router_path.dart';
-import 'package:harmony_flow/screens/PlaylistDetailScreen.dart';
-import 'package:harmony_flow/widgets/layout_scaffold_navigation.dart';
-import 'package:harmony_flow/widgets/layout_tab_controller.dart';
+import 'package:harmony_tube/models/router_args.dart';
+import 'package:harmony_tube/routes/router_path.dart';
+import 'package:harmony_tube/screens/PlaylistDetailScreen.dart';
+import 'package:harmony_tube/widgets/layout_scaffold_navigation.dart';
+import 'package:harmony_tube/widgets/layout_tab_controller.dart';
 
 class RouterBaseConfig {
   static GoRouter router =

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:harmony_flow/routes/router_base_config.dart';
-import 'package:harmony_flow/themes/app_themes.dart';
+import 'package:harmony_tube/routes/router_base_config.dart';
+import 'package:harmony_tube/themes/app_themes.dart';
 
 class MainScaffold extends StatelessWidget {
   const MainScaffold({super.key});

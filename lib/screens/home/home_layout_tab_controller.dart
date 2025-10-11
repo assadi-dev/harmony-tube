@@ -1,8 +1,8 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
-import 'package:harmony_flow/config/app_config.dart';
-import 'package:harmony_flow/screens/home_screen.dart';
-import 'package:harmony_flow/screens/playlist_screen.dart';
+import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/screens/home_screen.dart';
+import 'package:harmony_tube/screens/playlist_screen.dart';
 
 class HomeLayoutTabController extends StatelessWidget {
    HomeLayoutTabController({super.key});
