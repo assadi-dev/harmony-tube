@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/screens/home_screen.dart';
 import 'package:harmony_tube/screens/playlist_screen.dart';
+import 'package:harmony_tube/widgets/app_text_theme.dart';
 
 class HomeLayoutTabController extends StatefulWidget {
   @override
@@ -33,12 +34,16 @@ class HomeLayoutTabState extends State<HomeLayoutTabController>   with SingleTic
           bottom: ButtonsTabBar(
             controller: _tabController,
               unselectedBackgroundColor: Colors.transparent,
-contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
-
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
+            contentCenter: true,
+            labelSpacing: 5,
             tabs: [
-              Tab(text: "Accueil", icon: Icon(Icons.home_max_outlined)),
-              Tab(text: "Bibliothèque", icon: Icon(Icons.library_books_outlined)),
-            ],
+              Tab(text: "Accueil", icon: Icon(Icons.home_outlined, size: 18)),
+              Tab(
+                text: "Bibliothèque",
+                icon: Icon(Icons.library_music_outlined, size: 18),
+              ),
+            ]],
 
           ),
         ),
@@ -51,4 +56,20 @@ contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
 
     );
   }
+}
+
+class TabTextAlignement extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const TabTextAlignement({super.key, required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 5,
+      children: [Icon(icon), AppTextTheme(text)],);
+  }
+
 }

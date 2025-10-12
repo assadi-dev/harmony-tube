@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_widgets/flutter_sticky_widgets.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/widgets/cards/music_card.dart';
 
 import 'carousel/carousel_home.dart';
 
@@ -71,15 +72,13 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
             children: [
               CarouselHome(),
               SizedBox(height: 80),
-              ListView.builder(
+              ListView.separated(
                 physics: NeverScrollableScrollPhysics(),
-                // 👈 désactive son scroll
+                separatorBuilder: (context, index) => const SizedBox(height: 10,),
                 shrinkWrap: true,
                 itemCount: 100,
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text("hello", style: TextStyle(color: Colors.red)),
-                  );
+                  return MusicCard();
                 },
               ),
             ],
