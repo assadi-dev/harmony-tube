@@ -4,12 +4,25 @@ import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/screens/home_screen.dart';
 import 'package:harmony_tube/screens/playlist_screen.dart';
 
-class HomeLayoutTabController extends StatelessWidget {
-   HomeLayoutTabController({super.key});
-
-  final List<Widget> tabsViewList = [HomeScreen(), PlaylistScreen()];
-
+class HomeLayoutTabController extends StatefulWidget {
   @override
+  State<StatefulWidget> createState() => HomeLayoutTabState();
+}
+
+class HomeLayoutTabState extends State<HomeLayoutTabController>   with SingleTickerProviderStateMixin {
+   late TabController _tabController;
+   late List<Widget> tabsViewList = [];
+
+   @override
+   void initState() {
+     super.initState();
+     tabsViewList = [HomeScreen(), PlaylistScreen()];
+     _tabController = TabController(length: tabsViewList.length, vsync: this);
+
+   }
+
+
+   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: tabsViewList.length,
@@ -18,6 +31,7 @@ class HomeLayoutTabController extends StatelessWidget {
         appBar: AppBar(
           title: Text(app_title),
           bottom: ButtonsTabBar(
+            controller: _tabController,
               unselectedBackgroundColor: Colors.transparent,
 contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
 
@@ -29,7 +43,10 @@ contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
           ),
         ),
 
-        body: TabBarView(children: tabsViewList),
+        body: TabBarView(
+          controller: _tabController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: tabsViewList),
       ),
 
     );
