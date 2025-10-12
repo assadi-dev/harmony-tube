@@ -43,7 +43,7 @@ class HomeLayoutTabState extends State<HomeLayoutTabController>   with SingleTic
                 text: "Bibliothèque",
                 icon: Icon(Icons.library_music_outlined, size: 18),
               ),
-            ]],
+            ],
 
           ),
         ),
