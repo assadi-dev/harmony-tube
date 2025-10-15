@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart' hide Card;
 import 'package:harmony_tube/config/app_config.dart';
-import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
+import 'package:harmony_tube/services/musique_actions_services.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
+import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
 
 class MusicCard extends StatelessWidget {
   const MusicCard({super.key});
@@ -14,8 +15,14 @@ class MusicCard extends StatelessWidget {
       child: Container(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          spacing: 8,
-          children: [MediaPreview(), MediaInfos(), MoreButton()],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+          children: [
+            Row(spacing: 8,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [MediaPreview(), MediaInfos()],),
+            MoreButton()
+          ],
         ),
       ),
     );
@@ -51,11 +58,15 @@ void openModalBottomSheet(BuildContext context) async {
 class MoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return InkResponse(
       onTap: () {
         openModalBottomSheet(context);
       },
-      child: Icon(Icons.more_vert),
+      child: Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(shape: BoxShape.circle),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.end,
+              children: [Icon(Icons.more_vert)])),
     );
   }
 }
@@ -84,15 +95,44 @@ class MediaPreview extends StatelessWidget {
   }
 }
 
-class MediaInfos extends StatelessWidget {
+class MediaInfos extends StatefulWidget {
+
+  late final String? title;
+  late final String? artist;
+
+  MediaInfos({this.title, this.artist});
+
+  //TODO implement Duration format
+  //late final String? duration;
+
+  @override
+  State<StatefulWidget> createState() => MediaInfosState(title, artist);
+
+}
+
+class MediaInfosState extends State<MediaInfos> {
+  final String? title;
+  final String? artist;
+  MediaInfosState(this.title, this.artist);
+
+  late final String media_title;
+  late final String media_artist;
+
+  @override
+  void initState() {
+    media_title = title ?? "Music sans titre";
+    media_artist = artist ?? "Artist inconnu";
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AppTextTheme("Music sans titre"),
-        AppTextTheme("Artist inconnu", color: Colors.grey.shade500),
+        AppTextTheme(media_title),
+        AppTextTheme(media_artist, color: Colors.grey.shade500),
       ],
     );
   }
@@ -108,13 +148,25 @@ class MoreOptionList extends StatelessWidget {
       children: [
 
         TextWithIconGesture(
-            text: "Ajouter aux favoris", icon: Icons.favorite_border),
+            text: "Ajouter aux favoris",
+            icon: Icons.favorite_border,
+            onTap: () => MusicModalHandler.add_favorite(context, "1")),
         TextWithIconGesture(
-            text: "Ajouter à la playlist", icon: Icons.playlist_add_outlined),
-        TextWithIconGesture(text: "Modifier", icon: Icons.edit_outlined),
-        TextWithIconGesture(text: "Partager", icon: Icons.share_outlined),
-        TextWithIconGesture(text: "Télécharger", icon: Icons.download_outlined),
-        TextWithIconGesture(text: "Supprimer", icon: Icons.delete_outline),
+            text: "Ajouter à la playlist",
+            icon: Icons.playlist_add_outlined,
+            onTap: () => MusicModalHandler.add_to_playlist(context, "1", "1")),
+        TextWithIconGesture(text: "Modifier",
+            icon: Icons.edit_outlined,
+            onTap: () => MusicModalHandler.edit_music(context, "1")),
+        TextWithIconGesture(text: "Partager",
+            icon: Icons.share_outlined,
+            onTap: () => MusicModalHandler.share_music(context, "1")),
+        TextWithIconGesture(text: "Télécharger",
+            icon: Icons.download_outlined,
+            onTap: () => MusicModalHandler.download_music(context, "1")),
+        TextWithIconGesture(text: "Supprimer",
+            icon: Icons.delete_outline,
+            onTap: () => MusicModalHandler.delete_music(context, "1")),
 
       ],
     );

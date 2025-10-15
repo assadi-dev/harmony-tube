@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/widgets/app_text_theme.dart';
 
 class HeaderBottomSheet extends StatefulWidget {
   final String title;
@@ -31,22 +33,25 @@ class _HeaderBottomSheetState extends State<HeaderBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      spacing: 8,
-      children: [
-        if (imageSrc != null) PreviewImage(source:imageSrc) else SizedBox(),
-        TextColumn(title: title, description: description)
-      ],
-    );
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        spacing: 8,
+        children: [
+          PreviewImage(source: imageSrc) ,
+          TextColumn(title: title, description: description),
+        ],
+      ));
   }
 }
-
 
 class PreviewImage extends StatelessWidget {
   final String? source;
   const PreviewImage({super.key, this.source});
+
+  final double icon_size = 50;
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +60,11 @@ class PreviewImage extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius),
       ),
-      width: 25,
-      height: 25,
+      width: icon_size,
+      height: icon_size,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
-        child: Image.asset(source ?? "",fit: BoxFit.cover,),
+        child: Image.asset(source ?? no_cover_image,fit: BoxFit.cover,),
       ),
     );
 
@@ -75,10 +80,13 @@ class TextColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-return Column(children: [
-  Text(title),
-  Text(description ?? ""),
-],);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AppTextTheme(title, style: TextStyle(fontWeight: FontWeight.bold)),
+        AppTextTheme(description ?? "Artiste inconnu"),
+      ],);
   }
 
 }
