@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/themes/app_colors.dart';
 
 class CarouselHome extends StatelessWidget {
   const CarouselHome({super.key});
@@ -11,7 +12,7 @@ class CarouselHome extends StatelessWidget {
       decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(border_radius),
         gradient: LinearGradient(
-          colors: [Color(0xff000428), Color(0xff004e92)],
+          colors: [AppColors.bluePrimary, AppColors.blueSecondary],
           stops: [0, 1],
           begin: Alignment.bottomRight,
           end: Alignment.topLeft,

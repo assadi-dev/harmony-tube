@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/screens/playlist_screens/playlist_header.dart';
+
+import 'playlist_screens/playlist_contents.dart';
 
 class PlaylistScreen extends StatelessWidget {
   const PlaylistScreen({super.key});
@@ -8,7 +11,7 @@ class PlaylistScreen extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Mes Playlists"),
+        title: PlaylistHeader(),
       ),
       body: SizedBox(
         width: MediaQuery
@@ -22,7 +25,7 @@ class PlaylistScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Text("Mes Playlists")],
+          children: [PlaylistContents()],
         ),
       ),
     );

@@ -5,17 +5,18 @@ class themeApp {
 
 static ThemeData light =  ThemeData.light().copyWith(
   textSelectionTheme: const TextSelectionThemeData(
-    cursorColor: AppColors.green,
-    selectionColor: AppColors.green,
-    selectionHandleColor: AppColors.green,
+    cursorColor: AppColors.blueSecondary,
+    selectionColor: AppColors.blueSecondary,
+    selectionHandleColor: AppColors.blueSecondary,
   ),
     textTheme: const TextTheme(),
-    primaryColor:  AppColors.monochromatic,
+    primaryColor:  AppColors.bluePrimary,
     scaffoldBackgroundColor: AppColors.white,
     colorScheme: const ColorScheme.light(
-      primary: AppColors.green,
-      secondary: AppColors.greenSecondary,
+      primary: AppColors.bluePrimary,
+      secondary: AppColors.blueSecondary,
       surface: AppColors.white,
+      primaryContainer: AppColors.bluePrimary
     ),
 
 
