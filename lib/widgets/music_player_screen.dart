@@ -13,7 +13,7 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
   final PanelController _panelController = PanelController();
   @override
   Widget build(BuildContext context) {
-    return Text("qqqq");
+    return SizedBox();
   }
 
 

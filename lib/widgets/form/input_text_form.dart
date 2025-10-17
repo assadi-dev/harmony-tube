@@ -7,6 +7,7 @@ Widget TextFieldStyled(
   String labelText,
   String? hintText,
   TextEditingController controller,
+    String? Function(String?)? validator
 ) {
   final Color secondaryColor = Theme.of(context).colorScheme.primaryContainer;
   final Color primaryColor = Theme.of(context).colorScheme.primary;
@@ -30,12 +31,7 @@ Widget TextFieldStyled(
       hintText: hintText,
       hintStyle: TextStyle(color: primaryColor.withValues(alpha: 0.5)),
     ),
-    validator: (value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter some text';
-      }
-      return null;
-    },
+    validator: validator,
   );
 }
 
@@ -48,6 +44,7 @@ Widget MultiTextFieldStyled(
   TextEditingController controller,
   int? minLines,
   int? maxLines,
+  String? Function(String?)? validator,
 ) {
   final Color secondaryColor = Theme.of(context).colorScheme.primaryContainer;
   final Color primaryColor = Theme.of(context).colorScheme.primary;
@@ -74,11 +71,6 @@ Widget MultiTextFieldStyled(
       hintText: hintText,
       hintStyle: TextStyle(color: primaryColor.withValues(alpha: 0.5)),
     ),
-    validator: (value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter some text';
-      }
-      return null;
-    },
+    validator: validator,
   );
 }
