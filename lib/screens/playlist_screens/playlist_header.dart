@@ -9,6 +9,7 @@ class PlaylistHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

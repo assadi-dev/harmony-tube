@@ -11,9 +11,12 @@ class PlaylistScreen extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+
         title: PlaylistHeader(),
+        scrolledUnderElevation: 0,
       ),
       body: SizedBox(
+
         width: MediaQuery
             .of(context)
             .size
@@ -23,7 +26,7 @@ class PlaylistScreen extends StatelessWidget {
             .size
             .height,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [PlaylistContents()],
         ),

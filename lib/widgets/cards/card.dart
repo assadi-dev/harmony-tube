@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/themes/app_colors.dart';
 
-class Card extends StatelessWidget {
+class AppCard extends StatelessWidget {
 
   final Widget child;
 
-  const Card({super.key, required this.child});
+  const AppCard({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
