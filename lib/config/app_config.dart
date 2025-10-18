@@ -12,3 +12,4 @@ const String no_cover_image =  "assets/images/no-cover.jpg";
 const double preview_picture_small = 50;
 const double close_icon_size = 18;
 const double border_button = 5.00;
+const double more_icon_size = 18;

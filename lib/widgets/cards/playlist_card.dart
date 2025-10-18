@@ -90,7 +90,7 @@ class MoreButton extends StatelessWidget {
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(shape: BoxShape.circle),
           child: Row(crossAxisAlignment: CrossAxisAlignment.end,
-              children: [Icon(Icons.more_vert_outlined,size: 18,)])),
+              children: [Icon(Icons.more_vert_outlined,size: more_icon_size,)])),
     );
   }
 }
