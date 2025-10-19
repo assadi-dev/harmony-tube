@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/routes/models/router_args.dart';
+import 'package:harmony_tube/routes/router_path.dart';
 import 'package:harmony_tube/screens/playlist_screens/models/model.dart';
 import 'package:harmony_tube/services/playlist_actions_handler.dart';
-import 'package:harmony_tube/themes/app_colors.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/previews/preview_playlist_image.dart';
-import 'package:harmony_tube/widgets/responsive_icon.dart';
 import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
 
 import 'playlist_modal_action.dart';
@@ -14,11 +15,23 @@ import 'playlist_modal_action.dart';
 class PlaylistCard extends StatelessWidget {
   final PlaylistItem playlistItem;
 
+
   PlaylistCard({super.key, required this.playlistItem});
+
 
   @override
   Widget build(BuildContext context) {
-    return AppCard(child: Row(children: [PlaylistCardRow(playlistItem),Spacer(),MoreButton()]));
+    print(playlistItem.title);
+    void getToDetail() {
+      context.pushNamed(RouterPath.playlistDetail.name,
+          extra: PlaylistDetailExtra.fromPlaylistItem(playlistItem));
+    }
+
+    return AppCard(child: Row(children: [
+      GestureDetector(child: PlaylistCardRow(playlistItem), onTap: getToDetail),
+      Spacer(),
+      MoreButton()
+    ]));
   }
 }
 
@@ -104,6 +117,10 @@ class MoreOptionList extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       spacing: 15,
       children: [
+        TextWithIconGesture(
+            text: "Jouer la playlist",
+            icon: Icons.play_arrow_outlined,
+            onTap: () => PlaylistModalHandler.play_playlist(context, "1")),
         TextWithIconGesture(
             text: "Changer la couverture",
             icon: Icons.image_outlined,

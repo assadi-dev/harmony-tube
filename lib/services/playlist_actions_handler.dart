@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class PlaylistModalHandler {
+  static play_playlist(BuildContext context, String id) {
+    //TODO Implement play music logic
+    Navigator.pop(context);
+  }
+
   static edit_playlist(BuildContext context, String id) {
     //TODO Implement edit music logic
     Navigator.pop(context);

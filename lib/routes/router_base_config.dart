@@ -1,6 +1,6 @@
 
 import 'package:go_router/go_router.dart';
-import 'package:harmony_tube/models/router_args.dart';
+import 'package:harmony_tube/routes/models/router_args.dart';
 import 'package:harmony_tube/routes/router_path.dart';
 import 'package:harmony_tube/screens/PlaylistDetailScreen.dart';
 import 'package:harmony_tube/widgets/layout_scaffold_navigation.dart';
@@ -34,7 +34,7 @@ class RouterBaseConfig {
               name: RouterPath.playlistDetail.name,
               path: RouterPath.playlistDetail.path,
               builder: (context, state) {
-                final args = state.extra as PlaylistScreenArgument;
+                final args = state.extra as PlaylistDetailExtra;
                 return PlaylistDetailScreen(
                     id: args.id, title: args.title ?? "Unknown");
               }),

@@ -22,6 +22,7 @@ import 'package:harmony_tube/screens/playlist_screens/models/model.dart';
     for (int i = 0; i < 10; i++) {
       items.add(
         PlaylistItem(
+          id: i.toString(),
          title: randomTitles[random.nextInt(randomTitles.length)],
           totalTracks: random.nextInt(100),
         ),

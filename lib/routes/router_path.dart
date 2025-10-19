@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/screens/PlaylistDetailScreen.dart';
 import 'package:harmony_tube/screens/home/home_layout_tab_controller.dart';
 import 'package:harmony_tube/screens/playlist_screen.dart';
 
