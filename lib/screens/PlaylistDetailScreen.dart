@@ -30,9 +30,6 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
       print("Playlist id : $playlistId");
       print("Playlist title : $playlistTitle");
 
-      setState(() {
-        playlistTitle = "dddd";
-      });
 
       // Exemple : déclencher un BLoC
       // context.read<LocalPlaylistBloc>()
@@ -52,32 +49,70 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         shrinkWrap: true,
         slivers: [
-          SliverAppBar(
-            title: Text(appBarTitle),
-            floating: false,
-            pinned: true,
-            expandedHeight: 200,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(appBarTitle),
-              background: Image.asset(
-                no_cover_image,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          // Pas de SliverList.separated : on gère la séparation à la main
-          SliverList.separated(
-            separatorBuilder: (context, index) => const Divider(height: 10),
-            itemBuilder: (context, index) {
-              return
-                ListTile(title: Text('Track ${index + 1}'));
-            },
-            itemCount: 15,
-          ),
+          _silverHeader(title: appBarTitle, imageSrc: no_cover_image),
+          _silverBody(),
 
         ],
       )
       ,
     );
   }
+}
+
+
+SliverAppBar _silverHeader({required String title, required String imageSrc}) {
+  return SliverAppBar(
+    title: Text(title,textAlign: TextAlign.center,),
+    titleTextStyle: const TextStyle(color: Colors.white,fontSize: 14,overflow: TextOverflow.ellipsis),
+centerTitle: true,
+    floating: true,
+    pinned: true,
+    expandedHeight: 250,
+    flexibleSpace: FlexibleSpaceBar(
+
+
+
+      background: Image.asset(
+        imageSrc,
+        fit: BoxFit.cover,
+
+      ),
+
+    ),
+  );
+}
+
+SliverList _silverBody() {
+  return SliverList.separated(
+    separatorBuilder: (context, index) => const Divider(height: 10),
+    itemBuilder: (context, index) {
+      return
+        ListTile(title: Text('Track ${index + 1}'));
+    },
+    itemCount: 15,
+  );
+}
+
+class DelegateHeader extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(BuildContext context, double shrinkOffset,
+      bool overlapsContent) {
+    return Container(color: Colors.red,
+      height: 50,
+      child: Text("hello", style: TextStyle(color: Colors.blue),),);
+  }
+
+  @override
+  // TODO: implement maxExtent
+  double get maxExtent => 120;
+
+  @override
+  // TODO: implement minExtent
+  double get minExtent => 100;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
+  }
+
 }
