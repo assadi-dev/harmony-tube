@@ -32,7 +32,7 @@ class playlist_detail_silver_widgets {
       foregroundColor: dynColor,
       systemOverlayStyle: overlay,
 
-      title: _CollapsingTitle(title),
+
       titleTextStyle: const TextStyle(
         color: Colors.white,
         fontSize: 14,
