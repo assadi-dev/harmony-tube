@@ -21,7 +21,7 @@ class playlist_detail_silver_widgets {
 
     // Couleurs à adapter :
     const Color iconStart = Colors.white; // état étendu (header sombre)
-    const Color iconEnd   = Colors.black; // état collapssé (fond clair)
+     Color iconEnd   = Theme.of(context).colorScheme.primary; // état collapssé (fond clair)
     final Color dynColor  = Color.lerp(iconStart, iconEnd, t)!;
 
     final overlay = t < 0.5
