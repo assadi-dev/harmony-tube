@@ -52,9 +52,10 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
 
       body: CustomScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        slivers: [silverWidget.silverHeader(
-          title: appBarTitle,
-          imageSrc: no_cover_image,
+        slivers: [SliverLayoutBuilder(
+          builder: (context, constraints) {
+           return silverWidget.silverHeader(context: context,constraints: constraints, title: appBarTitle,imageSrc: no_cover_image);
+          }
         ),
           SliverPadding(
             padding: EdgeInsets.only(

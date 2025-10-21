@@ -1,13 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+
+const double silverHeightExpanded = 250;
 
 class playlist_detail_silver_widgets {
   final BuildContext context;
 
   playlist_detail_silver_widgets({required this.context});
 
-  SliverAppBar silverHeader({required String title, required String imageSrc}) {
+  SliverAppBar silverHeader(
+      {required BuildContext context, required SliverConstraints constraints, required String title, required String imageSrc}) {
+
+    final topInset = MediaQuery.of(context).padding.top;
+    final collapseOffset = (silverHeightExpanded - kToolbarHeight - topInset)
+        .clamp(1.0, double.infinity);
+
+    // 0.0 (étendu) → 1.0 (collapssé)
+    final t = (constraints.scrollOffset / collapseOffset).clamp(0.0, 1.0);
+
+    // Couleurs à adapter :
+    const Color iconStart = Colors.white; // état étendu (header sombre)
+    const Color iconEnd   = Colors.black; // état collapssé (fond clair)
+    final Color dynColor  = Color.lerp(iconStart, iconEnd, t)!;
+
+    final overlay = t < 0.5
+        ? SystemUiOverlayStyle.light  // status bar texte/icônes blancs
+        : SystemUiOverlayStyle.dark;  // status bar texte/icônes noirs
+
     return SliverAppBar(
-      title: Text(title, textAlign: TextAlign.center),
+      foregroundColor: dynColor,
+      systemOverlayStyle: overlay,
+
+      title: _CollapsingTitle(title),
       titleTextStyle: const TextStyle(
         color: Colors.white,
         fontSize: 14,
@@ -16,9 +41,11 @@ class playlist_detail_silver_widgets {
       centerTitle: true,
       floating: true,
       pinned: true,
-      expandedHeight: 250,
+      expandedHeight: silverHeightExpanded,
       flexibleSpace: FlexibleSpaceBar(
         background: Image.asset(imageSrc, fit: BoxFit.cover),
+
+
       ),
     );
   }
@@ -96,6 +123,46 @@ class playlist_detail_silver_widgets {
     return SliverPersistentHeader(delegate: DelegateHeader(), pinned: true);
   }
 }
+
+class _CollapsingTitle extends StatelessWidget {
+  final String text;
+
+  const _CollapsingTitle(this.text, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settings =
+    context.dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>()!;
+
+
+    final t = ((settings.maxExtent - settings.currentExtent) /
+        (settings.maxExtent - settings.minExtent))
+        .clamp(0.0, 1.0);
+
+    final Color expandedColor = Colors.white;
+    final Color collapsedColor = Theme
+        .of(context)
+        .colorScheme
+        .primary;
+    final color = Color.lerp(expandedColor, collapsedColor, t)!;
+
+    return AnimatedDefaultTextStyle(
+      duration: const Duration(milliseconds: 150),
+      style: Theme
+          .of(context)
+          .textTheme
+          .titleLarge!
+          .copyWith(color: color),
+      child: Text(
+        text,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(fontSize: 16),
+      ),
+    );
+  }
+}
+
 
 class DelegateHeader extends SliverPersistentHeaderDelegate {
   @override
