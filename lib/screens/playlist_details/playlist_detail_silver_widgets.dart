@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:harmony_tube/screens/playlist_details/playlist_detail_more_button.dart';
 
 const double silverHeightExpanded = 250;
 
@@ -10,7 +11,7 @@ class playlist_detail_silver_widgets {
   playlist_detail_silver_widgets({required this.context});
 
   SliverAppBar silverHeader(
-      {required BuildContext context, required SliverConstraints constraints, required String title, required String imageSrc}) {
+      {required BuildContext context, required SliverConstraints constraints, required String playlistId, required String title, required String imageSrc}) {
 
     final topInset = MediaQuery.of(context).padding.top;
     final collapseOffset = (silverHeightExpanded - kToolbarHeight - topInset)
@@ -31,8 +32,6 @@ class playlist_detail_silver_widgets {
     return SliverAppBar(
       foregroundColor: dynColor,
       systemOverlayStyle: overlay,
-
-
       titleTextStyle: const TextStyle(
         color: Colors.white,
         fontSize: 14,
@@ -44,16 +43,16 @@ class playlist_detail_silver_widgets {
       expandedHeight: silverHeightExpanded,
       flexibleSpace: FlexibleSpaceBar(
         background: Image.asset(imageSrc, fit: BoxFit.cover),
-
-
       ),
+      actions: [
+        PlaylistDetailMoreButton(playlistId: playlistId, title: title),
+      ],
     );
   }
 
   SliverToBoxAdapter silverBody() {
     return SliverToBoxAdapter(
       child: Container(
-
         child: Column(children: [silverPlaylistAction(), silverTrackList()]),
       ),
     );
@@ -70,29 +69,27 @@ class playlist_detail_silver_widgets {
 
   silverPlaylistAction() {
     return Container(
+
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       color: Colors.white,
       child: Row(
+        spacing: 10,
         children: [
-          Spacer(),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.grey.shade300,
-                border: Border.all(color: Colors.grey.shade400, width: 2),
-              ),
-              child: Icon(Icons.play_arrow_outlined, size: 30),
-            ),
-          ),
+          Expanded( child:  ActionButton(icon: Icons.play_arrow_outlined,
+              title: 'Lecture',
+              onPressed: () {})),
+          Expanded( child:    ActionButton(icon: Icons.download_outlined,
+              title: 'Télécharger',
+              onPressed: () {}),),
+
+
+
         ],
       ),
     );
   }
 
-  silverTrackList() {
+  Widget silverTrackList() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
       child: ListView.separated(
@@ -190,4 +187,50 @@ class DelegateHeader extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
     return true;
   }
+}
+
+class ActionButton extends StatelessWidget {
+
+  final IconData icon;
+  final String title;
+  final void Function()? onPressed;
+
+  ActionButton(
+      {super.key, required this.icon, required this.title, this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Material(
+        child: Ink(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.blueAccent, width: 2),
+            gradient: LinearGradient(colors: [Theme
+                .of(context)
+                .colorScheme
+                .secondary, Theme
+                .of(context)
+                .colorScheme
+                .primary
+            ], end: Alignment.bottomRight),
+            borderRadius: BorderRadius.circular(10),),
+          child: InkWell(
+            onTap: onPressed,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Row(spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(icon, color: Colors.white),
+                  Text(title, style: TextStyle(color: Colors.white),),
+                ],),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }
