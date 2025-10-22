@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart' hide Card;
 import 'package:harmony_tube/config/app_config.dart';
-import 'package:harmony_tube/services/musique_actions_services.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
-import 'package:harmony_tube/widgets/cards/playlist_card.dart';
-import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
 
 
 /*class MusicCardListOptions {
@@ -113,11 +110,11 @@ class OpenModalBottomSheet {
               borderRadius: BorderRadius.circular(5),
               color: Colors.white,
             ),
-            margin: EdgeInsets.only(bottom: 50),
+
             height: MediaQuery
                 .of(ctx)
                 .size
-                .height * 0.65,
+                .height,
             width: MediaQuery
                 .of(ctx)
                 .size
@@ -125,7 +122,8 @@ class OpenModalBottomSheet {
             child: MusicModalAction(
               title: "Music sans titre",
               child: Padding(
-                padding: EdgeInsets.all(15), child: moreOptionWidget,),),
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                child: moreOptionWidget,),),
           ),
     );
   }

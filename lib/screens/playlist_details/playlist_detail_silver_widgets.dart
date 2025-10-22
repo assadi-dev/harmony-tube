@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/screens/playlist_details/playlist_detail_more_button.dart';
 import 'package:harmony_tube/widgets/cards/music_card.dart';
+import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 
 const double silverHeightExpanded = 250;
 
@@ -52,13 +53,7 @@ class playlist_detail_silver_widgets {
     );
   }
 
-  SliverToBoxAdapter silverBody() {
-    return SliverToBoxAdapter(
-      child: Container(
-        child: Column(children: [silverPlaylistAction(), silverTrackList()]),
-      ),
-    );
-  }
+
 
   SliverToBoxAdapter sliverToBoxPlaylistActions() {
     return SliverToBoxAdapter(
@@ -89,28 +84,16 @@ class playlist_detail_silver_widgets {
     );
   }
 
-  Widget silverTrackList() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-      child: ListView.separated(
-        shrinkWrap: true,
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        physics: const NeverScrollableScrollPhysics(),
-        separatorBuilder: (context, index) => const Divider(height: 10),
-        itemBuilder: (context, index) {
-          return MusicCard(moreOptionWidget: SizedBox(),);
-        },
-        itemCount: 15,
-      ),
-    );
-  }
+
 
   SliverList silverTrackListSliver() {
     return SliverList.separated(
 
       separatorBuilder: (context, index) => const SizedBox(height: list_spacing_icon_size),
       itemBuilder: (context, index) {
-        return MusicCard(moreOptionWidget: Text("more"),);
+        final String id = index.toString();
+        final moreActions = MoreActionsList(context: context,  id: id);
+        return MusicCard(moreOptionWidget: moreActions.musicPlaylistActions(),);
       },
       itemCount: 18,
     );
