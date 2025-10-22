@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/screens/playlist_details/playlist_detail_more_button.dart';
 import 'package:harmony_tube/widgets/cards/music_card.dart';
 import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
@@ -73,8 +74,8 @@ class playlist_detail_silver_widgets {
           Expanded( child:  ActionButton(icon: Icons.play_arrow_outlined,
               title: 'Lecture',
               onPressed: () {})),
-          Expanded( child:    ActionButton(icon: Icons.download_outlined,
-              title: 'Télécharger',
+          Expanded( child:    ActionButton(icon: Icons.add_outlined,
+              title: 'Ajouter à la playlist',
               onPressed: () {}),),
 
 
@@ -87,15 +88,21 @@ class playlist_detail_silver_widgets {
 
 
   SliverList silverTrackListSliver() {
+
+
+    final List<TrackItemModel> trackItems = [];
+
     return SliverList.separated(
 
       separatorBuilder: (context, index) => const SizedBox(height: list_spacing_icon_size),
       itemBuilder: (context, index) {
-        final String id = index.toString();
-        final moreActions = MoreActionsList(context: context,  id: id);
-        return MusicCard(moreOptionWidget: moreActions.musicPlaylistActions(),);
+
+
+        final TrackItemModel trackItem = trackItems[index];
+        final moreActions = MoreActionsList(context: context, id: trackItem.id, trackItem: trackItem);
+        return MusicCard(moreOptionWidget: moreActions.musicPlaylistActions(),trackItem: trackItem,);
       },
-      itemCount: 18,
+      itemCount: trackItems.length,
     );
   }
 
@@ -206,8 +213,8 @@ class ActionButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(icon, color: Colors.white),
-                  Text(title, style: TextStyle(color: Colors.white),),
+                  Icon(icon, color: Colors.white,size: 16,),
+                  Text(title, style: TextStyle(color: Colors.white,fontSize: 12),),
                 ],),
             ),
           ),

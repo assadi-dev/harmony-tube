@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_widgets/flutter_sticky_widgets.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/widgets/cards/music_card.dart';
 import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 
@@ -30,6 +31,7 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
   Widget build(BuildContext context) {
     final StickyPosition initialPosition = StickyPosition(top: 200, left: 0);
     final StickyPosition finalPosition = StickyPosition(top: 0, left: 0);
+    final List<TrackItemModel> tracks = [];
 
     return StickyContainer(
       displayOverFlowContent: true,
@@ -77,11 +79,11 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
                 physics: NeverScrollableScrollPhysics(),
                 separatorBuilder: (context, index) => const SizedBox(height: list_spacing_icon_size,),
                 shrinkWrap: true,
-                itemCount: 100,
+                itemCount: tracks.length,
                 itemBuilder: (BuildContext context, int index) {
                   final String id = index.toString();
-                  final moreActions = MoreActionsList(context: context,  id: id);
-                  return MusicCard(moreOptionWidget: moreActions.musicCardActions(),);
+                  final moreActions = MoreActionsList(context: context,  id: id,trackItem: tracks[index]);
+                  return MusicCard(moreOptionWidget: moreActions.musicCardActions(),trackItem: tracks[index]);
                 },
               ),
             ],

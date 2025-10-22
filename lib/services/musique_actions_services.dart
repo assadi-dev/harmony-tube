@@ -8,8 +8,7 @@ class MusicModalHandler {
     Navigator.pop(context);
   }
 
-  static add_to_playlist(BuildContext context, String songId,
-      String playlistId) {
+  static add_to_playlist(BuildContext context, String id) {
     //TODO Implement add playlist logic
     Navigator.pop(context);
   }

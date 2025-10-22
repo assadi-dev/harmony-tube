@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart' hide Card;
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/core/models/local_track.dart';
+import 'package:harmony_tube/core/utils/files_system.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
@@ -42,8 +44,9 @@ import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
 
 class MusicCard extends StatelessWidget {
   final Widget moreOptionWidget;
+  final TrackItemModel trackItem;
 
-  const MusicCard({super.key,required this.moreOptionWidget});
+  const MusicCard({super.key,required this.moreOptionWidget, required this.trackItem});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +60,7 @@ class MusicCard extends StatelessWidget {
             Row(spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [MediaPreview(), MediaInfos()],),
-            MoreButton(moreOptionWidget: moreOptionWidget)
+            MoreButton(moreOptionWidget: moreOptionWidget,trackItem: trackItem)
           ],
         ),
       ),
@@ -68,15 +71,15 @@ class MusicCard extends StatelessWidget {
 
 
 class MoreButton extends StatelessWidget {
-
+  final TrackItemModel trackItem;
   final Widget moreOptionWidget;
 
-  const MoreButton({super.key, required this.moreOptionWidget});
+  const MoreButton({super.key, required this.moreOptionWidget, required this.trackItem});
 
   @override
   Widget build(BuildContext context) {
 
-    final modalBottomSheet = OpenModalBottomSheet(context: context, moreOptionWidget: moreOptionWidget);
+    final modalBottomSheet = OpenModalBottomSheet(context: context, moreOptionWidget: moreOptionWidget,trackItem:trackItem );
 
     return InkResponse(
       onTap: () {
@@ -94,10 +97,11 @@ class OpenModalBottomSheet {
 
   final Widget moreOptionWidget;
   final BuildContext context;
+  final TrackItemModel trackItem;
 
 
   OpenModalBottomSheet(
-      { required this.context, required this.moreOptionWidget});
+      { required this.context, required this.moreOptionWidget,required this.trackItem});
 
   void openModal() async {
     await showModalBottomSheet(
@@ -120,7 +124,8 @@ class OpenModalBottomSheet {
                 .size
                 .width * 0.95,
             child: MusicModalAction(
-              title: "Music sans titre",
+              title: trackItem.title,
+
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: moreOptionWidget,),),
@@ -131,6 +136,23 @@ class OpenModalBottomSheet {
 }
 
 class MediaPreview extends StatelessWidget {
+  
+  final String? imageSrc;
+  MediaPreview({this.imageSrc});
+
+
+
+  Image _previewImage() {
+    if (imageSrc != null) {
+      if (isHttpUrl(imageSrc!)) {
+        return Image.network(imageSrc!, fit: BoxFit.cover);
+      }
+      //TODO Load image from local storage
+      return Image.asset(imageSrc!, fit: BoxFit.cover);
+    }
+    return Image.asset(no_cover_image, fit: BoxFit.cover);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -148,7 +170,7 @@ class MediaPreview extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(border_radius_card),
-        child: Image.asset(no_cover_image,  fit: BoxFit.cover,),
+        child:  _previewImage(),
       ),
     );
   }
@@ -196,7 +218,3 @@ class MediaInfosState extends State<MediaInfos> {
     );
   }
 }
-
-
-
-
