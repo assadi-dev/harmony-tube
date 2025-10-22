@@ -30,7 +30,7 @@ class PlaylistCard extends StatelessWidget {
     return AppCard(child: Row(children: [
       GestureDetector(child: PlaylistCardRow(playlistItem), onTap: getToDetail),
       Spacer(),
-      MoreButton()
+      MoreButton(playlistId: playlistItem.id)
     ]));
   }
 }
@@ -65,14 +65,13 @@ Widget PlaylistCardRow(PlaylistItem playlistItem) {
 }
 
 
-class OpenModalBottomSheet {
+class PlaylistModalBottomSheet {
 
   final Widget moreOptionWidget;
   final BuildContext context;
 
 
-  OpenModalBottomSheet(
-      { required this.context, required this.moreOptionWidget});
+  PlaylistModalBottomSheet({ required this.context, required this.moreOptionWidget});
 
   void openModal() async {
     await showModalBottomSheet(
@@ -85,11 +84,8 @@ class OpenModalBottomSheet {
               borderRadius: BorderRadius.circular(5),
               color: Colors.white,
             ),
-            margin: EdgeInsets.only(bottom: 50),
-            height: MediaQuery
-                .of(ctx)
-                .size
-                .height * 0.45,
+
+
             width: MediaQuery
                 .of(ctx)
                 .size
@@ -107,10 +103,15 @@ class OpenModalBottomSheet {
 
 
 class MoreButton extends StatelessWidget {
+  final String playlistId;
+  const MoreButton({super.key,required this.playlistId});
+
   @override
   Widget build(BuildContext context) {
-    final modalBottomSheet = OpenModalBottomSheet(
-        context: context, moreOptionWidget: MoreOptionList());
+    final modalBottomSheet = PlaylistModalBottomSheet(
+      context: context,
+      moreOptionWidget: PlaylistMoreOptionList(playlistId: playlistId),
+    );
 
 
     return InkResponse(
@@ -127,7 +128,10 @@ class MoreButton extends StatelessWidget {
 }
 
 
-class MoreOptionList extends StatelessWidget {
+class PlaylistMoreOptionList extends StatelessWidget {
+  final String playlistId;
+
+  const PlaylistMoreOptionList({super.key, required this.playlistId});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -136,24 +140,31 @@ class MoreOptionList extends StatelessWidget {
       spacing: 15,
       children: [
         TextWithIconGesture(
+            text: "Informations",
+            icon: Icons.info_outline,
+            onTap: () => PlaylistModalHandler.play_playlist(context, playlistId)),
+        TextWithIconGesture(
             text: "Jouer la playlist",
             icon: Icons.play_arrow_outlined,
-            onTap: () => PlaylistModalHandler.play_playlist(context, "1")),
+            onTap: () => PlaylistModalHandler.play_playlist(context, playlistId)),
         TextWithIconGesture(
             text: "Changer la couverture",
             icon: Icons.image_outlined,
-            onTap: () => PlaylistModalHandler.edit_playlist(context, "1")),
-
+            onTap: () => PlaylistModalHandler.edit_playlist(context, playlistId)),
         TextWithIconGesture(
             text: "Modifier",
             icon: Icons.edit_outlined,
-            onTap: () => PlaylistModalHandler.edit_playlist(context, "1")),
+            onTap: () => PlaylistModalHandler.edit_playlist(context, playlistId)),
+        TextWithIconGesture(
+            text: "Réorganiser",
+            icon: Icons.drag_handle_outlined,
+            onTap: () => PlaylistModalHandler.reorder_playlist_tracks(context, playlistId)),
         TextWithIconGesture(text: "Télécharger",
             icon: Icons.download_outlined,
-            onTap: () => PlaylistModalHandler.download_playlist(context, "1")),
+            onTap: () => PlaylistModalHandler.download_playlist(context, playlistId)),
         TextWithIconGesture(text: "Supprimer",
             icon: Icons.delete_outline,
-            onTap: () => PlaylistModalHandler.delete_playlist(context, "1")),
+            onTap: () => PlaylistModalHandler.delete_playlist(context, playlistId)),
 
       ],
     );

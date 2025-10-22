@@ -15,7 +15,7 @@ class PlaylistDetailMoreButton extends StatelessWidget {
 class PlaylistDetailMoreHandler {
 
   void onPressMoreButton(){
-    print('More button pressed');
+
 
   }
 

@@ -9,7 +9,7 @@ class PlaylistModalAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return    Column(
-      spacing: 10,
+
       children: [
         PlaylistHeaderBottomSheet(
           title: title,
@@ -19,7 +19,7 @@ class PlaylistModalAction extends StatelessWidget {
           color: Colors.black12,
         ),
 
-        child
+      Padding(padding:EdgeInsets.symmetric(vertical: 10) ,child: child)
       ],
     );
   }
