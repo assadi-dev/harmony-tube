@@ -2,31 +2,33 @@ import 'package:harmony_tube/core/utils/generator.dart';
 
 
 class TrackItemModel  {
-  String id;
-  String title;
-  String artist;
+  final String id;
+  final String title;
+  String? artist;
   String? album;
   String? year;
   String? artwork;
   /**
    * Duration in milliseconds
    */
-  int duration;
+  final int duration;
   String? youtubeId;
   String? path;
+  DateTime? lastPlayedAt;
   DateTime? createdAt;
   DateTime? updatedAt;
 
   TrackItemModel({
     required this.id,
-    this.title = "unknown",
+    required this.title,
     this.artist = "unknown",
-    this.duration = 0,
+    required this.duration,
     this.youtubeId,
     this.path,
     this.year,
     this.album,
     this.artwork,
+    this.lastPlayedAt,
     this.createdAt,
     this.updatedAt,
   });
@@ -37,8 +39,8 @@ class TrackItemModel  {
     return TrackItemModel(
       id: generateId(),
       title: entries["title"],
-      artist: entries["artist"],
-      duration: entries["durationMs"],
+      artist: entries["artist"] ?? "unknown",
+      duration: entries["durationMs"] ?? 0,
       youtubeId: entries["youtubeId"],
       path: entries["path"],
       year: entries["year"],

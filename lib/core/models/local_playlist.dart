@@ -7,17 +7,26 @@ class PlaylistItemModel {
   final String id;
   final String name;
   final String? cover;
+  final List<TrackItemModel>? tracks;
+  final int nbTracks;
+  final String? description;
+  final DateTime? lastPlayedAt;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final List<TrackItemModel>? tracks;
+
+
 
   PlaylistItemModel({
     required this.id,
     required this.name,
+    this.description,
     this.cover,
+    this.tracks,
+    this.nbTracks = 0,
+    this.lastPlayedAt,
     this.createdAt,
     this.updatedAt,
-    this.tracks,
+
   });
 
   factory PlaylistItemModel.generate(Map<String, dynamic> entries) {
@@ -29,6 +38,7 @@ class PlaylistItemModel {
       name: entries['name'],
       cover: entries['cover'],
       tracks: entries['tracks'] ?? [],
+      nbTracks: entries['nbTracks'] ?? 0,
       createdAt: dateNow,
       updatedAt: dateNow,
     );
