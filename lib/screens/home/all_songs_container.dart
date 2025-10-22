@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sticky_widgets/flutter_sticky_widgets.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/widgets/cards/music_card.dart';
+import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 
 import 'carousel/carousel_home.dart';
 
@@ -74,11 +75,13 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
               SizedBox(height: 80),
               ListView.separated(
                 physics: NeverScrollableScrollPhysics(),
-                separatorBuilder: (context, index) => const SizedBox(height: 10,),
+                separatorBuilder: (context, index) => const SizedBox(height: list_spacing_icon_size,),
                 shrinkWrap: true,
                 itemCount: 100,
                 itemBuilder: (BuildContext context, int index) {
-                  return MusicCard();
+                  final String id = index.toString();
+                  final moreActions = MoreActionsList(context: context,  id: id);
+                  return MusicCard(moreOptionWidget: moreActions.musicCardActions(),);
                 },
               ),
             ],

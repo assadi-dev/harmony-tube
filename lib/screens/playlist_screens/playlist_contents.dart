@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/screens/playlist_screens/mocks/playlist_mocks.dart';
 import 'package:harmony_tube/widgets/cards/playlist_card.dart';
 
@@ -14,7 +15,7 @@ class PlaylistContents extends StatelessWidget {
 
       padding: const EdgeInsets.all(15),
       child: ListView.separated(
-        separatorBuilder: (context, index) => const SizedBox(height: 10,),
+        separatorBuilder: (context, index) => const SizedBox(height: list_spacing_icon_size,),
         shrinkWrap: true,
         itemCount: playlists.length,
         itemBuilder: (context, index) {

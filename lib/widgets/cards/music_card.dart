@@ -4,10 +4,49 @@ import 'package:harmony_tube/services/musique_actions_services.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
+import 'package:harmony_tube/widgets/cards/playlist_card.dart';
 import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
 
+
+/*class MusicCardListOptions {
+
+  final Widget moreOptionWidget;
+
+  MusicCardListOptions({required this.moreOptionWidget});
+
+  void openModalBottomSheet(BuildContext context) async {
+    await showModalBottomSheet(
+      useRootNavigator: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (ctx) =>
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
+            margin: EdgeInsets.only(bottom: 50),
+            height: MediaQuery
+                .of(ctx)
+                .size
+                .height * 0.55,
+            width: MediaQuery
+                .of(ctx)
+                .size
+                .width * 0.95,
+            child: MusicModalAction(child: Padding(
+              padding: EdgeInsets.all(15), child: moreOptionWidget,),),
+          ),
+    );
+  }
+
+}
+*/
+
 class MusicCard extends StatelessWidget {
-  const MusicCard({super.key});
+  final Widget moreOptionWidget;
+
+  const MusicCard({super.key,required this.moreOptionWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +60,7 @@ class MusicCard extends StatelessWidget {
             Row(spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [MediaPreview(), MediaInfos()],),
-            MoreButton()
+            MoreButton(moreOptionWidget: moreOptionWidget)
           ],
         ),
       ),
@@ -29,38 +68,22 @@ class MusicCard extends StatelessWidget {
   }
 }
 
-void openModalBottomSheet(BuildContext context) async {
-  await showModalBottomSheet(
-    useRootNavigator: true,
-    backgroundColor: Colors.transparent,
-    context: context,
-    builder: (ctx) =>
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: Colors.white,
-          ),
-          margin: EdgeInsets.only(bottom: 50),
-          height: MediaQuery
-              .of(ctx)
-              .size
-              .height * 0.55,
-          width: MediaQuery
-              .of(ctx)
-              .size
-              .width * 0.95,
-          child: MusicModalAction(child: Padding(
-            padding: EdgeInsets.all(15), child: MoreOptionList(),),),
-        ),
-  );
-}
+
 
 class MoreButton extends StatelessWidget {
+
+  final Widget moreOptionWidget;
+
+  const MoreButton({super.key, required this.moreOptionWidget});
+
   @override
   Widget build(BuildContext context) {
+
+    final modalBottomSheet = OpenModalBottomSheet(context: context, moreOptionWidget: moreOptionWidget);
+
     return InkResponse(
       onTap: () {
-        openModalBottomSheet(context);
+        modalBottomSheet.openModal();
       },
       child: Container(
           padding: EdgeInsets.all(8),
@@ -68,6 +91,45 @@ class MoreButton extends StatelessWidget {
         child: Icon(Icons.more_vert, size: more_icon_size,),),
     );
   }
+}
+
+class OpenModalBottomSheet {
+
+  final Widget moreOptionWidget;
+  final BuildContext context;
+
+
+  OpenModalBottomSheet(
+      { required this.context, required this.moreOptionWidget});
+
+  void openModal() async {
+    await showModalBottomSheet(
+      useRootNavigator: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (ctx) =>
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
+            margin: EdgeInsets.only(bottom: 50),
+            height: MediaQuery
+                .of(ctx)
+                .size
+                .height * 0.65,
+            width: MediaQuery
+                .of(ctx)
+                .size
+                .width * 0.95,
+            child: MusicModalAction(
+              title: "Music sans titre",
+              child: Padding(
+                padding: EdgeInsets.all(15), child: moreOptionWidget,),),
+          ),
+    );
+  }
+
 }
 
 class MediaPreview extends StatelessWidget {
@@ -137,40 +199,6 @@ class MediaInfosState extends State<MediaInfos> {
   }
 }
 
-class MoreOptionList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      spacing: 15,
-      children: [
 
-        TextWithIconGesture(
-            text: "Ajouter aux favoris",
-            icon: Icons.favorite_border,
-            onTap: () => MusicModalHandler.add_favorite(context, "1")),
-        TextWithIconGesture(
-            text: "Ajouter à la playlist",
-            icon: Icons.playlist_add_outlined,
-            onTap: () => MusicModalHandler.add_to_playlist(context, "1", "1")),
-        TextWithIconGesture(text: "Modifier",
-            icon: Icons.edit_outlined,
-            onTap: () => MusicModalHandler.edit_music(context, "1")),
-        TextWithIconGesture(text: "Partager",
-            icon: Icons.share_outlined,
-            onTap: () => MusicModalHandler.share_music(context, "1")),
-        TextWithIconGesture(text: "Télécharger",
-            icon: Icons.download_outlined,
-            onTap: () => MusicModalHandler.download_music(context, "1")),
-        TextWithIconGesture(text: "Supprimer",
-            icon: Icons.delete_outline,
-            onTap: () => MusicModalHandler.delete_music(context, "1")),
-
-      ],
-    );
-  }
-
-}
 
 

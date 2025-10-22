@@ -65,39 +65,57 @@ Widget PlaylistCardRow(PlaylistItem playlistItem) {
 }
 
 
-void openModalBottomSheet(BuildContext context) async {
-  await showModalBottomSheet(
-    useRootNavigator: true,
-    backgroundColor: Colors.transparent,
-    context: context,
-    builder: (ctx) =>
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: Colors.white,
+class OpenModalBottomSheet {
+
+  final Widget moreOptionWidget;
+  final BuildContext context;
+
+
+  OpenModalBottomSheet(
+      { required this.context, required this.moreOptionWidget});
+
+  void openModal() async {
+    await showModalBottomSheet(
+      useRootNavigator: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (ctx) =>
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
+            margin: EdgeInsets.only(bottom: 50),
+            height: MediaQuery
+                .of(ctx)
+                .size
+                .height * 0.45,
+            width: MediaQuery
+                .of(ctx)
+                .size
+                .width * 0.95,
+            child: PlaylistModalAction(
+              title: "Playlist sans titre",
+              child: Padding(
+                padding: EdgeInsets.all(15), child: moreOptionWidget,),),
           ),
-          margin: EdgeInsets.only(bottom: 50),
-          height: MediaQuery
-              .of(ctx)
-              .size
-              .height * 0.45,
-          width: MediaQuery
-              .of(ctx)
-              .size
-              .width * 0.95,
-          child: PlaylistModalAction(child: Padding(
-            padding: EdgeInsets.all(15), child: MoreOptionList(),),),
-        ),
-  );
+    );
+  }
+
 }
+
 
 
 class MoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final modalBottomSheet = OpenModalBottomSheet(
+        context: context, moreOptionWidget: MoreOptionList());
+
+
     return InkResponse(
       onTap: () {
-        openModalBottomSheet(context);
+        modalBottomSheet.openModal();
       },
       child: Container(
           padding: EdgeInsets.all(8),

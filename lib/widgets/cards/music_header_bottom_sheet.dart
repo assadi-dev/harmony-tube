@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 
-class HeaderBottomSheet extends StatefulWidget {
+class MusicHeaderBottomSheet extends StatefulWidget {
   final String title;
   final String? description;
   final String? imageSrc;
 
-  const HeaderBottomSheet({
+  const MusicHeaderBottomSheet({
     super.key,
     required this.title,
     this.description,
@@ -15,10 +15,10 @@ class HeaderBottomSheet extends StatefulWidget {
   });
 
   @override
-  State<HeaderBottomSheet> createState() => _HeaderBottomSheetState();
+  State<MusicHeaderBottomSheet> createState() => _MusicHeaderBottomSheetState();
 }
 
-class _HeaderBottomSheetState extends State<HeaderBottomSheet> {
+class _MusicHeaderBottomSheetState extends State<MusicHeaderBottomSheet> {
   late String title;
   String? description;
   String? imageSrc;

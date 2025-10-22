@@ -5,13 +5,13 @@ import 'package:harmony_tube/widgets/previews/preview_playlist_image.dart';
 
 class PlaylistHeaderBottomSheet extends StatefulWidget {
   final String title;
-  final String? description;
+  final String? subtitle;
   final String? imageSrc;
 
   const PlaylistHeaderBottomSheet({
     super.key,
     required this.title,
-    this.description,
+    this.subtitle,
     this.imageSrc,
   });
 
@@ -27,7 +27,7 @@ class _PlaylistHeaderBottomSheetState extends State<PlaylistHeaderBottomSheet> {
   @override
   void initState() {
     title = widget.title;
-    description = widget.description;
+    description = widget.subtitle;
     imageSrc = widget.imageSrc;
     super.initState();
   }

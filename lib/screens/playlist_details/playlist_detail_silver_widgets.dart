@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/screens/playlist_details/playlist_detail_more_button.dart';
+import 'package:harmony_tube/widgets/cards/music_card.dart';
 
 const double silverHeightExpanded = 250;
 
@@ -10,8 +12,8 @@ class playlist_detail_silver_widgets {
 
   playlist_detail_silver_widgets({required this.context});
 
-  SliverAppBar silverHeader(
-      {required BuildContext context, required SliverConstraints constraints, required String playlistId, required String title, required String imageSrc}) {
+  SliverAppBar silverHeader({required BuildContext context, required SliverConstraints constraints, required String playlistId, required String title, required String imageSrc})
+  {
 
     final topInset = MediaQuery.of(context).padding.top;
     final collapseOffset = (silverHeightExpanded - kToolbarHeight - topInset)
@@ -61,7 +63,6 @@ class playlist_detail_silver_widgets {
   SliverToBoxAdapter sliverToBoxPlaylistActions() {
     return SliverToBoxAdapter(
       child: Container(
-
         child: silverPlaylistAction(),
       ),
     );
@@ -69,9 +70,8 @@ class playlist_detail_silver_widgets {
 
   silverPlaylistAction() {
     return Container(
+      padding: const EdgeInsets.symmetric(vertical: 18),
 
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      color: Colors.white,
       child: Row(
         spacing: 10,
         children: [
@@ -98,7 +98,7 @@ class playlist_detail_silver_widgets {
         physics: const NeverScrollableScrollPhysics(),
         separatorBuilder: (context, index) => const Divider(height: 10),
         itemBuilder: (context, index) {
-          return ListTile(title: Text('Track ${index + 1}'));
+          return MusicCard(moreOptionWidget: SizedBox(),);
         },
         itemCount: 15,
       ),
@@ -108,9 +108,9 @@ class playlist_detail_silver_widgets {
   SliverList silverTrackListSliver() {
     return SliverList.separated(
 
-      separatorBuilder: (context, index) => const Divider(height: 10),
+      separatorBuilder: (context, index) => const SizedBox(height: list_spacing_icon_size),
       itemBuilder: (context, index) {
-        return ListTile(title: Text('Track ${index + 1}'));
+        return MusicCard(moreOptionWidget: Text("more"),);
       },
       itemCount: 18,
     );
