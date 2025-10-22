@@ -142,7 +142,7 @@ class PlaylistMoreOptionList extends StatelessWidget {
         TextWithIconGesture(
             text: "Informations",
             icon: Icons.info_outline,
-            onTap: () => PlaylistModalHandler.play_playlist(context, playlistId)),
+            onTap: () => PlaylistModalHandler.info_playlist(context, playlistId)),
         TextWithIconGesture(
             text: "Jouer la playlist",
             icon: Icons.play_arrow_outlined,

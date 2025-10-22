@@ -17,7 +17,7 @@ class TextWithIconGesture extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Row( crossAxisAlignment: CrossAxisAlignment.center, spacing: 12, children: [Icon(icon), AppTextTheme(text)]),
+      child: Row( crossAxisAlignment: CrossAxisAlignment.center, spacing: 12, children: [Icon(icon, color: Theme.of(context).colorScheme.primary), AppTextTheme(text)]),
     );
   }
 }

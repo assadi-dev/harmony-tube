@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class PlaylistModalHandler {
 
-  static infos(BuildContext context, String id) {
+  static info_playlist(BuildContext context, String id) {
     //TODO Implement show info logic
     Navigator.pop(context);
   }
