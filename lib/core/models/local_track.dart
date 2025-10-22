@@ -1,6 +1,5 @@
 import 'package:harmony_tube/core/utils/generator.dart';
 
-import 'timestampable_entity.dart';
 
 class TrackItemModel  {
   String id;
@@ -32,7 +31,7 @@ class TrackItemModel  {
     this.updatedAt,
   });
 
-  factory TrackItemModel.generate(dynamic entries) {
+  factory TrackItemModel.generate(Map<String,dynamic> entries) {
     final dateNow = DateTime.now();
 
     return TrackItemModel(
