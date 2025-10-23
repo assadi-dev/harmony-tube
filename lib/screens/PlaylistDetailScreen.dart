@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/config/app_config.dart';
-import 'package:harmony_tube/core/models/local_playlist.dart';
+import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 
 import 'playlist_details/playlist_detail_silver_widgets.dart';
 import 'playlist_screens/mocks/playlist_mocks.dart';

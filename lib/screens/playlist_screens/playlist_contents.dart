@@ -6,7 +6,7 @@ import 'package:harmony_tube/widgets/cards/playlist_card.dart';
 class PlaylistContents extends StatelessWidget {
    PlaylistContents({super.key});
 
-  final playlists = PlaylistMock.getPlaylist();
+  final playlists = []; //PlaylistMock.getPlaylist();
 
   @override
   Widget build(BuildContext context) {

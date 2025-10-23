@@ -29,7 +29,9 @@ class PlaylistItemModel {
 
   });
 
-  factory PlaylistItemModel.generate(Map<String, dynamic> entries) {
+
+
+  factory PlaylistItemModel.generate(dynamic entries) {
 
     final dateNow = DateTime.now();
 
@@ -44,6 +46,22 @@ class PlaylistItemModel {
       updatedAt: dateNow,
     );
 
+  }
+
+  PlaylistItemModel copyWith(dynamic entries) {
+    final dateNow = DateTime.now();
+
+    return PlaylistItemModel(
+      id: id,
+      name: entries['name'] ?? name,
+      description: entries['description'] ?? description,
+      cover: entries['cover'] ?? cover,
+      tracks: entries['tracks'] ?? tracks,
+      nbTracks: entries['nbTracks'] ?? nbTracks,
+      lastPlayedAt: entries['lastPlayedAt'] ?? lastPlayedAt,
+      createdAt: createdAt,
+      updatedAt: dateNow,
+    );
   }
 
 

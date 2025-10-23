@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PlaylistModalHandler {
+class PlaylistModalHandler  {
 
   static info_playlist(BuildContext context, String id) {
     //TODO Implement show info logic

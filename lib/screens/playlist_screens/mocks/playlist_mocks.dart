@@ -1,7 +1,7 @@
 
 
 import 'dart:math';
-import 'package:harmony_tube/core/models/local_playlist.dart';
+import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/screens/playlist_screens/models/model.dart';
 

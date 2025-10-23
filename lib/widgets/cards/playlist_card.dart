@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:harmony_tube/config/app_config.dart';
-import 'package:harmony_tube/core/models/local_playlist.dart';
+import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 import 'package:harmony_tube/routes/models/router_args.dart';
 import 'package:harmony_tube/routes/router_path.dart';
 import 'package:harmony_tube/screens/playlist_screens/models/model.dart';

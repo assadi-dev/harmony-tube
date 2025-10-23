@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:harmony_tube/config/app_config.dart';
-import 'package:harmony_tube/core/models/local_playlist.dart';
+import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/screens/playlist_details/playlist_detail_more_button.dart';
 import 'package:harmony_tube/widgets/cards/music_card.dart';
