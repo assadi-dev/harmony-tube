@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/core/models/local_playlist.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/screens/playlist_details/playlist_detail_more_button.dart';
 import 'package:harmony_tube/widgets/cards/music_card.dart';
@@ -14,7 +15,7 @@ class playlist_detail_silver_widgets {
 
   playlist_detail_silver_widgets({required this.context});
 
-  SliverAppBar silverHeader({required BuildContext context, required SliverConstraints constraints, required String playlistId, required String title, required String imageSrc})
+  SliverAppBar silverHeader({required BuildContext context, required SliverConstraints constraints, required String playlistId, required String title, required String imageSrc,required PlaylistItemModel playlistItem})
   {
 
     final topInset = MediaQuery.of(context).padding.top;
@@ -49,7 +50,7 @@ class playlist_detail_silver_widgets {
         background: Image.asset(imageSrc, fit: BoxFit.cover),
       ),
       actions: [
-        PlaylistDetailMoreButton(playlistId: playlistId, title: title),
+        PlaylistDetailMoreButton(playlistId: playlistId, title: title,playlistItem: playlistItem,),
       ],
     );
   }

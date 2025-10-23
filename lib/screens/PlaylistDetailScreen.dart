@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/core/models/local_playlist.dart';
 
 import 'playlist_details/playlist_detail_silver_widgets.dart';
+import 'playlist_screens/mocks/playlist_mocks.dart';
 
 class PlaylistDetailScreen extends StatefulWidget {
   final String id;
@@ -48,13 +50,16 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
     final appBarTitle = widget.title ??
         (playlistTitle.isNotEmpty ? playlistTitle : "Playlist");
 
+    final PlaylistItemModel playlistItem = PlaylistMock.findPlaylist(widget.id) as PlaylistItemModel;
+
+
     return Scaffold(
 
       body: CustomScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [SliverLayoutBuilder(
           builder: (context, constraints) {
-           return silverWidget.silverHeader(context: context,constraints: constraints, playlistId: widget.id, title: appBarTitle,imageSrc: no_cover_image);
+           return silverWidget.silverHeader(context: context,constraints: constraints, playlistId: widget.id, title: appBarTitle,imageSrc: no_cover_image,playlistItem: playlistItem);
           }
         ),
           SliverPadding(

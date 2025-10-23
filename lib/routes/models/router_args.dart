@@ -1,3 +1,4 @@
+import 'package:harmony_tube/core/models/local_playlist.dart';
 import 'package:harmony_tube/screens/playlist_screens/models/model.dart';
 
 class PlaylistDetailExtra {
@@ -10,9 +11,13 @@ class PlaylistDetailExtra {
 
   factory PlaylistDetailExtra.fromPlaylistItem(PlaylistItem item) {
     return PlaylistDetailExtra(
-        id: item.id, title: item.title ?? "Playlist sans titre", imgSrc: item.imageUrl ?? "");
+        id: item.id, title: item.title , imgSrc: item.imageUrl);
   }
 
+  factory PlaylistDetailExtra.fromPlaylistItemModel(PlaylistItemModel item) {
+    return PlaylistDetailExtra(
+        id: item.id, title: item.name , imgSrc: item.cover );
+  }
 
 
 }

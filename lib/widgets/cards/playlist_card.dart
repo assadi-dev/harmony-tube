@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/core/models/local_playlist.dart';
 import 'package:harmony_tube/routes/models/router_args.dart';
 import 'package:harmony_tube/routes/router_path.dart';
 import 'package:harmony_tube/screens/playlist_screens/models/model.dart';
@@ -13,7 +14,7 @@ import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
 import 'playlist_modal_action.dart';
 
 class PlaylistCard extends StatelessWidget {
-  final PlaylistItem playlistItem;
+  final PlaylistItemModel playlistItem;
 
 
   PlaylistCard({super.key, required this.playlistItem});
@@ -21,29 +22,29 @@ class PlaylistCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(playlistItem.title);
+
     void getToDetail() {
       context.pushNamed(RouterPath.playlistDetail.name,
-          extra: PlaylistDetailExtra.fromPlaylistItem(playlistItem));
+          extra: PlaylistDetailExtra.fromPlaylistItemModel(playlistItem));
     }
 
     return AppCard(child: Row(children: [
       GestureDetector(child: PlaylistCardRow(playlistItem), onTap: getToDetail),
       Spacer(),
-      MoreButton(playlistId: playlistItem.id)
+      MoreButton(playlistId: playlistItem.id, playlistItem: playlistItem)
     ]));
   }
 }
 
 
-Widget PlaylistCardPreview(PlaylistItem playlistItem) {
-  final String? imageSrc = playlistItem.imageUrl ?? null;
+Widget PlaylistCardPreview(PlaylistItemModel playlistItem) {
+  final String? imageSrc = playlistItem.cover ?? null;
   return  PreviewPlaylistImage(source: imageSrc);
 }
 
-Widget playlistCardColumn(PlaylistItem playlistItem) {
-  final String title = playlistItem.title;
-  final int totalTracks = playlistItem.totalTracks;
+Widget playlistCardColumn(PlaylistItemModel playlistItem) {
+  final String title = playlistItem.name;
+  final int totalTracks = playlistItem.nbTracks;
   final String totalTracksText = totalTracks == 1
       ? '$totalTracks track'
       : '$totalTracks tracks';
@@ -54,7 +55,7 @@ Widget playlistCardColumn(PlaylistItem playlistItem) {
   );
 }
 
-Widget PlaylistCardRow(PlaylistItem playlistItem) {
+Widget PlaylistCardRow(PlaylistItemModel playlistItem) {
   return Row(
     spacing: 8,
     children: [
@@ -69,9 +70,11 @@ class PlaylistModalBottomSheet {
 
   final Widget moreOptionWidget;
   final BuildContext context;
+  final PlaylistItemModel playlistItem;
 
 
-  PlaylistModalBottomSheet({ required this.context, required this.moreOptionWidget});
+
+  PlaylistModalBottomSheet({ required this.context, required this.moreOptionWidget, required this.playlistItem});
 
   void openModal() async {
     await showModalBottomSheet(
@@ -91,7 +94,7 @@ class PlaylistModalBottomSheet {
                 .size
                 .width * 0.95,
             child: PlaylistModalAction(
-              title: "Playlist sans titre",
+              title: playlistItem.name,
               child: Padding(
                 padding: EdgeInsets.all(15), child: moreOptionWidget,),),
           ),
@@ -104,13 +107,16 @@ class PlaylistModalBottomSheet {
 
 class MoreButton extends StatelessWidget {
   final String playlistId;
-  const MoreButton({super.key,required this.playlistId});
+  final PlaylistItemModel playlistItem;
+
+  const MoreButton({super.key,required this.playlistId,required this.playlistItem});
 
   @override
   Widget build(BuildContext context) {
     final modalBottomSheet = PlaylistModalBottomSheet(
       context: context,
       moreOptionWidget: PlaylistMoreOptionList(playlistId: playlistId),
+      playlistItem: playlistItem,
     );
 
 

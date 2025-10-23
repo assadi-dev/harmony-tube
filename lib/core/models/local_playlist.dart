@@ -36,6 +36,7 @@ class PlaylistItemModel {
     return PlaylistItemModel(
       id: generateId(),
       name: entries['name'],
+      description: entries['description'],
       cover: entries['cover'],
       tracks: entries['tracks'] ?? [],
       nbTracks: entries['nbTracks'] ?? 0,
