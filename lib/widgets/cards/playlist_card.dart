@@ -43,7 +43,7 @@ Widget PlaylistCardPreview(PlaylistItemModel playlistItem) {
 }
 
 Widget playlistCardColumn(PlaylistItemModel playlistItem) {
-  final String title = playlistItem.name;
+  final String title = playlistItem.title;
   final int totalTracks = playlistItem.nbTracks;
   final String totalTracksText = totalTracks == 1
       ? '$totalTracks track'
@@ -94,7 +94,7 @@ class PlaylistModalBottomSheet {
                 .size
                 .width * 0.95,
             child: PlaylistModalAction(
-              title: playlistItem.name,
+              title: playlistItem.title,
               child: Padding(
                 padding: EdgeInsets.all(15), child: moreOptionWidget,),),
           ),

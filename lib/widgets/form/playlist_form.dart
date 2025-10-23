@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/screens/playlist_screens/models/model.dart';
 
 import 'input_text_form.dart';
 
+
 class PlaylistForm extends StatefulWidget {
-  const PlaylistForm({super.key});
+  final Future<void> Function(PlaylistFormValues values) handleSubmitted;
+  const PlaylistForm({super.key,required this.handleSubmitted});
 
   @override
   State<PlaylistForm> createState() => _PlaylistFormState();
@@ -40,7 +43,9 @@ class _PlaylistFormState extends State<PlaylistForm> {
       context: context,
       formKey: _formKey,
       titleController: _titleController,
-      descriptionController: _descriptionController,);
+      descriptionController: _descriptionController,
+      handleSubmitted: widget.handleSubmitted,
+    );
 
 
     return Form(
@@ -70,26 +75,35 @@ class PlaylistInput {
   final GlobalKey<FormState> formKey;
   final TextEditingController titleController;
   final TextEditingController descriptionController;
+  final Future<void> Function(PlaylistFormValues values) handleSubmitted;
+
 
   PlaylistInput(
-      {required this.context, required this.formKey, required this.titleController, required this.descriptionController});
+      {required this.context, required this.formKey, required this.titleController, required this.descriptionController, required this.handleSubmitted});
 
 
-  void _submitValues() {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      String title = titleController.text;
-      String description = descriptionController.text;
+  Future<void> _submitValues() async{
+    try {
+      if (formKey.currentState!.validate()) {
+        formKey.currentState!.save();
+        String title = titleController.text;
+        String description = descriptionController.text;
 
+        await handleSubmitted(PlaylistFormValues(title: title, description: description));
+
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Veuillez remplir tous les champs')),
+        );
+      }
+    } catch (e) {
+      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Formulaire valide : $title | $description")),
-      );
-      Navigator.pop(context);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Veuillez remplir tous les champs')),
+
+        const SnackBar(content: Text('Une erreur est survenue lors de la soumission du formulaire')),
       );
     }
+
   }
 
   Widget titleInput(
@@ -101,7 +115,7 @@ class PlaylistInput {
       context,
       focusNode,
       formKey,
-      "Titre",
+      "Nom",
       "Titre de la playlist",
       titleController,
         (value)=> PlaylistInputValidator.titleValidator(value)

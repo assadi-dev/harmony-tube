@@ -5,7 +5,7 @@ import 'package:harmony_tube/core/utils/generator.dart';
 
 class PlaylistItemModel {
   final String id;
-  final String name;
+  final String title;
   final String? cover;
   final List<TrackItemModel>? tracks;
   final int nbTracks;
@@ -18,7 +18,7 @@ class PlaylistItemModel {
 
   PlaylistItemModel({
     required this.id,
-    required this.name,
+    required this.title,
     this.description,
     this.cover,
     this.tracks,
@@ -32,18 +32,17 @@ class PlaylistItemModel {
 
 
   factory PlaylistItemModel.generate(dynamic entries) {
-
-    final dateNow = DateTime.now();
+    final DateTime now = DateTime.now();
 
     return PlaylistItemModel(
       id: generateId(),
-      name: entries['name'],
-      description: entries['description'],
-      cover: entries['cover'],
-      tracks: entries['tracks'] ?? [],
-      nbTracks: entries['nbTracks'] ?? 0,
-      createdAt: dateNow,
-      updatedAt: dateNow,
+      title:  entries.title ?? 'playlist_${now.millisecond}',
+      description:  entries.description ?? null,
+      cover:  entries.cover ?? null,
+      tracks:  entries.tracks ?? null,
+      nbTracks:  entries.nbTracks ?? 0,
+      createdAt: now,
+      updatedAt: now,
     );
 
   }
@@ -53,12 +52,12 @@ class PlaylistItemModel {
 
     return PlaylistItemModel(
       id: id,
-      name: entries['name'] ?? name,
-      description: entries['description'] ?? description,
-      cover: entries['cover'] ?? cover,
-      tracks: entries['tracks'] ?? tracks,
-      nbTracks: entries['nbTracks'] ?? nbTracks,
-      lastPlayedAt: entries['lastPlayedAt'] ?? lastPlayedAt,
+      title: entries.title ?? title,
+      description: entries.description ?? description,
+      cover: entries.cover ?? cover,
+      tracks: entries.tracks ?? tracks,
+      nbTracks: entries.nbTracks ?? nbTracks,
+      lastPlayedAt: entries.lastPlayedAt ?? lastPlayedAt,
       createdAt: createdAt,
       updatedAt: dateNow,
     );

@@ -16,7 +16,7 @@ class PlaylistDetailExtra {
 
   factory PlaylistDetailExtra.fromPlaylistItemModel(PlaylistItemModel item) {
     return PlaylistDetailExtra(
-        id: item.id, title: item.name , imgSrc: item.cover );
+        id: item.id, title: item.title , imgSrc: item.cover );
   }
 
 

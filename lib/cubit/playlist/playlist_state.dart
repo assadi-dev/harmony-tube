@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 
 class PlaylistState extends Equatable {
-  final List<PlaylistItemModel>? collections;
+  final List<PlaylistItemModel> collections;
   final PlaylistItemModel? playlist;
   final Exception? error;
   final bool isLoading;
