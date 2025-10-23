@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:harmony_tube/cubit/playlist/playlist_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
 import 'package:harmony_tube/cubit/theme_mode_cubit.dart';
 import 'package:harmony_tube/injections/injector.dart';
 import 'package:harmony_tube/widgets/main_scaffold.dart';

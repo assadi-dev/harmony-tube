@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_state.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
-import 'package:harmony_tube/cubit/playlist/playlist_bloc.dart';
-import 'package:harmony_tube/cubit/playlist/playlist_event.dart';
-import 'package:harmony_tube/cubit/playlist/playlist_state.dart';
 import 'package:harmony_tube/screens/playlist_screens/playlist_screen_status.dart';
 import 'package:harmony_tube/widgets/cards/playlist_card.dart';
 

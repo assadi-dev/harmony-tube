@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_state.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
-import 'package:harmony_tube/core/utils/interraction.dart';
-import 'package:harmony_tube/cubit/playlist/playlist_event.dart';
-import 'package:harmony_tube/cubit/playlist/playlist_state.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
+
 
 class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
   PlaylistBloc() : super(const PlaylistState()) {
