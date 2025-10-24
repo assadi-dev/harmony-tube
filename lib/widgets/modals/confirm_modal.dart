@@ -85,8 +85,8 @@ class ConfirmButtonRowState extends State<ConfirmButtonRow> {
     void handleCancel() {
       if(widget.cancelHandler != null){
         widget.cancelHandler!();
-      };
-        Navigator.of(context).pop();
+      }
+      Navigator.of(context).pop();
     }
 
     void handleConfirm() {
