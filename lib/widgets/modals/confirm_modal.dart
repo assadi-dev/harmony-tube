@@ -30,7 +30,7 @@ class ConfirmModal {
 
 
 
-  show() {
+  open() {
     return WoltModalSheet.show(
       modalTypeBuilder: (context) => WoltModalType.dialog(),
       context: context,

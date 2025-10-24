@@ -6,8 +6,12 @@ import 'input_text_form.dart';
 
 
 class PlaylistForm extends StatefulWidget {
+ final  PlaylistFormValues defaultValues ;
   final Future<void> Function(PlaylistFormValues values) handleSubmitted;
-  const PlaylistForm({super.key,required this.handleSubmitted});
+ final String submitLabelButton;
+
+
+   PlaylistForm({super.key,required this.handleSubmitted, required this.defaultValues, this.submitLabelButton = "Créer"});
 
   @override
   State<PlaylistForm> createState() => _PlaylistFormState();
@@ -19,6 +23,8 @@ class _PlaylistFormState extends State<PlaylistForm> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
+
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +32,17 @@ class _PlaylistFormState extends State<PlaylistForm> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_focusNode);
     });
+
+      setState(() {
+        _titleController.text = widget.defaultValues.title;
+        _descriptionController.text = widget.defaultValues.description! ?? "";
+
+      });
+
+
+
   }
+
 
   @override
   void dispose() {
@@ -34,6 +50,8 @@ class _PlaylistFormState extends State<PlaylistForm> {
     _focusNode.dispose();
     _titleController.dispose();
     _descriptionController.dispose();
+
+
   }
 
 
@@ -45,6 +63,8 @@ class _PlaylistFormState extends State<PlaylistForm> {
       titleController: _titleController,
       descriptionController: _descriptionController,
       handleSubmitted: widget.handleSubmitted,
+      submitLabelButton:  widget.submitLabelButton,
+
     );
 
 
@@ -76,10 +96,12 @@ class PlaylistInput {
   final TextEditingController titleController;
   final TextEditingController descriptionController;
   final Future<void> Function(PlaylistFormValues values) handleSubmitted;
+  final String submitLabelButton;
+
 
 
   PlaylistInput(
-      {required this.context, required this.formKey, required this.titleController, required this.descriptionController, required this.handleSubmitted});
+      {required this.context, required this.formKey, required this.titleController, required this.descriptionController, required this.handleSubmitted, this.submitLabelButton = "Créer"});
 
 
   Future<void> _submitValues() async{
@@ -153,7 +175,7 @@ class PlaylistInput {
           ),
         ),
 
-        child: const Text("Créer"),
+        child:  Text(submitLabelButton),
         onPressed:_submitValues
 
 

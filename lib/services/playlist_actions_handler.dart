@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
+import 'package:harmony_tube/screens/playlist_screens/modals/edit_playlist_modal.dart';
 import 'package:harmony_tube/widgets/modals/confirm_modal.dart';
 
 class PlaylistModalHandler  {
@@ -17,11 +18,11 @@ class PlaylistModalHandler  {
   }
 
   static edit_playlist(BuildContext context, String id) {
-    //TODO Implement edit music logic
-    Navigator.pop(context);
-    //TODO Show modal edit playlist
-   context.read<PlaylistBloc>().add(FindPlaylist(playlistId: id));
 
+    Navigator.pop(context);
+   context.read<PlaylistBloc>().add(FindPlaylist(playlistId: id));
+    final editPlaylistModal = EditPlaylistModal(context: context,);
+    editPlaylistModal.open();
 
 
   }
@@ -34,7 +35,7 @@ class PlaylistModalHandler  {
     }
 
    final confirmModal = ConfirmModal(context: context, message: "Are you sure you want to delete this playlist?", onConfirm: confirmDelete );
-    confirmModal.show();
+    confirmModal.open();
   }
 
   static download_playlist(BuildContext context, String id) {
