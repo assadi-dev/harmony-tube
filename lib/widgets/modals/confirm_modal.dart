@@ -10,7 +10,7 @@ final borderShape = RoundedRectangleBorder(
 
 class ConfirmModal {
   final String message;
-  final void Function()  onConfirm;
+  final void Function(BuildContext context)  onConfirm;
   final BuildContext context;
   Widget? top;
   Widget? bottom;
@@ -25,18 +25,10 @@ class ConfirmModal {
 
   void closeModal() {
   print("action canceled");
-  Navigator.of(context).pop();
-  }
-
-  void confirm() {
-   try{
-     onConfirm();
-     Navigator.of(context).pop();
-   }catch(e){
-     print(e);
-   }
 
   }
+
+
 
   show() {
     return WoltModalSheet.show(
@@ -55,7 +47,7 @@ class ConfirmModal {
                     AppTextTheme(message, style: textButtonStyle,),
                     bottom ?? SizedBox(),
                     ConfirmButtonRow(cancelHandler: closeModal,
-                        confirmHandler: confirm)
+                        confirmHandler: onConfirm)
                   ]
                 ),
               ),
@@ -72,7 +64,7 @@ class ConfirmModal {
 
 class ConfirmButtonRow extends StatefulWidget {
   final void Function() cancelHandler;
-  final void Function() confirmHandler;
+  final void Function(BuildContext context) confirmHandler;
 
   const ConfirmButtonRow(
       {super.key, required this.confirmHandler, required this.cancelHandler});
@@ -88,6 +80,23 @@ class ConfirmButtonRowState extends State<ConfirmButtonRow> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    void handleCancel() {
+        widget.cancelHandler();
+        Navigator.of(context).pop();
+    }
+
+    void handleConfirm() {
+      try{
+        widget.confirmHandler(context);
+        Navigator.of(context).pop();
+      }catch(e){
+        print(e);
+      }
+
+    }
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
@@ -97,7 +106,7 @@ class ConfirmButtonRowState extends State<ConfirmButtonRow> {
           children: [
             ElevatedButton(
                 child: AppTextTheme("Annuler", style: textButtonStyle),
-                onPressed:  widget.cancelHandler,
+                onPressed:handleCancel,
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
@@ -116,7 +125,7 @@ class ConfirmButtonRowState extends State<ConfirmButtonRow> {
                 shape: borderShape,
 
               ),
-              onPressed:widget.confirmHandler,),
+              onPressed:handleConfirm,),
 
           ]
       ),);

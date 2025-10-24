@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
 import 'package:harmony_tube/widgets/modals/confirm_modal.dart';
 
 class PlaylistModalHandler  {
@@ -19,10 +22,11 @@ class PlaylistModalHandler  {
   }
 
   static delete_playlist(BuildContext context, String id) {
-
-    void  confirmDelete() async {
-    print("Confirm Deleting Playlist");
     Navigator.of(context).pop();
+    void  confirmDelete(BuildContext context)  {
+    print("Confirm Deleting Playlist");
+    context.read<PlaylistBloc>().add(DeletePlaylist(playlistId: id));
+
 
     }
 
