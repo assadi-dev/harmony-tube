@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_state.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
-import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
 
 
 class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
@@ -10,6 +10,7 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     on<CreatePlaylist>(createPlaylist);
     on<DeletePlaylist>(deletePlaylist);
     on<UpdatePlaylist>(updatePlaylist);
+    on<FindPlaylist>(findPlaylist);
   }
 
   Future<void> getCollections(
@@ -34,6 +35,29 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
         ),
       );
 
+    }
+  }
+
+  Future<void> findPlaylist(FindPlaylist event,
+      Emitter<PlaylistState> emit,) async {
+    try {
+      final playlistId = event.playlistId;
+      final playlist = state.collections.firstWhere((item) =>
+      item.id == playlistId);
+      emit(
+        state.copyWith(
+          playlist: playlist,
+          error: null,
+          isLoading: false,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          error: Exception(e),
+          isLoading: false,
+        ),
+      );
     }
   }
 

@@ -19,17 +19,19 @@ class PlaylistModalHandler  {
   static edit_playlist(BuildContext context, String id) {
     //TODO Implement edit music logic
     Navigator.pop(context);
+    //TODO Show modal edit playlist
+   context.read<PlaylistBloc>().add(FindPlaylist(playlistId: id));
+
+
+
   }
 
   static delete_playlist(BuildContext context, String id) {
     Navigator.of(context).pop();
     void  confirmDelete(BuildContext context)  {
-    print("Confirm Deleting Playlist");
-    context.read<PlaylistBloc>().add(DeletePlaylist(playlistId: id));
-
+      context.read<PlaylistBloc>().add(DeletePlaylist(playlistId: id));
 
     }
-
 
    final confirmModal = ConfirmModal(context: context, message: "Are you sure you want to delete this playlist?", onConfirm: confirmDelete );
     confirmModal.show();
