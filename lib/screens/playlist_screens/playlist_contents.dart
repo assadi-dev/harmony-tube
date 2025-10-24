@@ -18,7 +18,8 @@ class PlaylistContents extends StatelessWidget {
         return PlaylistScreenStatus(
             isLoading: state.isLoading,
             isError: state.error != null ? true : false,
-            child: playlistListItems(state.collections));
+            child: Padding(padding: EdgeInsets.symmetric(horizontal: 15),
+            child: playlistListItems(state.collections),),);
       },);
 
   }
