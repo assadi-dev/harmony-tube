@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/widgets/modals/confirm_modal.dart';
 
 class PlaylistModalHandler  {
 
@@ -18,8 +19,16 @@ class PlaylistModalHandler  {
   }
 
   static delete_playlist(BuildContext context, String id) {
-    //TODO Implement delete music logic
-    Navigator.pop(context);
+
+    void  confirmDelete() async {
+    print("Confirm Deleting Playlist");
+    Navigator.of(context).pop();
+
+    }
+
+
+   final confirmModal = ConfirmModal(context: context, message: "Are you sure you want to delete this playlist?", onConfirm: confirmDelete );
+    confirmModal.show();
   }
 
   static download_playlist(BuildContext context, String id) {
