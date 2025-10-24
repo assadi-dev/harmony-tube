@@ -46,7 +46,7 @@ class ConfirmModal {
 
                     AppTextTheme(message, style: textButtonStyle,),
                     bottom ?? SizedBox(),
-                    ConfirmButtonRow(cancelHandler: closeModal,
+                    ConfirmButtonRow(cancelHandler: null,
                         confirmHandler: onConfirm)
                   ]
                 ),
@@ -63,11 +63,11 @@ class ConfirmModal {
 
 
 class ConfirmButtonRow extends StatefulWidget {
-  final void Function() cancelHandler;
+  final void Function()? cancelHandler;
   final void Function(BuildContext context) confirmHandler;
 
   const ConfirmButtonRow(
-      {super.key, required this.confirmHandler, required this.cancelHandler});
+      {super.key, required this.confirmHandler,  this.cancelHandler});
 
   @override
   State<StatefulWidget> createState() => ConfirmButtonRowState();
@@ -83,7 +83,9 @@ class ConfirmButtonRowState extends State<ConfirmButtonRow> {
 
 
     void handleCancel() {
-        widget.cancelHandler();
+      if(widget.cancelHandler != null){
+        widget.cancelHandler!();
+      };
         Navigator.of(context).pop();
     }
 
