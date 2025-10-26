@@ -11,6 +11,8 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     on<DeletePlaylist>(deletePlaylist);
     on<UpdatePlaylist>(updatePlaylist);
     on<FindPlaylist>(findPlaylist);
+    on<ClearPlaylist>(clearPlaylist);
+
   }
 
   Future<void> getCollections(
@@ -59,6 +61,14 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
         ),
       );
     }
+  }
+
+  clearPlaylist(ClearPlaylist event, Emitter<PlaylistState> emit){
+    emit(state.copyWith(
+      playlist: null,
+      error: null,
+      isLoading: false,
+    ));
   }
 
   Future<void> createPlaylist(

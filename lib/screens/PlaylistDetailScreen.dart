@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 
@@ -26,32 +29,35 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
   void initState() {
     super.initState();
 
-    // Lance tes chargements/blocs après le premier frame si besoin
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final playlistId = widget.id;
       playlistTitle = widget.title ?? "Sans titre";
 
-      print("Playlist id : $playlistId");
-      print("Playlist title : $playlistTitle");
-
-
-      // Exemple : déclencher un BLoC
-      // context.read<LocalPlaylistBloc>()
-      //     .add(GetPlaylistDetailEvent(id: playlistId));
+      context.read<PlaylistBloc>()
+           .add(FindPlaylist(playlistId: playlistId));
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print("Playlist dispose");
+
   }
 
   @override
   Widget build(BuildContext context) {
     final silverWidget = playlist_detail_silver_widgets(context: context);
     final double silverPaddingSize = 15.0;
+    context.watch<PlaylistBloc>().state;
 
-    /// Priorité : prop.title > titre chargé > fallback
-    final appBarTitle = widget.title ??
-        (playlistTitle.isNotEmpty ? playlistTitle : "Playlist");
 
-    final PlaylistItemModel playlistItem = PlaylistMock.findPlaylist(widget.id) as PlaylistItemModel;
 
+    final  playlistItem = context.read<PlaylistBloc>().state.playlist as PlaylistItemModel;
+    print("Playlist id : ${playlistItem.id}");
+    print("Playlist title : ${playlistItem.title}");
+
+    final appBarTitle = playlistItem.title;
 
     return Scaffold(
 

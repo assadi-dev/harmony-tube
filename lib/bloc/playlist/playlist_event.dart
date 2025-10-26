@@ -36,6 +36,10 @@ class UpdatePlaylist extends PlaylistEvent {
   const UpdatePlaylist({required this.playlist});
 }
 
+class ClearPlaylist extends PlaylistEvent {}
+
+
+
 
 class DeletePlaylist extends PlaylistEvent {
   final String playlistId;
