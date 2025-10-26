@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sticky_widgets/flutter_sticky_widgets.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
+import 'package:harmony_tube/screens/home/more_track_actions.dart';
+import 'package:harmony_tube/widgets/Buttons/more_button.dart';
 import 'package:harmony_tube/widgets/cards/music_card.dart';
 import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 
@@ -33,6 +35,27 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
     final StickyPosition finalPosition = StickyPosition(top: 0, left: 0);
     final List<TrackItemModel> tracks = [];
 
+    Widget IconTitleColumn() {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        spacing: 8,
+        children: [
+          Icon(Icons.music_note_outlined),
+
+          Text(
+            "Touts les titres",
+            style: TextStyle(
+              color: Theme
+                  .of(context)
+                  .primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ],
+      );
+    }
+
     return StickyContainer(
       displayOverFlowContent: true,
       stickyChildren: [
@@ -48,19 +71,9 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
               color: Theme.of(context).scaffoldBackgroundColor,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                children: [
-                  Icon(Icons.music_note_outlined),
-                  SizedBox(width: 10),
-                  Text(
-                    "Touts les titres",
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
+                children: [IconTitleColumn(), MoreTrackActions()],
               ),
             ),
           ),

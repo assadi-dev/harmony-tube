@@ -6,7 +6,7 @@ import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 
 import 'playlist_details/playlist_detail_silver_widgets.dart';
-import 'playlist_screens/mocks/playlist_mocks.dart';
+
 
 class PlaylistDetailScreen extends StatefulWidget {
   final String id;
@@ -48,14 +48,12 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final silverWidget = playlist_detail_silver_widgets(context: context);
-    final double silverPaddingSize = 15.0;
+    final double silverPaddingSize = padding_layout;
     context.watch<PlaylistBloc>().state;
 
 
 
     final  playlistItem = context.read<PlaylistBloc>().state.playlist as PlaylistItemModel;
-    print("Playlist id : ${playlistItem.id}");
-    print("Playlist title : ${playlistItem.title}");
 
     final appBarTitle = playlistItem.title;
 

@@ -1,6 +1,10 @@
 import 'package:harmony_tube/core/utils/generator.dart';
 
 
+/**
+ * A model for a track item
+ */
+/// Represents a single track.
 class TrackItemModel  {
   final String id;
   final String title;
@@ -8,9 +12,7 @@ class TrackItemModel  {
   String? album;
   String? year;
   String? artwork;
-  /**
-   * Duration in milliseconds
-   */
+  /// The duration of the track in milliseconds.
   final int duration;
   String? youtubeId;
   String? path;
