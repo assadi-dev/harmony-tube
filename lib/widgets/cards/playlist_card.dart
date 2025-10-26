@@ -6,6 +6,7 @@ import 'package:harmony_tube/routes/models/router_args.dart';
 import 'package:harmony_tube/routes/router_path.dart';
 import 'package:harmony_tube/screens/playlist_screens/models/model.dart';
 import 'package:harmony_tube/services/playlist_actions_handler.dart';
+import 'package:harmony_tube/widgets/Buttons/more_button.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/previews/preview_playlist_image.dart';
@@ -119,17 +120,7 @@ class MoreButton extends StatelessWidget {
       playlistItem: playlistItem,
     );
 
-
-    return InkResponse(
-      onTap: () {
-        modalBottomSheet.openModal();
-      },
-      child: Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(shape: BoxShape.circle),
-          child: Row(crossAxisAlignment: CrossAxisAlignment.end,
-              children: [Icon(Icons.more_vert_outlined,size: more_icon_size,)])),
-    );
+    return MoreIconButton(onPress: () => modalBottomSheet.openModal());
   }
 }
 

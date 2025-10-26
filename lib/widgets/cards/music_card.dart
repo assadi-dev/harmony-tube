@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide Card;
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/utils/files_system.dart';
+import 'package:harmony_tube/widgets/Buttons/more_button.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
@@ -81,14 +82,11 @@ class MoreButton extends StatelessWidget {
 
     final modalBottomSheet = OpenModalBottomSheet(context: context, moreOptionWidget: moreOptionWidget,trackItem:trackItem );
 
-    return InkResponse(
-      onTap: () {
+    return MoreIconButton(
+      onPress: () {
         modalBottomSheet.openModal();
       },
-      child: Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(shape: BoxShape.circle),
-        child: Icon(Icons.more_vert, size: more_icon_size,),),
+
     );
   }
 }
