@@ -3,32 +3,36 @@ import 'package:flutter/material.dart';
 
 class MusicModalHandler {
 
-  static add_favorite(BuildContext context, String id) {
+  final BuildContext context;
+  final String  id;
+  MusicModalHandler({required this.context, required this.id});
+
+ void  add_favorite() {
     //TODO Implement add favorite logic
-    Navigator.pop(context);
+    Navigator.of(context).pop();
   }
 
-  static add_to_playlist(BuildContext context, String id) {
+  void  add_to_playlist() {
     //TODO Implement add playlist logic
     Navigator.pop(context);
   }
 
-  static edit_music(BuildContext context, String id) {
+ void  edit_music() {
     //TODO Implement edit music logic
     Navigator.pop(context);
   }
 
-  static share_music(BuildContext context, String id) {
+ void  share_music() {
     //TODO Implement share music logic
     Navigator.pop(context);
   }
 
-  static delete_music(BuildContext context, String id) {
+ void  delete_music() {
     //TODO Implement delete music logic
     Navigator.pop(context);
   }
 
-  static download_music(BuildContext context, String id) {
+void  download_music() {
     //TODO Implement download music logic
     Navigator.pop(context);
   }

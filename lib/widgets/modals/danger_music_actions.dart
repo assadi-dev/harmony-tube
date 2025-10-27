@@ -7,14 +7,21 @@ class DangerMusicActions {
   final BuildContext context;
   final String id;
   final dynamic extras;
+ late MusicModalHandler trackHandler;
+   DangerMusicActions({ required  this.context, required  this.id,this.extras = null}){
+    trackHandler = MusicModalHandler(context: context, id: id,);
+  }
 
-  const DangerMusicActions({ required  this.context, required  this.id,this.extras = null});
+
+
+
 
   Widget removeTrackAction () {
+
     return TextWithIconGesture(
       text: "Supprimer",
       icon: Icons.delete_outline,
-      onTap: () => MusicModalHandler.delete_music(context, id),
+      onTap: () => trackHandler.delete_music(),
     );
   }
 
@@ -22,7 +29,7 @@ class DangerMusicActions {
     return TextWithIconGesture(
       text: "Retirer de la playlist",
       icon: Icons.delete_outline,
-      onTap: () => MusicModalHandler.delete_music(context, id),
+      onTap: () => trackHandler.delete_music(),
     );
   }
 

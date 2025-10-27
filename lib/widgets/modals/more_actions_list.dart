@@ -8,36 +8,37 @@ import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
 /**
  * String id : id de la musique
  */
-List<Widget> basicActions(BuildContext context, String id) =>
-    [ TextWithIconGesture(
+List<Widget> basicActions(BuildContext context, String id) {
+  final trackHandler = MusicModalHandler(context: context, id: id);
+
+  return [
+    TextWithIconGesture(
       text: "Ajouter aux favoris",
       icon: Icons.favorite_border,
-      onTap: () => MusicModalHandler.add_favorite(context, id),
+      onTap: () => trackHandler.add_favorite(),
     ),
-      TextWithIconGesture(
-        text: "Ajouter à la playlist",
-        icon: Icons.playlist_add_outlined,
-        onTap: () => MusicModalHandler.add_to_playlist(context, id),
-      ),
-      TextWithIconGesture(
-        text: "Modifier",
-        icon: Icons.edit_outlined,
-        onTap: () => MusicModalHandler.edit_music(context, id),
-      ),
-      TextWithIconGesture(
-        text: "Partager",
-        icon: Icons.share_outlined,
-        onTap: () => MusicModalHandler.share_music(context, id),
-      ),
-      TextWithIconGesture(
-        text: "Télécharger",
-        icon: Icons.download_outlined,
-        onTap: () => MusicModalHandler.download_music(context, id),
-      ),
-    ];
-
-
-
+    TextWithIconGesture(
+      text: "Ajouter à la playlist",
+      icon: Icons.playlist_add_outlined,
+      onTap: () => trackHandler.add_to_playlist(),
+    ),
+    TextWithIconGesture(
+      text: "Modifier",
+      icon: Icons.edit_outlined,
+      onTap: () => trackHandler.edit_music(),
+    ),
+    TextWithIconGesture(
+      text: "Partager",
+      icon: Icons.share_outlined,
+      onTap: () => trackHandler.share_music(),
+    ),
+    TextWithIconGesture(
+      text: "Télécharger",
+      icon: Icons.download_outlined,
+      onTap: () => trackHandler.download_music(),
+    ),
+  ];
+}
 
 class MoreActionsList {
 
