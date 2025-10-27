@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
-import 'package:harmony_tube/services/musique_actions_services.dart';
+import 'package:harmony_tube/services/music_actions_services.dart';
 import 'package:harmony_tube/widgets/modals/danger_music_actions.dart';
 import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
 

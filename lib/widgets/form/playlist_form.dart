@@ -137,7 +137,7 @@ class PlaylistInput {
       context,
       focusNode,
       formKey,
-      "Nom",
+      null,
       "Titre de la playlist",
       titleController,
         (value)=> PlaylistInputValidator.titleValidator(value)
@@ -152,10 +152,10 @@ class PlaylistInput {
       context,
       focusNode,
       formKey,
-      "Description",
+      null,
       "Description de la playlist",
       descriptionController,
-       1,
+       3,
        5,
       null
     );

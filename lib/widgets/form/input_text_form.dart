@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+final double borderRadiusValue = 5;
+
 Widget TextFieldStyled(
   BuildContext context,
   FocusNode focusNode,
   GlobalKey<FormState> formKey,
-  String labelText,
+  String? labelText,
   String? hintText,
   TextEditingController controller,
     String? Function(String?)? validator
@@ -18,15 +20,13 @@ Widget TextFieldStyled(
     focusNode: focusNode,
     decoration: InputDecoration(
       filled: true,
-      fillColor: WidgetStateColor.resolveWith((states) {
-        if (states.contains(WidgetState.focused)) {
-          return primaryColor.withValues(alpha: 0.1);
-        }
-        return Colors.transparent;
-      }),
+      fillColor: primaryColor.withValues(alpha: 0.1),
       border: UnderlineInputBorder(
-        borderSide: BorderSide(color: secondaryColor),
+        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(borderRadiusValue),
+
       ),
+
       labelText: labelText,
       hintText: hintText,
       hintStyle: TextStyle(color: primaryColor.withValues(alpha: 0.5)),
@@ -39,7 +39,7 @@ Widget MultiTextFieldStyled(
   BuildContext context,
   FocusNode focusNode,
   GlobalKey<FormState> formKey,
-  String labelText,
+  String? labelText,
   String? hintText,
   TextEditingController controller,
   int? minLines,
@@ -58,14 +58,10 @@ Widget MultiTextFieldStyled(
     focusNode: focusNode,
     decoration: InputDecoration(
       filled: true,
-      fillColor: WidgetStateColor.resolveWith((states) {
-        if (states.contains(WidgetState.focused)) {
-          return primaryColor.withValues(alpha: 0.1);
-        }
-        return Colors.transparent;
-      }),
+      fillColor: primaryColor.withValues(alpha: 0.1),
       border: UnderlineInputBorder(
-        borderSide: BorderSide(color: secondaryColor),
+        borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(borderRadiusValue)
       ),
       labelText: labelText,
       hintText: hintText,

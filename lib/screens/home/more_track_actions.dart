@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/screens/home/modals/add_track_main.dart';
+import 'package:harmony_tube/screens/home/modals/track_more_action_view.dart';
 import 'package:harmony_tube/widgets/Buttons/more_button.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -18,17 +20,8 @@ class MoreTrackActions extends StatelessWidget {
           pageListBuilder: (context) {
 
             return [
-              SliverWoltModalSheetPage(
-
-              hasTopBarLayer: false,
-                mainContentSliversBuilder: (context) =>
-                [
-                  SliverToBoxAdapter(
-
-                    child: TrackModalActionList(),
-                  ),
-                ],
-              )
+              TrackMoreAction(context),
+              AddTrackMain(context),
             ];
           }
       );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:harmony_tube/services/musique_actions_services.dart';
+import 'package:harmony_tube/services/music_actions_services.dart';
 import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
 
 class DangerMusicActions {
