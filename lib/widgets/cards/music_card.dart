@@ -2,46 +2,16 @@ import 'package:flutter/material.dart' hide Card;
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/utils/files_system.dart';
+import 'package:harmony_tube/core/utils/format_duration.dart';
 import 'package:harmony_tube/widgets/Buttons/more_button.dart';
-import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
+import 'package:harmony_tube/widgets/text_scroll.dart';
 
 
-/*class MusicCardListOptions {
+const double trackCardFontSize = 12.0;
 
-  final Widget moreOptionWidget;
 
-  MusicCardListOptions({required this.moreOptionWidget});
-
-  void openModalBottomSheet(BuildContext context) async {
-    await showModalBottomSheet(
-      useRootNavigator: true,
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (ctx) =>
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.white,
-            ),
-            margin: EdgeInsets.only(bottom: 50),
-            height: MediaQuery
-                .of(ctx)
-                .size
-                .height * 0.55,
-            width: MediaQuery
-                .of(ctx)
-                .size
-                .width * 0.95,
-            child: MusicModalAction(child: Padding(
-              padding: EdgeInsets.all(15), child: moreOptionWidget,),),
-          ),
-    );
-  }
-
-}
-*/
 
 class MusicCard extends StatelessWidget {
   final Widget moreOptionWidget;
@@ -60,7 +30,7 @@ class MusicCard extends StatelessWidget {
           children: [
             Row(spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [MediaPreview(), MediaInfos()],),
+              children: [MediaPreview(), MediaInfos(track: trackItem)],),
             MoreButton(moreOptionWidget: moreOptionWidget,trackItem: trackItem)
           ],
         ),
@@ -176,43 +146,80 @@ class MediaPreview extends StatelessWidget {
 
 class MediaInfos extends StatefulWidget {
 
-  late final String? title;
-  late final String? artist;
 
-  MediaInfos({this.title, this.artist});
+  final TrackItemModel track;
+
+  MediaInfos({required this.track});
 
   //TODO implement Duration format
   //late final String? duration;
 
   @override
-  State<StatefulWidget> createState() => MediaInfosState(title, artist);
+  State<StatefulWidget> createState() => MediaInfosState();
 
 }
 
 class MediaInfosState extends State<MediaInfos> {
-  final String? title;
-  final String? artist;
-  MediaInfosState(this.title, this.artist);
+  late String title;
+  late String artist;
+  late int duration;
 
-  late final String media_title;
-  late final String media_artist;
+
+
 
   @override
   void initState() {
-    media_title = title ?? "Music sans titre";
-    media_artist = artist ?? "Artist inconnu";
+    title = widget.track.title ?? "Music sans titre";
+    artist = widget.track.artist ?? "Artist inconnu";
+    duration = widget.track.duration;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        AppTextTheme(media_title),
-        AppTextTheme(media_artist, color: Colors.grey.shade500),
-      ],
+    return SizedBox(
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.56,
+      child: Column(
+        spacing: 4,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextHorizontalScroll(text: title, style: TextStyle(color: Theme
+              .of(context)
+              .primaryColor, fontSize: trackCardFontSize),),
+          RowArtistAndDuration(artist, duration)
+
+        ],
+      ),
     );
   }
+}
+
+
+Widget RowArtistAndDuration(String artist, int duration) {
+  final String formatDuration = formatDurationFromMilliseconds(duration);
+  final Color color = Colors.grey.shade500;
+  final textStyle = TextStyle(color: color, fontSize: trackCardFontSize);
+  return Row(spacing: 8,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Row(
+          spacing: 2,
+          children: [
+
+            Icon(
+                Icons.person_2_outlined, color: color, size: trackCardFontSize),
+            TextHorizontalScroll(text: artist, style: textStyle),
+          ]),
+
+      Row(spacing: 2, children: [
+        Icon(Icons.access_time_rounded, color: color, size: trackCardFontSize),
+        Text(formatDuration, style: textStyle)
+      ]),
+
+    ],);
 }
