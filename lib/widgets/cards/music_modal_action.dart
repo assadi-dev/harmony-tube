@@ -1,15 +1,16 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/widgets/cards/music_header_bottom_sheet.dart';
 
 class MusicModalAction extends StatelessWidget {
-  final String title;
   final Widget child;
+  final TrackItemModel trackItem;
 
   const MusicModalAction({
     super.key,
-    required this.title,
+    required this.trackItem,
     this.child = const SizedBox(),
   });
 
@@ -20,7 +21,8 @@ class MusicModalAction extends StatelessWidget {
       spacing: 10,
       children: [
         MusicHeaderBottomSheet(
-          title: title,
+          title: trackItem.title,
+          description:trackItem.artist ,
         ),
         Divider(
           height: 5,

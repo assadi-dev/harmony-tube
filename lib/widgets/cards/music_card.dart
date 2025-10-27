@@ -92,7 +92,7 @@ class OpenModalBottomSheet {
                 .size
                 .width * 0.95,
             child: MusicModalAction(
-              title: trackItem.title,
+              trackItem: trackItem,
 
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
