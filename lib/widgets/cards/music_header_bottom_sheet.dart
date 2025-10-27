@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
+import 'package:harmony_tube/widgets/text_scroll.dart';
 
 class MusicHeaderBottomSheet extends StatefulWidget {
   final String title;
@@ -84,7 +85,12 @@ class TextColumn extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AppTextTheme(title, style: TextStyle(fontWeight: FontWeight.bold)),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.7,
+          child: TextHorizontalScroll(text: title, style: TextStyle(color: Theme
+              .of(context)
+              .primaryColor, fontWeight: FontWeight.bold),),
+        ),
         AppTextTheme(description ?? "Artiste inconnu"),
       ],);
   }

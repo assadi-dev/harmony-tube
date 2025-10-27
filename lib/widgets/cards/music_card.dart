@@ -146,14 +146,9 @@ class MediaPreview extends StatelessWidget {
 
 class MediaInfos extends StatefulWidget {
 
-
   final TrackItemModel track;
 
   MediaInfos({required this.track});
-
-  //TODO implement Duration format
-  //late final String? duration;
-
   @override
   State<StatefulWidget> createState() => MediaInfosState();
 
