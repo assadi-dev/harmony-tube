@@ -1,1 +1,103 @@
+import 'package:harmony_tube/core/models/local_track.dart';
+import 'package:harmony_tube/core/utils/generator.dart';
 
+final List<TrackItemModel> youtubeTrackMock = [
+  TrackItemModel(
+    id: generateId(),
+    title: "LEBEEY - COCO FEAT ELAMS - DON DADDA ( audio 2023 )",
+    artist: "Lebeey",
+    duration: 234000,
+    youtubeId: "-yftcLwfq-U",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Guy2Bezbar - Monaco (Clip Officiel)",
+    artist: "Guy2bezbar",
+    duration: 162000,
+    youtubeId: "m3IqAolevVc",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Keblack Ft. Franglish - Boucan (Clip Officiel)",
+    artist: "Keblack",
+    duration: 192000,
+    youtubeId: "WQQ4pBn1gHs",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Imen ES feat. Franglish - Quitter (VidéoClip)",
+    artist: "Fan 𝚍𝚎 𝓘𝓶𝓮𝓷 𝓔𝓢 💖",
+    duration: 136000,
+    youtubeId: "U56H2naUP7k",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Naza - Tibili (Visualizer)",
+    artist: "NAZA",
+    duration: 136000,
+    youtubeId: "eeP9dzTIq8U",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Zoubs Mars - Chikwetse 🐀( Clip officiel )",
+    artist: "Zoubs Mars",
+    duration: 187000,
+    youtubeId: "fgWtINZbZNk",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "RVFV, YOUKA - Hm Hm Hm Remix (Video Oficial)",
+    artist: "RVFV",
+    duration: 182000,
+    youtubeId: "CwklvbwKzg0",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Keblack Ft. Naza – Zizanie (Lifestyle Visualizer)",
+    artist: "Keblack",
+    duration: 173000,
+    youtubeId: "M6lSoBYbXbI",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Mbosso Ft Costa Titch & Alfa Kat - Shetani (Official Music Video)",
+    artist: "Mbosso",
+    duration: 191000,
+    youtubeId: "KhNzgS38c3Y",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Keblack Ft. Guy2Bezbar - Melrose Place (Visualizer)",
+    artist: "Keblack",
+    duration: 157000,
+    youtubeId: "RzapDEXlEcY",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Oxlade - OMALICHA (Official Video)",
+    artist: "OxladeVEVO",
+    duration: 171000,
+    youtubeId: "KNmViNkw96I",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "JOSAS - Pichichi",
+    artist: "Josas Officiel",
+    duration: 179000,
+    youtubeId: "4abJ7pvV5c0",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Soolking ft. L2B - Tour du monde [Clip Officiel]",
+    artist: "Soolking Officiel",
+    duration: 172000,
+    youtubeId: "j5iOQ9qgThg",
+  ),
+  TrackItemModel(
+    id: generateId(),
+    title: "Zoubs Mars - Zaïma ✉️ Feat Boina Rizik 🤍",
+    artist: "Zoubs Mars",
+    duration: 286000,
+    youtubeId: "2TKFoX56O8w",
+  ),
+];
