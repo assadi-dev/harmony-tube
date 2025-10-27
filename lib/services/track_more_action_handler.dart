@@ -25,8 +25,12 @@ TrackMoreActionHandler({required this.context});
   }
 
 
+void openAudioFiles(){
+  Navigator.of(context).pop();
+}
 
-
-
+void openFileManager(){
+  Navigator.of(context).pop();
+}
 
 }

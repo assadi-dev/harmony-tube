@@ -97,6 +97,8 @@ class YoutubeFormHandler {
 
         formKey.currentState!.save();
         print("Form is valid : ${youtubeId}");
+        Navigator.of(context).pop();
+
       } else {
         print("Form is not valid ");
       }
