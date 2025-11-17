@@ -14,6 +14,7 @@ SliverWoltModalSheetPage AddTrackMain(BuildContext context) {
   final trackHandler =TrackMoreActionHandler(context: context);
 
   return SliverWoltModalSheetPage(
+    id: "add_new_track",
     topBarTitle: AppTextTheme("Ajouter un morceau"),
     leadingNavBarWidget: IconButton(
       onPressed: goBack,

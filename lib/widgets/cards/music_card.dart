@@ -9,6 +9,7 @@ import 'package:harmony_tube/widgets/cards/music_header_bottom_sheet.dart';
 import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
 import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 import 'package:harmony_tube/widgets/text_scroll.dart';
+import 'package:harmony_tube/widgets/woltPages/PlaylistSelect.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 
@@ -89,44 +90,13 @@ class OpenModalBottomSheet {
           Widget moreOptionWidget = moreOptionInstance.musicCardActions();
           return [
             moreActionList(ctx, trackItem,moreOptionWidget),
+            PlaylistSelect(ctx)
 
           ];
         }
     );
   }
 
-
-  void openModal2() async {
-    await showModalBottomSheet(
-        useRootNavigator: true,
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (ctx) {
-          moreOptionInstance.setContext(ctx);
-          Widget moreOptionWidget = moreOptionInstance.musicCardActions();
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.white,
-            ),
-
-            height: MediaQuery
-                .of(ctx)
-                .size
-                .height,
-            width: MediaQuery
-                .of(ctx)
-                .size
-                .width * 0.95,
-            child: MusicModalAction(
-              trackItem: trackItem,
-
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                child: moreOptionWidget,),),
-          );
-        });
-  }
 
 
 }

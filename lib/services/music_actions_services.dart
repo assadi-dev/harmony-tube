@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class MusicModalHandler {
 
@@ -14,7 +15,8 @@ class MusicModalHandler {
 
   void  add_to_playlist() {
     //TODO Implement add playlist logic
-    Navigator.pop(context);
+   // Navigator.pop(context);
+    WoltModalSheet.of(context).showPageWithId("playlist_select");
   }
 
  void  edit_music() {
