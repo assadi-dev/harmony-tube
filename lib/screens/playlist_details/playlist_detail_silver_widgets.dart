@@ -101,7 +101,7 @@ class playlist_detail_silver_widgets {
 
         final TrackItemModel trackItem = trackItems[index];
         final moreActions = MoreActionsList(context: context, id: trackItem.id, trackItem: trackItem);
-        return MusicCard(moreOptionWidget: moreActions.musicPlaylistActions(),trackItem: trackItem,);
+        return MusicCard(moreOptionInstance: moreActions,trackItem: trackItem,);
       },
       itemCount: trackItems.length,
     );

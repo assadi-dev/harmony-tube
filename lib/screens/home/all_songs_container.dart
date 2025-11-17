@@ -111,7 +111,7 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
                       final moreActions = MoreActionsList(
                           context: context, id: id, trackItem: tracks[index]);
                       return MusicCard(
-                          moreOptionWidget: moreActions.musicCardActions(),
+                          moreOptionInstance: moreActions,
                           trackItem: tracks[index]);
                     },
                   ),

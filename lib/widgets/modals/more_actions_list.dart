@@ -47,6 +47,11 @@ class MoreActionsList {
   final TrackItemModel trackItem;
   MoreActionsList( { required this.context, required this.id, required this.trackItem});
 
+  void setContext (BuildContext context) {
+    context = context;
+  }
+
+
   Widget musicCardActions() {
 
     final dangerAction = DangerMusicActions(context:context,id: id);

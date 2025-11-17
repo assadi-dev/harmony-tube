@@ -6,6 +6,7 @@ import 'package:harmony_tube/core/utils/format_duration.dart';
 import 'package:harmony_tube/widgets/Buttons/more_button.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
+import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 import 'package:harmony_tube/widgets/text_scroll.dart';
 
 
@@ -14,10 +15,11 @@ const double trackCardFontSize = 12.0;
 
 
 class MusicCard extends StatelessWidget {
-  final Widget moreOptionWidget;
+  final MoreActionsList moreOptionInstance;
   final TrackItemModel trackItem;
 
-  const MusicCard({super.key,required this.moreOptionWidget, required this.trackItem});
+  const MusicCard(
+      {super.key, required this.moreOptionInstance, required this.trackItem});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,8 @@ class MusicCard extends StatelessWidget {
             Row(spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [MediaPreview(), MediaInfos(track: trackItem)],),
-            MoreButton(moreOptionWidget: moreOptionWidget,trackItem: trackItem)
+            MoreButton(
+                moreOptionInstance: moreOptionInstance, trackItem: trackItem)
           ],
         ),
       ),
@@ -43,14 +46,16 @@ class MusicCard extends StatelessWidget {
 
 class MoreButton extends StatelessWidget {
   final TrackItemModel trackItem;
-  final Widget moreOptionWidget;
+  final MoreActionsList moreOptionInstance;
 
-  const MoreButton({super.key, required this.moreOptionWidget, required this.trackItem});
+  const MoreButton(
+      {super.key, required this.moreOptionInstance, required this.trackItem});
 
   @override
   Widget build(BuildContext context) {
-
-    final modalBottomSheet = OpenModalBottomSheet(context: context, moreOptionWidget: moreOptionWidget,trackItem:trackItem );
+    final modalBottomSheet = OpenModalBottomSheet(context: context,
+        moreOptionInstance: moreOptionInstance,
+        trackItem: trackItem);
 
     return MoreIconButton(
       onPress: () {
@@ -63,21 +68,23 @@ class MoreButton extends StatelessWidget {
 
 class OpenModalBottomSheet {
 
-  final Widget moreOptionWidget;
+  final MoreActionsList moreOptionInstance;
   final BuildContext context;
   final TrackItemModel trackItem;
 
 
   OpenModalBottomSheet(
-      { required this.context, required this.moreOptionWidget,required this.trackItem});
+      { required this.context, required this.moreOptionInstance, required this.trackItem});
 
   void openModal() async {
     await showModalBottomSheet(
-      useRootNavigator: true,
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (ctx) =>
-          Container(
+        useRootNavigator: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (ctx) {
+          moreOptionInstance.setContext(ctx);
+          Widget moreOptionWidget = moreOptionInstance.musicCardActions();
+          return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               color: Colors.white,
@@ -97,9 +104,10 @@ class OpenModalBottomSheet {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: moreOptionWidget,),),
-          ),
-    );
+          );
+        });
   }
+
 
 }
 
