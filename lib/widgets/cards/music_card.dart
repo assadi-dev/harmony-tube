@@ -5,9 +5,11 @@ import 'package:harmony_tube/core/utils/files_system.dart';
 import 'package:harmony_tube/core/utils/format_duration.dart';
 import 'package:harmony_tube/widgets/Buttons/more_button.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
+import 'package:harmony_tube/widgets/cards/music_header_bottom_sheet.dart';
 import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
 import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 import 'package:harmony_tube/widgets/text_scroll.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 
 const double trackCardFontSize = 12.0;
@@ -34,7 +36,8 @@ class MusicCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [MediaPreview(), MediaInfos(track: trackItem)],),
             MoreButton(
-                moreOptionInstance: moreOptionInstance, trackItem: trackItem)
+              moreOptionInstance: moreOptionInstance, trackItem: trackItem,
+            ),
           ],
         ),
       ),
@@ -77,6 +80,23 @@ class OpenModalBottomSheet {
       { required this.context, required this.moreOptionInstance, required this.trackItem});
 
   void openModal() async {
+    WoltModalSheet.show(
+      context: context,
+      showDragHandle: false,
+      modalTypeBuilder: (context) => WoltModalType.bottomSheet(),
+        pageListBuilder: (ctx) {
+          moreOptionInstance.setContext(ctx);
+          Widget moreOptionWidget = moreOptionInstance.musicCardActions();
+          return [
+            moreActionList(ctx, trackItem,moreOptionWidget),
+
+          ];
+        }
+    );
+  }
+
+
+  void openModal2() async {
     await showModalBottomSheet(
         useRootNavigator: true,
         backgroundColor: Colors.transparent,
@@ -213,7 +233,6 @@ Widget RowArtistAndDuration(String artist, int duration) {
       Row(
           spacing: 2,
           children: [
-
             Icon(
                 Icons.person_2_outlined, color: color, size: trackCardFontSize),
             TextHorizontalScroll(text: artist, style: textStyle),
@@ -225,4 +244,26 @@ Widget RowArtistAndDuration(String artist, int duration) {
       ]),
 
     ],);
+}
+
+
+SliverWoltModalSheetPage moreActionList(BuildContext modalSheetContext, TrackItemModel trackItem, Widget moreOptionWidget){
+
+  return SliverWoltModalSheetPage(
+    hasTopBarLayer: true,
+    topBar:MusicHeaderBottomSheet(
+      title: trackItem.title,
+      description:trackItem.artist ,
+    ),
+    isTopBarLayerAlwaysVisible: true,
+    mainContentSliversBuilder: (context) {
+
+      List<SliverToBoxAdapter> childrens = [  SliverToBoxAdapter(
+        child:Padding(padding: EdgeInsetsGeometry.all(15),child:  moreOptionWidget),
+      )];
+
+      return  childrens;
+    });
+
+
 }
