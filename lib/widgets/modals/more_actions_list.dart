@@ -42,13 +42,13 @@ List<Widget> basicActions(BuildContext context, String id) {
 
 class MoreActionsList {
 
-  final BuildContext context;
+  BuildContext context;
   final String id;
   final TrackItemModel trackItem;
   MoreActionsList( { required this.context, required this.id, required this.trackItem});
 
   void setContext (BuildContext context) {
-    context = context;
+    this.context = context;
   }
 
 
