@@ -8,8 +8,8 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 SliverWoltModalSheetPage PlaylistSelect(BuildContext context) {
 
 
-  var state = BlocProvider.of<PlaylistBloc>(context).state;
-  var playlists = state.collections ?? [];
+  var playlists = BlocProvider.of<PlaylistBloc>(context).state.collections ?? [];
+  var playlistCount = playlists.length ?? 0;
 
   void confirm() async {
     Navigator.pop(context);
@@ -27,7 +27,7 @@ SliverWoltModalSheetPage PlaylistSelect(BuildContext context) {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (_, index) => ListTile(title: Text('Playlist ${playlists[index].title}')),
-            childCount: playlists.length,
+            childCount: playlistCount,
           ),
         ),
         SliverToBoxAdapter(child: SizedBox(height: 100,),),
