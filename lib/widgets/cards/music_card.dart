@@ -90,7 +90,7 @@ class OpenModalBottomSheet {
           Widget moreOptionWidget = moreOptionInstance.musicCardActions();
           return [
             moreActionList(ctx, trackItem,moreOptionWidget),
-            PlaylistSelect(ctx)
+            PlaylistSelect(ctx,trackItem)
 
           ];
         }

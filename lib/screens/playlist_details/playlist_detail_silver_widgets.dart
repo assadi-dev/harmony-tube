@@ -88,10 +88,7 @@ class playlist_detail_silver_widgets {
 
 
 
-  SliverList silverTrackListSliver() {
-
-
-    final List<TrackItemModel> trackItems = [];
+  SliverList silverTrackListSliver(List<TrackItemModel> trackItems) {
 
     return SliverList.separated(
 

@@ -38,12 +38,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    print("Playlist dispose");
 
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +49,8 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
 
 
     final  playlistItem = context.read<PlaylistBloc>().state.playlist as PlaylistItemModel;
-
+    final playlistTracks = playlistItem.tracks ?? [];
     final appBarTitle = playlistItem.title;
-
     return Scaffold(
 
       body: CustomScrollView(
@@ -84,7 +78,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
                   .viewPadding
                   .bottom,
             ),
-            sliver: silverWidget.silverTrackListSliver(),
+            sliver: silverWidget.silverTrackListSliver(playlistTracks),
           ),
         ],
       )
