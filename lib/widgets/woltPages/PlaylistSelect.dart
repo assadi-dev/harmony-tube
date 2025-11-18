@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
+import 'package:harmony_tube/widgets/cards/playlist_select_radio.dart';
 import 'package:harmony_tube/widgets/woltPages/GoBackModal.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -26,9 +27,11 @@ SliverWoltModalSheetPage PlaylistSelect(BuildContext context) {
       return [
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (_, index) => ListTile(title: Text('Playlist ${playlists[index].title}')),
+                (_, index) => PlaylistSelectRadio(playlist: playlists[index],
+                ),
             childCount: playlistCount,
           ),
+
         ),
         SliverToBoxAdapter(child: SizedBox(height: 100,),),
       ];
@@ -42,3 +45,5 @@ SliverWoltModalSheetPage PlaylistSelect(BuildContext context) {
     ),
   );
 }
+
+

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/themes/app_colors.dart';
 import 'package:harmony_tube/widgets/responsive_icon.dart';
@@ -16,6 +18,10 @@ class PreviewPlaylistImage extends StatefulWidget {
 class _PreviewPlaylistImageState extends State<PreviewPlaylistImage> {
   @override
   Widget build(BuildContext context) {
+
+    //selectedplaylist = context.read<PlaylistBloc>().state;
+
+
       return Container(
       height: preview_picture_small,
       width: preview_picture_small,
@@ -31,7 +37,7 @@ class _PreviewPlaylistImageState extends State<PreviewPlaylistImage> {
         ),
         borderRadius: BorderRadius.circular(border_radius_card),
         boxShadow: [
-          BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 8)),
+          BoxShadow(color: Colors.black26, blurRadius: 0.15, offset: Offset(0.5, 0.55)),
         ],
       ),
       child: ResponsiveIcon(
