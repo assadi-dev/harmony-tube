@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_state.dart';
+import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 
 
@@ -12,6 +13,8 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     on<UpdatePlaylist>(updatePlaylist);
     on<FindPlaylist>(findPlaylist);
     on<ClearPlaylist>(clearPlaylist);
+    on<AddTrackToPlaylist>(addTrackToPlaylist);
+    on<AddMultipleTrackToPlaylist>(addMultipleTrackToPlaylist);
 
   }
 
@@ -121,7 +124,8 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
   Future<void> updatePlaylist(
     UpdatePlaylist event,
     Emitter<PlaylistState> emit,
-  ) async {
+  )
+  async {
     PlaylistItemModel playlistPayload = event.playlist;
     List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
     Exception? error;
@@ -145,4 +149,83 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
       );
     }
   }
+
+
+  Future<void> addTrackToPlaylist(
+    AddTrackToPlaylist event,
+    Emitter<PlaylistState> emit,
+  )
+  async {
+
+    Exception? error;
+    String playlistId = event.playlistId;
+    TrackItemModel track = event.track;
+    List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
+
+
+    try {
+
+      PlaylistItemModel? playlist = updatedCollections.firstWhere((item) => item.id == playlistId);
+      if (playlist == null) {
+        throw Exception('Playlist not found');
+
+      }
+      playlist.tracks?.add(track);
+      updatedCollections = updatedCollections.map((item) {
+        if (item.id == playlistId) {
+          return item.copyWith(playlist);
+        }
+        return item;
+      }).toList();
+    } catch (e) {
+      error = Exception(e);
+    } finally {
+      emit(
+        state.copyWith(
+          collections: updatedCollections,
+          error: error,
+          isLoading: false,
+        ),
+      );
+    }
+
+  }
+
+  Future<void> addMultipleTrackToPlaylist( AddMultipleTrackToPlaylist event, Emitter<PlaylistState> emit,) async {
+    Exception? error;
+    List<String> playlistIds = event.playlistIds;
+    List<TrackItemModel> tracks = event.tracks;
+    List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
+
+    try {
+      for (String playlistId in playlistIds) {
+        PlaylistItemModel? playlist = updatedCollections.firstWhere((
+            item) => item.id == playlistId);
+        if (playlist == null) {
+          continue;
+        }
+        for (TrackItemModel track in tracks) {
+          playlist.tracks?.add(track);
+        }
+        updatedCollections = updatedCollections.map((item) {
+          if (item.id == playlistId) {
+            return item.copyWith(playlist);
+          }
+          return item;
+        }).toList();
+
+      }
+    } catch (e) {
+      error = Exception(e);
+    } finally {
+      emit(
+          state.copyWith(
+            collections: updatedCollections,
+            error: error,
+            isLoading: false,));
+    }
+  }
+
+
+
 }

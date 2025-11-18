@@ -55,7 +55,10 @@ class ConfirmButton extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     void confirm(){
-      if(BlocProvider.of<SelectedItemsCubit>(context).state.toItems.isNotEmpty) {
+      final selectedItems = BlocProvider.of<SelectedItemsCubit>(context).state.toItems;
+
+      if(selectedItems.isNotEmpty) {
+        print("playlist selected: ${selectedItems.length}");
         BlocProvider.of<SelectedItemsCubit>(context).clearAll();
       }
 

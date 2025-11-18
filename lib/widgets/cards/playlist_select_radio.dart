@@ -13,8 +13,6 @@ class PlaylistSelectRadio extends StatefulWidget {
   @override
   _PlaylistSelectRadioState createState() => _PlaylistSelectRadioState();
 
-
-
 }
 
 class _PlaylistSelectRadioState extends State<PlaylistSelectRadio> {
@@ -44,7 +42,7 @@ class _PlaylistSelectRadioState extends State<PlaylistSelectRadio> {
       });
 
     }
-    print(BlocProvider.of<SelectedItemsCubit>(context).state.toItems);
+
     return Card(
   elevation: 0,
         color: backgroundColor,

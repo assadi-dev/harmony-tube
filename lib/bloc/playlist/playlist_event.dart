@@ -63,6 +63,13 @@ class AddTrackToPlaylist extends PlaylistEvent {
   const AddTrackToPlaylist({required this.playlistId, required this.track});
 }
 
+class AddMultipleTrackToPlaylist extends PlaylistEvent {
+  final List<TrackItemModel> tracks;
+  final List<String> playlistIds;
+  const AddMultipleTrackToPlaylist({required this.tracks, required this.playlistIds});
+}
+
+
 class RemoveTrackToPlaylist extends PlaylistEvent {
   final String trackId;
   final String playlistId;
