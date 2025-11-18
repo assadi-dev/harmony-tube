@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/woltPages/GoBackModal.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 SliverWoltModalSheetPage PlaylistSelect(BuildContext context) {
 
+
+  var state = BlocProvider.of<PlaylistBloc>(context).state;
+  var playlists = state.collections ?? [];
+
   void confirm() async {
     Navigator.pop(context);
   }
+
 
   return SliverWoltModalSheetPage(
     id: 'playlist_select',
@@ -19,8 +26,8 @@ SliverWoltModalSheetPage PlaylistSelect(BuildContext context) {
       return [
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (_, index) => ListTile(title: Text('Playlist ${index + 1}')),
-            childCount: 25,
+            (_, index) => ListTile(title: Text('Playlist ${playlists[index].title}')),
+            childCount: playlists.length,
           ),
         ),
         SliverToBoxAdapter(child: SizedBox(height: 100,),),
