@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/core/models/enum.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/services/music_actions_services.dart';
 import 'package:harmony_tube/widgets/modals/danger_music_actions.dart';
@@ -45,8 +46,8 @@ class MoreActionsList {
   BuildContext context;
   final String id;
   final TrackItemModel trackItem;
-  MoreActionsList( { required this.context, required this.id, required this.trackItem});
-
+  TypeActionForMusicCard? from ;
+  MoreActionsList( { required this.context, required this.id, required this.trackItem,this.from= TypeActionForMusicCard.other }) ;
   void setContext (BuildContext context) {
     this.context = context;
   }
@@ -57,6 +58,7 @@ class MoreActionsList {
     final dangerAction = DangerMusicActions(context:context,id: id);
 
     List<Widget> children = basicActions(context,id);
+    addDangerActionByTypeAction(dangerAction,children,from!);
     children.add(dangerAction.removeTrackAction());
 
     return Column(
@@ -67,22 +69,18 @@ class MoreActionsList {
     );
   }
 
-  Widget musicPlaylistActions() {
 
-    final dangerAction = DangerMusicActions(context:context,id: id);
-
-    List<Widget> children = basicActions(context,id);
-    children.add(dangerAction.removeTrackAction());
-    children.add(dangerAction.removeTrackToPlaylistAction());
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      spacing: 15,
-      children: children,
-    );
-  }
-
-
+void addDangerActionByTypeAction(DangerMusicActions dangerAction,List<Widget> children,TypeActionForMusicCard typeAction,){
+    switch (typeAction) {
+      case TypeActionForMusicCard.playlist:
+        children.add(dangerAction.removeTrackToPlaylistAction());
+        break;
+      case TypeActionForMusicCard.other:
+        children;
+        break;
+      default:
+        children;
+    }
+}
 
 }

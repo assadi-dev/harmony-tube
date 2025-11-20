@@ -5,6 +5,7 @@ import 'package:harmony_tube/bloc/track/track_bloc.dart';
 import 'package:harmony_tube/bloc/track/track_event.dart';
 import 'package:harmony_tube/bloc/track/track_state.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/core/models/enum.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/screens/home/more_track_actions.dart';
 import 'package:harmony_tube/widgets/cards/music_card.dart';
@@ -109,7 +110,7 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
                     itemBuilder: (BuildContext context, int index) {
                       final String id = index.toString();
                       final moreActions = MoreActionsList(
-                          context: context, id: id, trackItem: tracks[index]);
+                          context: context, id: id, trackItem: tracks[index],from: TypeActionForMusicCard.other);
                       return MusicCard(
                           moreOptionInstance: moreActions,
                           trackItem: tracks[index]);

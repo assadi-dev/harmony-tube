@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/core/models/enum.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/screens/playlist_details/playlist_detail_more_button.dart';
@@ -97,7 +98,7 @@ class playlist_detail_silver_widgets {
 
 
         final TrackItemModel trackItem = trackItems[index];
-        final moreActions = MoreActionsList(context: context, id: trackItem.id, trackItem: trackItem);
+        final moreActions = MoreActionsList(context: context, id: trackItem.id, trackItem: trackItem,from: TypeActionForMusicCard.playlist);
         return MusicCard(moreOptionInstance: moreActions,trackItem: trackItem,);
       },
       itemCount: trackItems.length,
