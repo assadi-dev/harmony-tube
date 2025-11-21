@@ -26,10 +26,11 @@ class DangerMusicActions {
   }
 
   Widget removeTrackToPlaylistAction () {
+
     return TextWithIconGesture(
       text: "Retirer de la playlist",
       icon: Icons.delete_outline,
-      onTap: () => trackHandler.delete_music(),
+      onTap: () => trackHandler.delete_music_from_playlist(),
     );
   }
 

@@ -4,6 +4,7 @@ import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
+import 'package:harmony_tube/cubit/selected_items.dart';
 
 import 'playlist_details/playlist_detail_silver_widgets.dart';
 
@@ -30,6 +31,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<SelectedItemsCubit>(context).clearAll();
       final playlistId = widget.id;
       playlistTitle = widget.title ?? "Sans titre";
 

@@ -9,14 +9,14 @@ final borderShape = RoundedRectangleBorder(
 
 
 class ConfirmModal {
-  final String message;
+  String? message;
   final void Function(BuildContext context)  onConfirm;
   final BuildContext context;
   Widget? top;
   Widget? bottom;
 
   ConfirmModal({
-    required this.message,
+     this.message,
     required this.onConfirm,
     required this.context,
     this.top,
@@ -40,15 +40,18 @@ class ConfirmModal {
 
             mainContentSliversBuilder: (context) => [
               SliverToBoxAdapter(
-                child: Column(
-                    spacing: 16,
-                  children: [
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Column(
+                      spacing: 16,
+                    children: [
 
-                    AppTextTheme(message, style: textButtonStyle,),
-                    bottom ?? SizedBox(),
-                    ConfirmButtonRow(cancelHandler: null,
-                        confirmHandler: onConfirm)
-                  ]
+                     message!.isNotEmpty  ? AppTextTheme(message!, style: textButtonStyle,):SizedBox(),
+                      bottom ?? SizedBox(),
+                      ConfirmButtonRow(cancelHandler: null,
+                          confirmHandler: onConfirm)
+                    ]
+                  ),
                 ),
               ),
             ],),

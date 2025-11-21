@@ -15,6 +15,8 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     on<ClearPlaylist>(clearPlaylist);
     on<AddTrackToPlaylist>(addTrackToPlaylist);
     on<AddMultipleTrackToPlaylist>(addMultipleTrackToPlaylist);
+    on<RemoveMultipleTrackToPlaylist>(removeMultipleTrackToPlaylist);
+
 
   }
 
@@ -226,6 +228,54 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     }
   }
 
+  PlaylistItemModel? removeTrackFromPlaylist(String playlistId, String trackId,
+      List<PlaylistItemModel> collections) {
+    if (collections == null) {
+      throw Exception('Collections is null');
+    }
+    PlaylistItemModel? playlist = collections.firstWhere((item) => item.id == playlistId);
+    if (playlist == null) {
+      throw Exception('Playlist not found');
+    }
 
+    playlist.tracks?.removeWhere((track) => track.id == trackId);
+    return playlist;
+  }
+
+
+  Future<void> removeMultipleTrackToPlaylist(RemoveMultipleTrackToPlaylist event, Emitter<PlaylistState> emit) async {
+    Exception? error;
+    List<String> trackIds = event.trackIds;
+    String playlistId = event.playlistId;
+    List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
+    PlaylistItemModel? playlist;
+    try {
+      for (String trackId in trackIds) {
+        try {
+          playlist = removeTrackFromPlaylist(playlistId, trackId, updatedCollections);
+        } catch (e) {
+          continue;
+        }
+      }
+
+      updatedCollections = updatedCollections.map((item) {
+        if (item.id == playlistId) {
+          return item.copyWith(playlist);
+        }
+        return item;
+      }).toList();
+
+
+    }
+    catch (e) {
+      error = Exception(e);
+    } finally {
+      emit(
+          state.copyWith(
+            collections: updatedCollections,
+            error: error,
+            isLoading: false,));
+    }
+  }
 
 }

@@ -76,7 +76,11 @@ class RemoveTrackToPlaylist extends PlaylistEvent {
   const RemoveTrackToPlaylist({required this.playlistId, required this.trackId});
 }
 
-
+class RemoveMultipleTrackToPlaylist extends PlaylistEvent {
+  final List<String> trackIds;
+  final String playlistId;
+  const RemoveMultipleTrackToPlaylist({required this.trackIds, required this.playlistId});
+}
 
 
 

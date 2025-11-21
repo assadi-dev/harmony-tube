@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart' hide Card;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/utils/files_system.dart';
 import 'package:harmony_tube/core/utils/format_duration.dart';
+import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/widgets/Buttons/more_button.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/cards/music_header_bottom_sheet.dart';
@@ -63,6 +65,7 @@ class MoreButton extends StatelessWidget {
 
     return MoreIconButton(
       onPress: () {
+        BlocProvider.of<SelectedItemsCubit>(context).addItemToFrom(trackItem.id);
         modalBottomSheet.openModal();
       },
 
