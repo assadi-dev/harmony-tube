@@ -44,11 +44,11 @@ class MusicModalHandler {
 
 
     void confirmDelete(BuildContext context) {
-      final selectedItemsState = BlocProvider.of<SelectedItemsCubit>(context).state;
+      //final tracksItems = [];
       final playlistIdCurrent = BlocProvider.of<PlaylistBloc>(context).state.playlist;
       if(playlistIdCurrent == null) throw Exception("Playlist not found");
-      if(selectedItemsState.fromItems.isEmpty) throw Exception("No music selected");
-      final trackIds = selectedItemsState.fromItems;
+      //if(tracksItems.isEmpty) throw Exception("No music selected");
+      final trackIds = [id];
 
       final playlistId = playlistIdCurrent.id;
       BlocProvider.of<PlaylistBloc>(context).add(RemoveMultipleTrackToPlaylist(trackIds: trackIds, playlistId: playlistId));
