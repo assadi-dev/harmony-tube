@@ -4,11 +4,10 @@ import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/utils/files_system.dart';
 import 'package:harmony_tube/core/utils/format_duration.dart';
+import 'package:harmony_tube/core/utils/interraction.dart';
 import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/widgets/Buttons/more_button.dart';
-import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/cards/music_header_bottom_sheet.dart';
-import 'package:harmony_tube/widgets/cards/music_modal_action.dart';
 import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 import 'package:harmony_tube/widgets/text_scroll.dart';
 import 'package:harmony_tube/widgets/woltPages/PlaylistSelect.dart';
@@ -22,29 +21,57 @@ const double trackCardFontSize = 12.0;
 class MusicCard extends StatelessWidget {
   final MoreActionsList moreOptionInstance;
   final TrackItemModel trackItem;
+  void Function(TrackItemModel)? onLongPress;
+  void Function(TrackItemModel)? onPress;
 
-  const MusicCard(
-      {super.key, required this.moreOptionInstance, required this.trackItem});
+  MusicCard(
+      {super.key, required this.moreOptionInstance, required this.trackItem, this.onLongPress,this.onPress});
+
+  void handlePress(){
+    try {
+
+      if (onLongPress != null) {
+        onPress!(trackItem);
+      }
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  void handleLongPress() {
+    try {
+      vibrate();
+      if (onLongPress != null) {
+        onLongPress!(trackItem);
+      }
+    } catch (err) {
+      print(err);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AppCard(
-      child: Container(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-          children: [
-            Row(spacing: 8,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [MediaPreview(), MediaInfos(track: trackItem)],),
-            MoreButton(
-              moreOptionInstance: moreOptionInstance, trackItem: trackItem,
+    return Container(
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      child: ListTile(
+        dense: true,
+        contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(border_radius_card),
             ),
-          ],
-        ),
+
+        leading: MediaPreview(),
+        title: MediaInfos(track: trackItem),
+        trailing: MoreButton(
+            moreOptionInstance: moreOptionInstance, trackItem: trackItem),
+        onLongPress: handleLongPress,
+        onTap: handlePress,
       ),
     );
+
   }
 }
 
