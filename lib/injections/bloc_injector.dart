@@ -6,6 +6,8 @@ import 'package:harmony_tube/bloc/track/track_bloc.dart';
 import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/cubit/theme_mode_cubit.dart';
 
+import '../cubit/select_mode_cubit.dart' show SelectModeStateCubit;
+
 Future<void> blocInjector(final GetIt injector) async {
 
   injector.registerFactory<ThemeModeCubit>(
@@ -14,6 +16,9 @@ Future<void> blocInjector(final GetIt injector) async {
 
   injector.registerFactory<SelectedItemsCubit>(
         () => SelectedItemsCubit(),
+  );
+  injector.registerFactory<SelectModeStateCubit>(
+        () => SelectModeStateCubit(),
   );
 
   injector.registerFactory<PlaylistBloc>(

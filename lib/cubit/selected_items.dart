@@ -2,6 +2,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SelectedItemsState {
+
   final List<String> fromItems;
   final List<String> toItems;
 

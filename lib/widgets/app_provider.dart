@@ -7,6 +7,8 @@ import 'package:harmony_tube/cubit/theme_mode_cubit.dart';
 import 'package:harmony_tube/injections/injector.dart';
 import 'package:harmony_tube/widgets/main_scaffold.dart';
 
+import '../cubit/select_mode_cubit.dart';
+
 class AppProvider extends StatefulWidget {
   const AppProvider({super.key});
   @override
@@ -19,7 +21,8 @@ class _AppProvider extends State<AppProvider> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ThemeModeCubit>(create: (context)=>injector()),
-        BlocProvider<SelectedItemsCubit>(create: (context)=>injector()),
+        BlocProvider<SelectedItemsCubit>(create: (context) => injector()),
+        BlocProvider<SelectModeStateCubit>(create: (context) => injector()),
         BlocProvider<PlaylistBloc>(create: (context)=>injector()),
         BlocProvider<TrackBloc>(create: (context)=>injector()),
       ],

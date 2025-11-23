@@ -7,7 +7,10 @@ import 'package:harmony_tube/bloc/track/track_state.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/enum.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
+import 'package:harmony_tube/cubit/select_mode_cubit.dart';
+import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/screens/home/more_track_actions.dart';
+import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/music_card.dart';
 import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 
@@ -44,22 +47,27 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
         final List<TrackItemModel> tracks = state.collections;
 
         Widget IconTitleColumn() {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            spacing: 8,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.music_note_outlined),
-
-              Text(
-                "Touts les titres",
-                style: TextStyle(
-                  color: Theme
-                      .of(context)
-                      .primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 8,
+                children: [
+                  Icon(Icons.music_note_outlined),
+                  Text(
+                    "Touts les titres",
+                    style: TextStyle(
+                      color: Theme
+                          .of(context)
+                          .primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
               ),
+              TracksSelectionMode(),
             ],
           );
         }
@@ -113,7 +121,14 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
                           context: context, id: id, trackItem: tracks[index],from: TypeActionForMusicCard.other);
                       return MusicCard(
                           moreOptionInstance: moreActions,
-                          trackItem: tracks[index]);
+                          trackItem: tracks[index],
+                        onLongPress: (trackItem){
+                            BlocProvider.of<SelectModeStateCubit>(context).toggleModeState();
+
+                        },
+
+                      );
+
                     },
                   ),
                 ],
@@ -127,4 +142,32 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
 
 
   }
+}
+
+
+class TracksSelectionMode extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context) {
+    int selectedLength = context.watch<SelectedItemsCubit>().state.fromItems.length;
+    bool isSelectionMode = context.watch<SelectModeStateCubit>().state.isActive;
+    print(isSelectionMode);
+    Widget ShowSelectionModeWidget(){
+      if(isSelectionMode) {
+        return  Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [AppTextTheme("Selectionné: ${selectedLength}",style: TextStyle(color: Colors.grey,fontSize: 12))],
+        );
+      }
+
+      return SizedBox(height: 0,);
+    }
+
+   return  Padding(
+     padding: EdgeInsets.symmetric(vertical: 2,horizontal: 10),
+       child: ShowSelectionModeWidget()
+    );
+
+  }
+
 }
