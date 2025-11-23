@@ -123,9 +123,13 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
                           moreOptionInstance: moreActions,
                           trackItem: tracks[index],
                         onLongPress: (trackItem){
+                          BlocProvider.of<SelectedItemsCubit>(context).clearAll();
                             BlocProvider.of<SelectModeStateCubit>(context).toggleModeState();
 
                         },
+                        onPress: (trackItem) {
+                          BlocProvider.of<SelectedItemsCubit>(context).toggleFromItem(trackItem.id);
+                        }
 
                       );
 
@@ -146,28 +150,35 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
 
 
 class TracksSelectionMode extends StatelessWidget{
-
   @override
   Widget build(BuildContext context) {
-    int selectedLength = context.watch<SelectedItemsCubit>().state.fromItems.length;
-    bool isSelectionMode = context.watch<SelectModeStateCubit>().state.isActive;
-    print(isSelectionMode);
-    Widget ShowSelectionModeWidget(){
-      if(isSelectionMode) {
-        return  Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [AppTextTheme("Selectionné: ${selectedLength}",style: TextStyle(color: Colors.grey,fontSize: 12))],
-        );
-      }
-
-      return SizedBox(height: 0,);
-    }
 
    return  Padding(
      padding: EdgeInsets.symmetric(vertical: 2,horizontal: 10),
-       child: ShowSelectionModeWidget()
-    );
+       child: BlocBuilder<SelectModeStateCubit,SelectModeState>(builder: (BuildContext context, state) {
+         return ShowSelectionModeWidget(state.isActive);
+       }
+         ),
+   );
+  }
+}
+
+Widget ShowSelectionModeWidget(bool isSelectionMode){
+
+  if(isSelectionMode) {
+    return BlocBuilder<SelectedItemsCubit, SelectedItemsState>(
+        builder: (BuildContext context, SelectedItemsState state) {
+          int selectedLength = context.watch<SelectedItemsCubit>().state.fromItems.length;
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AppTextTheme("Selectionné: ${selectedLength}",
+                  style: TextStyle(color: Colors.grey, fontSize: 12))
+            ],
+          );
+        });
 
   }
 
+  return SizedBox(height: 0,);
 }

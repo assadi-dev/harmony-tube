@@ -5,6 +5,7 @@ import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/utils/files_system.dart';
 import 'package:harmony_tube/core/utils/format_duration.dart';
 import 'package:harmony_tube/core/utils/interraction.dart';
+import 'package:harmony_tube/cubit/select_mode_cubit.dart';
 import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/widgets/Buttons/more_button.dart';
 import 'package:harmony_tube/widgets/cards/music_header_bottom_sheet.dart';
@@ -51,6 +52,30 @@ class MusicCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+     var selectionModeState = context.watch<SelectModeStateCubit>().state;
+
+    Widget TrailingWidget(){
+  selectionModeState.isActive;
+      if(selectionModeState.isActive){
+        return BlocBuilder<SelectedItemsCubit, SelectedItemsState>(
+
+          builder: (context, state) {
+            var selectedItems = state.fromItems;
+            var  icon_selected = Icons.radio_button_off_outlined;
+            if (selectedItems.contains(trackItem.id)) {
+              icon_selected = Icons.radio_button_on_outlined;
+            }
+
+            return Icon(icon_selected,  size: 18,);
+          });
+
+      }
+
+      return MoreButton(
+          moreOptionInstance: moreOptionInstance, trackItem: trackItem);
+    }
+
     return Container(
       width: MediaQuery
           .of(context)
@@ -65,8 +90,7 @@ class MusicCard extends StatelessWidget {
 
         leading: MediaPreview(),
         title: MediaInfos(track: trackItem),
-        trailing: MoreButton(
-            moreOptionInstance: moreOptionInstance, trackItem: trackItem),
+        trailing: TrailingWidget(),
         onLongPress: handleLongPress,
         onTap: handlePress,
       ),

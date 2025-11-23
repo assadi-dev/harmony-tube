@@ -18,6 +18,25 @@ class SelectedItemsCubit extends Cubit<SelectedItemsState> {
     List<String> newFromItems = List.from(state.fromItems)..add(item);
     emit(SelectedItemsState(fromItems: newFromItems, toItems: state.toItems));
   }
+
+  void toggleFromItem(String item) {
+    if (state.fromItems.contains(item)) {
+      removeItemFromFrom(item);
+      return;
+    }
+    addItemToFrom(item);
+
+
+  }
+
+  void toggleToItem(String item) {
+    if (state.toItems.contains(item)) {
+      removeItemFromTo(item);
+      return;
+    }
+    addItemToTo(item);
+  }
+
   void addItemToTo(String item) {
     List<String> newToItems = List.from(state.toItems)..add(item);
     emit(SelectedItemsState(fromItems: state.fromItems, toItems: newToItems));
