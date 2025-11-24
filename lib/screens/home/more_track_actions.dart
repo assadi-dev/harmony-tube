@@ -39,6 +39,13 @@ class MoreTrackActions extends StatelessWidget {
     return MoreIconButton(onPress: () => open());
   }
 
+  List<String> getTrackIds(BuildContext context) {
+
+    List<String> selectedItems = BlocProvider.of<SelectedItemsCubit>(context).state.fromItems;
+    return selectedItems;
+
+  }
+
   List<TrackItemModel> getTrackItemsFromSelection(BuildContext context) {
     List<TrackItemModel> trackItems = [];
 
