@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
+import 'package:harmony_tube/cubit/select_mode_cubit.dart';
 import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/playlist_select_radio.dart';
@@ -64,7 +65,9 @@ final List<TrackItemModel> trackItems;
           BlocProvider.of<PlaylistBloc>(context).add(AddMultipleTrackToPlaylist(tracks: trackItems, playlistIds: selectedItems));
           print('track added to playlist succefully');
           BlocProvider.of<SelectedItemsCubit>(context).clearAll();
+          BlocProvider.of<SelectModeStateCubit>(context).setSelectModeState(false);
         }
+
 
       }catch(e){
         print("error in confirm button: ${e}");

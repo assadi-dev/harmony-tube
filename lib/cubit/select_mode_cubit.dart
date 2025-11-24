@@ -12,7 +12,7 @@ class SelectModeStateCubit extends Cubit<SelectModeState> {
   SelectModeStateCubit() : super(SelectModeState(false));
 
  void  setSelectModeState(bool value) {
-    emit(SelectModeState(!value));
+    emit(SelectModeState(value));
   }
 
   void  toggleModeState() {
