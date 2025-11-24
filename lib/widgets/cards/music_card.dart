@@ -41,8 +41,9 @@ class MusicCard extends StatelessWidget {
 
   void handleLongPress() {
     try {
-      vibrate();
+
       if (onLongPress != null) {
+        vibrate();
         onLongPress!(trackItem);
       }
     } catch (err) {

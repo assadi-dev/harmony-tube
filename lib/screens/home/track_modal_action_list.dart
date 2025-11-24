@@ -19,6 +19,7 @@ final moreHandler = TrackMoreActionHandler(context:context);
             mainAxisAlignment: MainAxisAlignment.start,
             spacing: 24, children: <Widget>[
 
+          TextWithIconGesture(text:"Séléctionner" ,  onTap:moreHandler.selectMode, icon: Icons.check),
           TextWithIconGesture(text:"Jouer tout les morceaux" ,  onTap: moreHandler.playAll, icon: Icons.play_arrow_outlined),
           TextWithIconGesture(text: "Ajouter un morceau" ,  onTap: moreHandler.addTrack, icon: Icons.playlist_add_outlined),
           TextWithIconGesture(text: "Mélanger les morceaux" ,  onTap: moreHandler.shuffleAll, icon: Icons.shuffle_outlined),

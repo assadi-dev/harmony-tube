@@ -123,8 +123,20 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
                           moreOptionInstance: moreActions,
                           trackItem: tracks[index],
                         onLongPress: (trackItem){
-                          BlocProvider.of<SelectedItemsCubit>(context).clearAll();
-                            BlocProvider.of<SelectModeStateCubit>(context).toggleModeState();
+                          final modalBottomSheet = OpenModalBottomSheet(
+                              context: context,
+                              moreOptionInstance: moreActions,
+                              trackItem: trackItem);
+                          bool selectMode = BlocProvider
+                              .of<SelectModeStateCubit>(context)
+                              .state
+                              .isActive;
+                          if (!selectMode) {
+                            BlocProvider.of<SelectedItemsCubit>(context).clearAll();
+                            BlocProvider.of<SelectedItemsCubit>(context).addItemToFrom(trackItem.id);
+                            modalBottomSheet.openModal();
+                          }
+
 
                         },
                         onPress: (trackItem) {
