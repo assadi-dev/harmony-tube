@@ -14,6 +14,8 @@ import 'package:harmony_tube/widgets/text_scroll.dart';
 import 'package:harmony_tube/widgets/woltPages/PlaylistSelect.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
+import '../../bloc/track/track_bloc.dart';
+
 
 const double trackCardFontSize = 12.0;
 
@@ -145,12 +147,13 @@ class OpenModalBottomSheet {
           Widget moreOptionWidget = moreOptionInstance.musicCardActions();
           return [
             moreActionList(ctx, trackItem,moreOptionWidget),
-            PlaylistSelect(ctx,trackItem)
+            PlaylistSelect(ctx,[trackItem])
 
           ];
         }
     );
   }
+
 
 
 

@@ -9,7 +9,7 @@ import 'package:harmony_tube/widgets/cards/playlist_select_radio.dart';
 import 'package:harmony_tube/widgets/woltPages/GoBackModal.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-SliverWoltModalSheetPage PlaylistSelect(BuildContext context,   TrackItemModel trackItem) {
+SliverWoltModalSheetPage PlaylistSelect(BuildContext context,   List<TrackItemModel> trackItems) {
 
 
   var playlists = BlocProvider.of<PlaylistBloc>(context).state.collections ?? [];
@@ -43,7 +43,7 @@ SliverWoltModalSheetPage PlaylistSelect(BuildContext context,   TrackItemModel t
       color: Colors.transparent,
       width: double.infinity,
       padding: EdgeInsets.all(16),
-      child: ConfirmButton(trackItem: trackItem),
+      child: ConfirmButton(trackItems: trackItems),
     ),
   );
 }
@@ -52,8 +52,8 @@ SliverWoltModalSheetPage PlaylistSelect(BuildContext context,   TrackItemModel t
 
 
 class ConfirmButton extends StatelessWidget{
-final TrackItemModel trackItem;
-  const ConfirmButton({super.key, required this.trackItem});
+final List<TrackItemModel> trackItems;
+  const ConfirmButton({super.key, required this.trackItems});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ final TrackItemModel trackItem;
       try{
         final selectedItems = BlocProvider.of<SelectedItemsCubit>(context).state.toItems;
         if(selectedItems.isNotEmpty) {
-          BlocProvider.of<PlaylistBloc>(context).add(AddMultipleTrackToPlaylist(tracks: [trackItem], playlistIds: selectedItems));
+          BlocProvider.of<PlaylistBloc>(context).add(AddMultipleTrackToPlaylist(tracks: trackItems, playlistIds: selectedItems));
           print('track added to playlist succefully');
           BlocProvider.of<SelectedItemsCubit>(context).clearAll();
         }

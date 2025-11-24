@@ -34,6 +34,7 @@ Widget SelectWidget(){
           TextWithIconGesture(text:"Jouer tout les morceaux" ,  onTap: moreHandler.playAll, icon: Icons.play_arrow_outlined),
           TextWithIconGesture(text: "Ajouter un morceau" ,  onTap: moreHandler.addTrack, icon: Icons.playlist_add_outlined),
           TextWithIconGesture(text: "Mélanger les morceaux" ,  onTap: moreHandler.shuffleAll, icon: Icons.shuffle_outlined),
+          TextWithIconGesture(text: "Ajouter à la playlist" ,  onTap: moreHandler.addToPlaylist, icon: Icons.shuffle_outlined),
 
         ]));
   }

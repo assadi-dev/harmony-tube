@@ -21,7 +21,7 @@ TrackMoreActionHandler({required this.context});
   }
 
   void addTrack (){
-    WoltModalSheet.of(context).showNext();
+    WoltModalSheet.of(context).showPageWithId("add_new_track");
   }
 
   void saveTrack (){
@@ -43,4 +43,12 @@ void selectMode() {
     BlocProvider.of<SelectModeStateCubit>(context).toggleModeState();
     Navigator.of(context).pop();
   }
+  
+  
+  void addToPlaylist(){
+    WoltModalSheet.of(context).showPageWithId("playlist_select");
+
+  }
+  
+  
 }

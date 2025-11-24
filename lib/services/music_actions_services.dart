@@ -19,8 +19,6 @@ class MusicModalHandler {
   }
 
   void  add_to_playlist() {
-    //TODO Implement add playlist logic
-   // Navigator.pop(context);
     WoltModalSheet.of(context).showPageWithId("playlist_select");
   }
 
@@ -44,7 +42,6 @@ class MusicModalHandler {
 
 
     void confirmDelete(BuildContext context) {
-      //final tracksItems = [];
       final playlistIdCurrent = BlocProvider.of<PlaylistBloc>(context).state.playlist;
       if(playlistIdCurrent == null) throw Exception("Playlist not found");
       //if(tracksItems.isEmpty) throw Exception("No music selected");
