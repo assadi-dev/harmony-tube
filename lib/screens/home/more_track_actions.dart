@@ -23,10 +23,7 @@ class MoreTrackActions extends StatelessWidget {
           showDragHandle: false,
           modalTypeBuilder: (context) => WoltModalType.bottomSheet(),
           pageListBuilder: (context) {
-
             List<TrackItemModel> trackItems = getTrackItemsFromSelection(context);
-
-
             return [
               TrackMoreAction(context),
               AddTrackMain(context),
