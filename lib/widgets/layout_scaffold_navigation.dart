@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:harmony_tube/modules/bottom_navigations/bloc/bottom_bar_cubit.dart';
+import 'package:harmony_tube/modules/bottom_navigations/widgets/app_bottom_navigation.dart';
 import 'package:harmony_tube/widgets/music_player_screen.dart';
 
 class LayoutScaffoldNavigation extends StatelessWidget {
@@ -9,8 +12,10 @@ class LayoutScaffoldNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isBottomNavBarVisible = true;
-    // context.watch<BottomBarCubit>().state.isBottomNavBarVisible;
+    final isBottomNavBarVisible = context
+        .watch<BottomBarCubit>()
+        .state
+        .isBottomNavBarVisible;
 
     return Scaffold(
       //extendBody: true,
@@ -20,6 +25,9 @@ class LayoutScaffoldNavigation extends StatelessWidget {
           Align(alignment: Alignment.bottomCenter, child: MusicPlayerScreen()),
         ],
       ),
+      bottomNavigationBar: isBottomNavBarVisible
+          ? AppBottomNavigation(navigationShell: navigationShell)
+          : null,
     );
   }
 }

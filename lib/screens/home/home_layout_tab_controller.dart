@@ -32,20 +32,6 @@ class HomeLayoutTabState extends State<HomeLayoutTabController>
       child: Scaffold(
         appBar: AppBar(
           title: Text(app_title),
-          bottom: ButtonsTabBar(
-            controller: _tabController,
-            unselectedBackgroundColor: Colors.transparent,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
-            contentCenter: true,
-            labelSpacing: 5,
-            tabs: [
-              Tab(text: "Accueil", icon: Icon(Icons.home_outlined, size: 18)),
-              Tab(
-                text: "Bibliothèque",
-                icon: Icon(Icons.library_music_outlined, size: 18),
-              ),
-            ],
-          ),
         ),
 
         body: TabBarView(
