@@ -13,13 +13,13 @@ class BottomBarListItems {
       screen: RouterPath.home.widget,
     ),
     BottomNavigationItemModel(
-      icon: Icons.search,
-      label: RouterPath.search.title,
-      screen: RouterPath.search.widget,
-      path: RouterPath.search.path,
+      icon: Icons.explore,
+      label: RouterPath.explorer.title,
+      screen: RouterPath.explorer.widget,
+      path: RouterPath.explorer.path,
     ),
     BottomNavigationItemModel(
-      icon: Icons.list_rounded,
+      icon: Icons.library_music,
       label: RouterPath.library.title,
       path: RouterPath.library.path,
       screen: RouterPath.library.widget,

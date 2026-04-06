@@ -25,10 +25,11 @@ class RouterPath {
     title: "Accueil",
     widget: HomeLayoutTabController(),
   );
-  static RouterObject search = RouterObject(
-    name: "search",
-    path: '/search',
-    title: "Rechercher",
+  static RouterObject explorer = RouterObject(
+    name: "explorer",
+    path: '/explorer',
+    title: "Explorer",
+    widget: const Placeholder(),
   );
   static RouterObject library = RouterObject(
     name: "library",
