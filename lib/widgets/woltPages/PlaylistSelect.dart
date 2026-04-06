@@ -10,15 +10,13 @@ import 'package:harmony_tube/widgets/cards/playlist_select_radio.dart';
 import 'package:harmony_tube/widgets/woltPages/GoBackModal.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-SliverWoltModalSheetPage PlaylistSelect(BuildContext context,   List<TrackItemModel> trackItems) {
-
-
-  var playlists = BlocProvider.of<PlaylistBloc>(context).state.collections ?? [];
+SliverWoltModalSheetPage PlaylistSelect(
+  BuildContext context,
+  List<TrackItemModel> trackItems,
+) {
+  var playlists =
+      BlocProvider.of<PlaylistBloc>(context).state.collections ?? [];
   var playlistCount = playlists.length ?? 0;
-
-
-
-
 
   return SliverWoltModalSheetPage(
     id: 'playlist_select',
@@ -27,16 +25,13 @@ SliverWoltModalSheetPage PlaylistSelect(BuildContext context,   List<TrackItemMo
     isTopBarLayerAlwaysVisible: true,
     mainContentSliversBuilder: (BuildContext context) {
       return [
-
         SliverList(
           delegate: SliverChildBuilderDelegate(
-                (_, index) => PlaylistSelectRadio(playlist: playlists[index],
-                ),
+            (_, index) => PlaylistSelectRadio(playlist: playlists[index]),
             childCount: playlistCount,
           ),
-
         ),
-        SliverToBoxAdapter(child: SizedBox(height: 100,),),
+        SliverToBoxAdapter(child: SizedBox(height: 100)),
       ];
     },
 
@@ -49,28 +44,32 @@ SliverWoltModalSheetPage PlaylistSelect(BuildContext context,   List<TrackItemMo
   );
 }
 
-
-
-
-class ConfirmButton extends StatelessWidget{
-final List<TrackItemModel> trackItems;
+class ConfirmButton extends StatelessWidget {
+  final List<TrackItemModel> trackItems;
   const ConfirmButton({super.key, required this.trackItems});
 
   @override
   Widget build(BuildContext context) {
-    void confirm(){
-      try{
-        final selectedItems = BlocProvider.of<SelectedItemsCubit>(context).state.toItems;
-        if(selectedItems.isNotEmpty) {
-          BlocProvider.of<PlaylistBloc>(context).add(AddMultipleTrackToPlaylist(tracks: trackItems, playlistIds: selectedItems));
+    void confirm() {
+      try {
+        final selectedItems = BlocProvider.of<SelectedItemsCubit>(
+          context,
+        ).state.toItems;
+        if (selectedItems.isNotEmpty) {
+          BlocProvider.of<PlaylistBloc>(context).add(
+            AddMultipleTrackToPlaylist(
+              tracks: trackItems,
+              playlistIds: selectedItems,
+            ),
+          );
           print('track added to playlist succefully');
           BlocProvider.of<SelectedItemsCubit>(context).clearAll();
-          BlocProvider.of<SelectModeStateCubit>(context).setSelectModeState(false);
+          BlocProvider.of<SelectModeStateCubit>(
+            context,
+          ).setSelectModeState(false);
         }
-
-
-      }catch(e){
-        print("error in confirm button: ${e}");
+      } catch (e) {
+        print("error in confirm button: $e");
       }
 
       Navigator.pop(context);
@@ -78,10 +77,11 @@ final List<TrackItemModel> trackItems;
 
     return BlocBuilder<SelectedItemsCubit, SelectedItemsState>(
       builder: (context, state) {
-        return ElevatedButton(onPressed: state.toItems.length > 0 ? confirm : null,  child: Text('Confirmer'));
-      });
+        return ElevatedButton(
+          onPressed: state.toItems.isNotEmpty ? confirm : null,
+          child: Text('Confirmer'),
+        );
+      },
+    );
   }
-
-
 }
-

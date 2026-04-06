@@ -1,8 +1,6 @@
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/utils/generator.dart';
 
-
-
 class PlaylistItemModel {
   final String id;
   final String title;
@@ -14,8 +12,6 @@ class PlaylistItemModel {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-
-
   PlaylistItemModel({
     required this.id,
     required this.title,
@@ -26,25 +22,21 @@ class PlaylistItemModel {
     this.lastPlayedAt,
     this.createdAt,
     this.updatedAt,
-
   });
-
-
 
   factory PlaylistItemModel.generate(dynamic entries) {
     final DateTime now = DateTime.now();
 
     return PlaylistItemModel(
       id: generateId(),
-      title:  entries.title ?? 'playlist_${now.millisecond}',
-      description:  entries.description ?? null,
-      cover:  entries.cover ?? null,
-      tracks:  entries.tracks ?? null,
-      nbTracks:  entries.nbTracks ?? 0,
+      title: entries.title ?? 'playlist_${now.millisecond}',
+      description: entries.description,
+      cover: entries.cover,
+      tracks: entries.tracks,
+      nbTracks: entries.nbTracks ?? 0,
       createdAt: now,
       updatedAt: now,
     );
-
   }
 
   PlaylistItemModel copyWith(dynamic entries) {
@@ -62,10 +54,4 @@ class PlaylistItemModel {
       updatedAt: dateNow,
     );
   }
-
-
 }
-
-
-
-

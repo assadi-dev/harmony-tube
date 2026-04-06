@@ -10,7 +10,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class EditPlaylistForm extends StatelessWidget {
   final BuildContext context;
 
-  EditPlaylistForm({super.key, required this.context});
+  const EditPlaylistForm({super.key, required this.context});
 
   Future<void> editPlaylist(PlaylistFormValues values) async {
     final playlist = context.read<PlaylistBloc>().state.playlist;

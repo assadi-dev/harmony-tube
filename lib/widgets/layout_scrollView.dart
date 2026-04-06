@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 
 class LayoutScrollView extends StatelessWidget {
   final Widget child;
 
-  LayoutScrollView({required this.child});
+  const LayoutScrollView({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

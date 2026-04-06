@@ -1,17 +1,15 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/themes/app_themes.dart';
 
 class MusicPlayerApp extends StatelessWidget {
-  const MusicPlayerApp({Key? key}) : super(key: key);
+  const MusicPlayerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Harmony Flow',
       debugShowCheckedModeBanner: false,
-      theme:themeApp.light,
+      theme: themeApp.light,
       darkTheme: themeApp.dark,
       themeMode: ThemeMode.light,
       home: const MusicPlayerHome(),
@@ -20,7 +18,7 @@ class MusicPlayerApp extends StatelessWidget {
 }
 
 class MusicPlayerHome extends StatefulWidget {
-  const MusicPlayerHome({Key? key}) : super(key: key);
+  const MusicPlayerHome({super.key});
 
   @override
   State<MusicPlayerHome> createState() => _MusicPlayerHomeState();
@@ -34,7 +32,11 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
 
   final List<Map<String, String>> _songs = [
     {'title': 'Summer Vibes', 'artist': 'Artist Name', 'duration': '3:45'},
-    {'title': 'Midnight Dreams', 'artist': 'Another Artist', 'duration': '4:20'},
+    {
+      'title': 'Midnight Dreams',
+      'artist': 'Another Artist',
+      'duration': '4:20',
+    },
     {'title': 'Ocean Waves', 'artist': 'Wave Music', 'duration': '3:15'},
     {'title': 'Electric Soul', 'artist': 'DJ Master', 'duration': '5:00'},
     {'title': 'Urban Nights', 'artist': 'City Sounds', 'duration': '3:50'},
@@ -78,13 +80,19 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
           const SizedBox(width: 8),
         ],
       ),
-      body: _selectedIndex == 0 ? _buildHomeView(isDark, primaryGreen, cardColor, textColor)
+      body: _selectedIndex == 0
+          ? _buildHomeView(isDark, primaryGreen, cardColor, textColor)
           : _buildPlaylistView(isDark, primaryGreen, cardColor, textColor),
       bottomNavigationBar: _buildBottomBar(isDark, primaryGreen, textColor),
     );
   }
 
-  Widget _buildHomeView(bool isDark, Color primaryGreen, Color? cardColor, Color textColor) {
+  Widget _buildHomeView(
+    bool isDark,
+    Color primaryGreen,
+    Color? cardColor,
+    Color textColor,
+  ) {
     return Column(
       children: [
         Expanded(
@@ -107,12 +115,23 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
                   TextButton.icon(
                     onPressed: () {},
                     icon: Icon(Icons.add, color: primaryGreen),
-                    label: Text('Ajouter', style: TextStyle(color: primaryGreen)),
+                    label: Text(
+                      'Ajouter',
+                      style: TextStyle(color: primaryGreen),
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
-              ..._songs.map((song) => _buildSongTile(song, isDark, primaryGreen, cardColor, textColor)),
+              ..._songs.map(
+                (song) => _buildSongTile(
+                  song,
+                  isDark,
+                  primaryGreen,
+                  cardColor,
+                  textColor,
+                ),
+              ),
             ],
           ),
         ),
@@ -121,12 +140,20 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
     );
   }
 
-  Widget _buildNowPlaying(bool isDark, Color primaryGreen, Color? cardColor, Color textColor) {
+  Widget _buildNowPlaying(
+    bool isDark,
+    Color primaryGreen,
+    Color? cardColor,
+    Color textColor,
+  ) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [primaryGreen.withOpacity(0.3), primaryGreen.withOpacity(0.1)],
+          colors: [
+            primaryGreen.withOpacity(0.3),
+            primaryGreen.withOpacity(0.1),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -163,10 +190,7 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
           const SizedBox(height: 4),
           Text(
             'Artist Name',
-            style: TextStyle(
-              color: textColor.withOpacity(0.6),
-              fontSize: 16,
-            ),
+            style: TextStyle(color: textColor.withOpacity(0.6), fontSize: 16),
           ),
           const SizedBox(height: 20),
           SliderTheme(
@@ -190,8 +214,14 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('1:15', style: TextStyle(color: textColor.withOpacity(0.6))),
-                Text('3:45', style: TextStyle(color: textColor.withOpacity(0.6))),
+                Text(
+                  '1:15',
+                  style: TextStyle(color: textColor.withOpacity(0.6)),
+                ),
+                Text(
+                  '3:45',
+                  style: TextStyle(color: textColor.withOpacity(0.6)),
+                ),
               ],
             ),
           ),
@@ -241,7 +271,13 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
     );
   }
 
-  Widget _buildSongTile(Map<String, String> song, bool isDark, Color primaryGreen, Color? cardColor, Color textColor) {
+  Widget _buildSongTile(
+    Map<String, String> song,
+    bool isDark,
+    Color primaryGreen,
+    Color? cardColor,
+    Color textColor,
+  ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -282,7 +318,12 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
     );
   }
 
-  Widget _buildPlaylistView(bool isDark, Color primaryGreen, Color? cardColor, Color textColor) {
+  Widget _buildPlaylistView(
+    bool isDark,
+    Color primaryGreen,
+    Color? cardColor,
+    Color textColor,
+  ) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -304,15 +345,55 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
           ],
         ),
         const SizedBox(height: 16),
-        _buildPlaylistCard('Favoris', '12 titres', isDark, primaryGreen, cardColor, textColor, Icons.favorite),
-        _buildPlaylistCard('Workout', '8 titres', isDark, primaryGreen, cardColor, textColor, Icons.fitness_center),
-        _buildPlaylistCard('Chill', '15 titres', isDark, primaryGreen, cardColor, textColor, Icons.beach_access),
-        _buildPlaylistCard('Party', '20 titres', isDark, primaryGreen, cardColor, textColor, Icons.celebration),
+        _buildPlaylistCard(
+          'Favoris',
+          '12 titres',
+          isDark,
+          primaryGreen,
+          cardColor,
+          textColor,
+          Icons.favorite,
+        ),
+        _buildPlaylistCard(
+          'Workout',
+          '8 titres',
+          isDark,
+          primaryGreen,
+          cardColor,
+          textColor,
+          Icons.fitness_center,
+        ),
+        _buildPlaylistCard(
+          'Chill',
+          '15 titres',
+          isDark,
+          primaryGreen,
+          cardColor,
+          textColor,
+          Icons.beach_access,
+        ),
+        _buildPlaylistCard(
+          'Party',
+          '20 titres',
+          isDark,
+          primaryGreen,
+          cardColor,
+          textColor,
+          Icons.celebration,
+        ),
       ],
     );
   }
 
-  Widget _buildPlaylistCard(String title, String subtitle, bool isDark, Color primaryGreen, Color? cardColor, Color textColor, IconData icon) {
+  Widget _buildPlaylistCard(
+    String title,
+    String subtitle,
+    bool isDark,
+    Color primaryGreen,
+    Color? cardColor,
+    Color textColor,
+    IconData icon,
+  ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -355,13 +436,22 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
               ],
             ),
           ),
-          Icon(Icons.arrow_forward_ios, color: textColor.withOpacity(0.4), size: 20),
+          Icon(
+            Icons.arrow_forward_ios,
+            color: textColor.withOpacity(0.4),
+            size: 20,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildMiniPlayer(bool isDark, Color primaryGreen, Color? cardColor, Color textColor) {
+  Widget _buildMiniPlayer(
+    bool isDark,
+    Color primaryGreen,
+    Color? cardColor,
+    Color textColor,
+  ) {
     return Container(
       height: 70,
       decoration: BoxDecoration(
@@ -439,10 +529,7 @@ class _MusicPlayerHomeState extends State<MusicPlayerHome> {
           });
         },
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Accueil',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
           BottomNavigationBarItem(
             icon: Icon(Icons.playlist_play),
             label: 'Playlists',

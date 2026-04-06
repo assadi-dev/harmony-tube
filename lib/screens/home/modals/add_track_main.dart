@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/services/track_more_action_handler.dart';
-import 'package:harmony_tube/themes/app_colors.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/form/youtube_id_or_url_form.dart';
 import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
@@ -11,7 +10,7 @@ SliverWoltModalSheetPage AddTrackMain(BuildContext context) {
     WoltModalSheet.of(context).showPrevious();
   }
 
-  final trackHandler =TrackMoreActionHandler(context: context);
+  final trackHandler = TrackMoreActionHandler(context: context);
 
   return SliverWoltModalSheetPage(
     id: "add_new_track",
@@ -19,7 +18,6 @@ SliverWoltModalSheetPage AddTrackMain(BuildContext context) {
     leadingNavBarWidget: IconButton(
       onPressed: goBack,
       icon: Icon(Icons.arrow_back_ios_new, size: 20),
-
     ),
     isTopBarLayerAlwaysVisible: true,
 
@@ -42,7 +40,7 @@ SliverWoltModalSheetPage AddTrackMain(BuildContext context) {
                 onTap: trackHandler.openAudioFiles,
               ),
               TextWithIconGesture(
-                text:  "Depuis le Gestionnaire des fichiers",
+                text: "Depuis le Gestionnaire des fichiers",
                 icon: Icons.folder_open_outlined,
                 onTap: trackHandler.openFileManager,
               ),
@@ -53,5 +51,3 @@ SliverWoltModalSheetPage AddTrackMain(BuildContext context) {
     ],
   );
 }
-
-

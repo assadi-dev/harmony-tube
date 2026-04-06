@@ -5,10 +5,7 @@ import 'package:harmony_tube/services/music_actions_services.dart';
 import 'package:harmony_tube/widgets/modals/danger_music_actions.dart';
 import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
 
-
-/**
- * String id : id de la musique
- */
+/// String id : id de la musique
 List<Widget> basicActions(BuildContext context, String id) {
   final trackHandler = MusicModalHandler(context: context, id: id);
 
@@ -42,23 +39,25 @@ List<Widget> basicActions(BuildContext context, String id) {
 }
 
 class MoreActionsList {
-
   BuildContext context;
   final String id;
   final TrackItemModel trackItem;
-  TypeActionForMusicCard? from ;
-  MoreActionsList( { required this.context, required this.id, required this.trackItem,this.from= TypeActionForMusicCard.other }) ;
-  void setContext (BuildContext context) {
+  TypeActionForMusicCard? from;
+  MoreActionsList({
+    required this.context,
+    required this.id,
+    required this.trackItem,
+    this.from = TypeActionForMusicCard.other,
+  });
+  void setContext(BuildContext context) {
     this.context = context;
   }
 
-
   Widget musicCardActions() {
+    final dangerAction = DangerMusicActions(context: context, id: id);
 
-    final dangerAction = DangerMusicActions(context:context,id: id);
-
-    List<Widget> children = basicActions(context,id);
-    addDangerActionByTypeAction(dangerAction,children,from!);
+    List<Widget> children = basicActions(context, id);
+    addDangerActionByTypeAction(dangerAction, children, from!);
     children.add(dangerAction.removeTrackAction());
 
     return Column(
@@ -69,8 +68,11 @@ class MoreActionsList {
     );
   }
 
-
-void addDangerActionByTypeAction(DangerMusicActions dangerAction,List<Widget> children,TypeActionForMusicCard typeAction,){
+  void addDangerActionByTypeAction(
+    DangerMusicActions dangerAction,
+    List<Widget> children,
+    TypeActionForMusicCard typeAction,
+  ) {
     switch (typeAction) {
       case TypeActionForMusicCard.playlist:
         children.add(dangerAction.removeTrackToPlaylistAction());
@@ -81,6 +83,5 @@ void addDangerActionByTypeAction(DangerMusicActions dangerAction,List<Widget> ch
       default:
         children;
     }
-}
-
+  }
 }

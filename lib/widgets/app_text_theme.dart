@@ -19,7 +19,7 @@ class AppTextTheme extends StatelessWidget {
   final TextHeightBehavior? textHeightBehavior;
   final Color? selectionColor;
 
-  AppTextTheme(
+  const AppTextTheme(
     this.data, {
     super.key,
     this.color,
@@ -41,10 +41,10 @@ class AppTextTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final base = DefaultTextStyle.of(context).style;
-    final Color _defaultColor = Theme.of(context).primaryColor;
+    final Color defaultColor = Theme.of(context).primaryColor;
     final effectiveStyle = (base.merge(
       style,
-    )).copyWith(color: color ?? style?.color ?? base.color ?? _defaultColor);
+    )).copyWith(color: color ?? style?.color ?? base.color ?? defaultColor);
     return Text(
       data,
       style: effectiveStyle,

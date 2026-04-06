@@ -7,16 +7,15 @@ final borderShape = RoundedRectangleBorder(
   borderRadius: BorderRadius.circular(8),
 );
 
-
 class ConfirmModal {
   String? message;
-  final void Function(BuildContext context)  onConfirm;
+  final void Function(BuildContext context) onConfirm;
   final BuildContext context;
   Widget? top;
   Widget? bottom;
 
   ConfirmModal({
-     this.message,
+    this.message,
     required this.onConfirm,
     required this.context,
     this.top,
@@ -24,11 +23,8 @@ class ConfirmModal {
   });
 
   void closeModal() {
-  print("action canceled");
-
+    print("action canceled");
   }
-
-
 
   open() {
     return WoltModalSheet.show(
@@ -37,54 +33,52 @@ class ConfirmModal {
       pageListBuilder: (context) {
         return [
           SliverWoltModalSheetPage(
-
             mainContentSliversBuilder: (context) => [
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Column(
-                      spacing: 16,
+                    spacing: 16,
                     children: [
-
-                     message!.isNotEmpty  ? AppTextTheme(message!, style: textButtonStyle,):SizedBox(),
+                      message!.isNotEmpty
+                          ? AppTextTheme(message!, style: textButtonStyle)
+                          : SizedBox(),
                       bottom ?? SizedBox(),
-                      ConfirmButtonRow(cancelHandler: null,
-                          confirmHandler: onConfirm)
-                    ]
+                      ConfirmButtonRow(
+                        cancelHandler: null,
+                        confirmHandler: onConfirm,
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],),
-
+            ],
+          ),
         ];
       },
     );
   }
-
-
 }
-
 
 class ConfirmButtonRow extends StatefulWidget {
   final void Function()? cancelHandler;
   final void Function(BuildContext context) confirmHandler;
 
-  const ConfirmButtonRow(
-      {super.key, required this.confirmHandler,  this.cancelHandler});
+  const ConfirmButtonRow({
+    super.key,
+    required this.confirmHandler,
+    this.cancelHandler,
+  });
 
   @override
   State<StatefulWidget> createState() => ConfirmButtonRowState();
-
 }
 
 class ConfirmButtonRowState extends State<ConfirmButtonRow> {
   bool isPending = false;
 
-
   @override
   Widget build(BuildContext context) {
-
-
     void handleCancel() {
       try {
         if (widget.cancelHandler != null) {
@@ -92,55 +86,48 @@ class ConfirmButtonRowState extends State<ConfirmButtonRow> {
         }
       } catch (e) {
         print(e);
-      }finally{
+      } finally {
         Navigator.of(context).pop();
       }
-
     }
 
     void handleConfirm() {
-      try{
+      try {
         widget.confirmHandler(context);
         Navigator.of(context).pop();
-      }catch(e){
+      } catch (e) {
         print(e);
       }
-
     }
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
-          spacing: 8,
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                child: AppTextTheme("Annuler", style: textButtonStyle),
-                onPressed:handleCancel,
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    shadowColor: Colors.transparent,
-                    shape: borderShape)),
-            ElevatedButton(child: Text("Confirmer", style: textButtonStyle),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme
-                    .of(context)
-                    .colorScheme
-                    .primary,
-                foregroundColor: Theme
-                    .of(context)
-                    .colorScheme
-                    .onPrimary,
-                shape: borderShape,
-
-              ),
-              onPressed:handleConfirm,),
-
-          ]
-      ),);
+        spacing: 8,
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: handleCancel,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              shadowColor: Colors.transparent,
+              shape: borderShape,
+            ),
+            child: AppTextTheme("Annuler", style: textButtonStyle),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              shape: borderShape,
+            ),
+            onPressed: handleConfirm,
+            child: Text("Confirmer", style: textButtonStyle),
+          ),
+        ],
+      ),
+    );
   }
-
-
 }

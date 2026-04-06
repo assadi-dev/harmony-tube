@@ -1,53 +1,59 @@
-
 import 'package:go_router/go_router.dart';
 import 'package:harmony_tube/routes/models/router_args.dart';
 import 'package:harmony_tube/routes/router_path.dart';
 import 'package:harmony_tube/screens/PlaylistDetailScreen.dart';
 import 'package:harmony_tube/widgets/layout_scaffold_navigation.dart';
-import 'package:harmony_tube/widgets/layout_tab_controller.dart';
 
 class RouterBaseConfig {
-  static GoRouter router =
-  GoRouter(initialLocation: RouterPath.home.path, routes: [
+  static GoRouter router = GoRouter(
+    initialLocation: RouterPath.home.path,
+    routes: [
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            LayoutScaffoldNavigation(navigationShell: navigationShell),
 
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) =>
-          LayoutScaffoldNavigation(navigationShell: navigationShell),
-
-      branches: [
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
                 name: RouterPath.home.name,
                 path: RouterPath.home.path,
-                builder: (context, state) => RouterPath.home.widget),
+                builder: (context, state) => RouterPath.home.widget,
+              ),
+            ],
+          ),
 
-          ],
-        ),
-
-        StatefulShellBranch(routes: [
-          GoRoute(
-              name: RouterPath.library.name,
-              path: RouterPath.library.path,
-              builder: (context, state) => RouterPath.library.widget),
-          GoRoute(
-              name: RouterPath.playlistDetail.name,
-              path: RouterPath.playlistDetail.path,
-              builder: (context, state) {
-                final args = state.extra as PlaylistDetailExtra;
-                return PlaylistDetailScreen(
-                    id: args.id, title: args.title ?? "Unknown");
-              }),
-        ]),
-        StatefulShellBranch(routes: [
-          GoRoute(
-              name: RouterPath.settings.name,
-              path: RouterPath.settings.path,
-              builder: (context, state) => RouterPath.settings.widget),
-        ])
-      ],
-    ),
-  ]);
-
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: RouterPath.library.name,
+                path: RouterPath.library.path,
+                builder: (context, state) => RouterPath.library.widget,
+              ),
+              GoRoute(
+                name: RouterPath.playlistDetail.name,
+                path: RouterPath.playlistDetail.path,
+                builder: (context, state) {
+                  final args = state.extra as PlaylistDetailExtra;
+                  return PlaylistDetailScreen(
+                    id: args.id,
+                    title: args.title ?? "Unknown",
+                  );
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: RouterPath.settings.name,
+                path: RouterPath.settings.path,
+                builder: (context, state) => RouterPath.settings.widget,
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  );
 }
-

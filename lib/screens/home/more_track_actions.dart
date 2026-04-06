@@ -18,18 +18,17 @@ class MoreTrackActions extends StatelessWidget {
   Widget build(BuildContext context) {
     void open() {
       WoltModalSheet.show(
-
-          context: context,
-          showDragHandle: false,
-          modalTypeBuilder: (context) => WoltModalType.bottomSheet(),
-          pageListBuilder: (context) {
-            List<TrackItemModel> trackItems = getTrackItemsFromSelection(context);
-            return [
-              TrackMoreAction(context),
-              AddTrackMain(context),
-              PlaylistSelect(context,trackItems)
-            ];
-          }
+        context: context,
+        showDragHandle: false,
+        modalTypeBuilder: (context) => WoltModalType.bottomSheet(),
+        pageListBuilder: (context) {
+          List<TrackItemModel> trackItems = getTrackItemsFromSelection(context);
+          return [
+            TrackMoreAction(context),
+            AddTrackMain(context),
+            PlaylistSelect(context, trackItems),
+          ];
+        },
       );
     }
 
@@ -37,32 +36,28 @@ class MoreTrackActions extends StatelessWidget {
   }
 
   List<String> getTrackIds(BuildContext context) {
-
-    List<String> selectedItems = BlocProvider.of<SelectedItemsCubit>(context).state.fromItems;
+    List<String> selectedItems = BlocProvider.of<SelectedItemsCubit>(
+      context,
+    ).state.fromItems;
     return selectedItems;
-
   }
 
   List<TrackItemModel> getTrackItemsFromSelection(BuildContext context) {
     List<TrackItemModel> trackItems = [];
 
-    List<String> selectedItems = BlocProvider.of<SelectedItemsCubit>(context).state.fromItems;
+    List<String> selectedItems = BlocProvider.of<SelectedItemsCubit>(
+      context,
+    ).state.fromItems;
 
-    if(selectedItems.isNotEmpty) {
-      for(String id in selectedItems) {
-        TrackItemModel?  trackItem = BlocProvider.of<TrackBloc>(context).state.collections.firstWhere((element) => element.id == id);
-        if(trackItem != null) {
-          trackItems.add(trackItem);
-        }
-
+    if (selectedItems.isNotEmpty) {
+      for (String id in selectedItems) {
+        TrackItemModel? trackItem = BlocProvider.of<TrackBloc>(
+          context,
+        ).state.collections.firstWhere((element) => element.id == id);
+        trackItems.add(trackItem);
       }
     }
 
     return trackItems;
-
   }
-
-
-
 }
-

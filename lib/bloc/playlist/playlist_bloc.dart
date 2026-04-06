@@ -4,7 +4,6 @@ import 'package:harmony_tube/bloc/playlist/playlist_state.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 
-
 class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
   PlaylistBloc() : super(const PlaylistState()) {
     on<GetPlaylistCollections>(getCollections);
@@ -16,8 +15,6 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     on<AddTrackToPlaylist>(addTrackToPlaylist);
     on<AddMultipleTrackToPlaylist>(addMultipleTrackToPlaylist);
     on<RemoveMultipleTrackToPlaylist>(removeMultipleTrackToPlaylist);
-
-
   }
 
   Future<void> getCollections(
@@ -29,11 +26,9 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     Exception? error;
     try {
       //TODO Call Playlist usecase here
-
     } catch (e) {
       error = Exception(e);
     } finally {
-
       emit(
         state.copyWith(
           collections: collections,
@@ -41,39 +36,26 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
           isLoading: false,
         ),
       );
-
     }
   }
 
-  Future<void> findPlaylist(FindPlaylist event,
-      Emitter<PlaylistState> emit,) async {
+  Future<void> findPlaylist(
+    FindPlaylist event,
+    Emitter<PlaylistState> emit,
+  ) async {
     try {
       final playlistId = event.playlistId;
-      final playlist = state.collections.firstWhere((item) =>
-      item.id == playlistId);
-      emit(
-        state.copyWith(
-          playlist: playlist,
-          error: null,
-          isLoading: false,
-        ),
+      final playlist = state.collections.firstWhere(
+        (item) => item.id == playlistId,
       );
+      emit(state.copyWith(playlist: playlist, error: null, isLoading: false));
     } catch (e) {
-      emit(
-        state.copyWith(
-          error: Exception(e),
-          isLoading: false,
-        ),
-      );
+      emit(state.copyWith(error: Exception(e), isLoading: false));
     }
   }
 
-  clearPlaylist(ClearPlaylist event, Emitter<PlaylistState> emit){
-    emit(state.copyWith(
-      playlist: null,
-      error: null,
-      isLoading: false,
-    ));
+  clearPlaylist(ClearPlaylist event, Emitter<PlaylistState> emit) {
+    emit(state.copyWith(playlist: null, error: null, isLoading: false));
   }
 
   Future<void> createPlaylist(
@@ -84,7 +66,6 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     Exception? error;
 
     try {
-
       final newPlaylist = event.playlist;
       updatedCollections.add(newPlaylist);
     } catch (e) {
@@ -126,8 +107,7 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
   Future<void> updatePlaylist(
     UpdatePlaylist event,
     Emitter<PlaylistState> emit,
-  )
-  async {
+  ) async {
     PlaylistItemModel playlistPayload = event.playlist;
     List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
     Exception? error;
@@ -152,26 +132,19 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     }
   }
 
-
   Future<void> addTrackToPlaylist(
     AddTrackToPlaylist event,
     Emitter<PlaylistState> emit,
-  )
-  async {
-
+  ) async {
     Exception? error;
     String playlistId = event.playlistId;
     TrackItemModel track = event.track;
     List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
 
-
     try {
-
-      PlaylistItemModel? playlist = updatedCollections.firstWhere((item) => item.id == playlistId);
-      if (playlist == null) {
-        throw Exception('Playlist not found');
-
-      }
+      PlaylistItemModel? playlist = updatedCollections.firstWhere(
+        (item) => item.id == playlistId,
+      );
       playlist.tracks?.add(track);
       updatedCollections = updatedCollections.map((item) {
         if (item.id == playlistId) {
@@ -190,10 +163,12 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
         ),
       );
     }
-
   }
 
-  Future<void> addMultipleTrackToPlaylist( AddMultipleTrackToPlaylist event, Emitter<PlaylistState> emit,) async {
+  Future<void> addMultipleTrackToPlaylist(
+    AddMultipleTrackToPlaylist event,
+    Emitter<PlaylistState> emit,
+  ) async {
     Exception? error;
     List<String> playlistIds = event.playlistIds;
     List<TrackItemModel> tracks = event.tracks;
@@ -201,11 +176,9 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
 
     try {
       for (String playlistId in playlistIds) {
-        PlaylistItemModel? playlist = updatedCollections.firstWhere((
-            item) => item.id == playlistId);
-        if (playlist == null) {
-          continue;
-        }
+        PlaylistItemModel? playlist = updatedCollections.firstWhere(
+          (item) => item.id == playlistId,
+        );
         for (TrackItemModel track in tracks) {
           playlist.tracks?.add(track);
         }
@@ -215,35 +188,37 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
           }
           return item;
         }).toList();
-
       }
     } catch (e) {
       error = Exception(e);
     } finally {
       emit(
-          state.copyWith(
-            collections: updatedCollections,
-            error: error,
-            isLoading: false,));
+        state.copyWith(
+          collections: updatedCollections,
+          error: error,
+          isLoading: false,
+        ),
+      );
     }
   }
 
-  PlaylistItemModel? removeTrackFromPlaylist(String playlistId, String trackId,
-      List<PlaylistItemModel> collections) {
-    if (collections == null) {
-      throw Exception('Collections is null');
-    }
-    PlaylistItemModel? playlist = collections.firstWhere((item) => item.id == playlistId);
-    if (playlist == null) {
-      throw Exception('Playlist not found');
-    }
+  PlaylistItemModel? removeTrackFromPlaylist(
+    String playlistId,
+    String trackId,
+    List<PlaylistItemModel> collections,
+  ) {
+    PlaylistItemModel? playlist = collections.firstWhere(
+      (item) => item.id == playlistId,
+    );
 
     playlist.tracks?.removeWhere((track) => track.id == trackId);
     return playlist;
   }
 
-
-  Future<void> removeMultipleTrackToPlaylist(RemoveMultipleTrackToPlaylist event, Emitter<PlaylistState> emit) async {
+  Future<void> removeMultipleTrackToPlaylist(
+    RemoveMultipleTrackToPlaylist event,
+    Emitter<PlaylistState> emit,
+  ) async {
     Exception? error;
     List<String> trackIds = event.trackIds;
     String playlistId = event.playlistId;
@@ -252,7 +227,11 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     try {
       for (String trackId in trackIds) {
         try {
-          playlist = removeTrackFromPlaylist(playlistId, trackId, updatedCollections);
+          playlist = removeTrackFromPlaylist(
+            playlistId,
+            trackId,
+            updatedCollections,
+          );
         } catch (e) {
           continue;
         }
@@ -264,18 +243,16 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
         }
         return item;
       }).toList();
-
-
-    }
-    catch (e) {
+    } catch (e) {
       error = Exception(e);
     } finally {
       emit(
-          state.copyWith(
-            collections: updatedCollections,
-            error: error,
-            isLoading: false,));
+        state.copyWith(
+          collections: updatedCollections,
+          error: error,
+          isLoading: false,
+        ),
+      );
     }
   }
-
 }

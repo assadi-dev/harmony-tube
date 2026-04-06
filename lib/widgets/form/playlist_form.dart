@@ -4,14 +4,17 @@ import 'package:harmony_tube/screens/playlist_screens/models/model.dart';
 
 import 'input_text_form.dart';
 
-
 class PlaylistForm extends StatefulWidget {
- final  PlaylistFormValues defaultValues ;
+  final PlaylistFormValues defaultValues;
   final Future<void> Function(PlaylistFormValues values) handleSubmitted;
- final String submitLabelButton;
+  final String submitLabelButton;
 
-
-   PlaylistForm({super.key,required this.handleSubmitted, required this.defaultValues, this.submitLabelButton = "Créer"});
+  const PlaylistForm({
+    super.key,
+    required this.handleSubmitted,
+    required this.defaultValues,
+    this.submitLabelButton = "Créer",
+  });
 
   @override
   State<PlaylistForm> createState() => _PlaylistFormState();
@@ -23,8 +26,6 @@ class _PlaylistFormState extends State<PlaylistForm> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
-
-
   @override
   void initState() {
     super.initState();
@@ -33,16 +34,11 @@ class _PlaylistFormState extends State<PlaylistForm> {
       FocusScope.of(context).requestFocus(_focusNode);
     });
 
-      setState(() {
-        _titleController.text = widget.defaultValues.title;
-        _descriptionController.text = widget.defaultValues.description! ?? "";
-
-      });
-
-
-
+    setState(() {
+      _titleController.text = widget.defaultValues.title;
+      _descriptionController.text = widget.defaultValues.description! ?? "";
+    });
   }
-
 
   @override
   void dispose() {
@@ -50,10 +46,7 @@ class _PlaylistFormState extends State<PlaylistForm> {
     _focusNode.dispose();
     _titleController.dispose();
     _descriptionController.dispose();
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -63,31 +56,21 @@ class _PlaylistFormState extends State<PlaylistForm> {
       titleController: _titleController,
       descriptionController: _descriptionController,
       handleSubmitted: widget.handleSubmitted,
-      submitLabelButton:  widget.submitLabelButton,
-
+      submitLabelButton: widget.submitLabelButton,
     );
-
 
     return Form(
       key: _formKey,
       child: Column(
         spacing: 12,
         children: [
-          playlistInput.titleInput(
-            _focusNode,
-            _titleController,
-          ), playlistInput.descriptionInput(
-            FocusNode(),
-            _descriptionController,
-          ),
-          playlistInput.submitButton()
+          playlistInput.titleInput(_focusNode, _titleController),
+          playlistInput.descriptionInput(FocusNode(), _descriptionController),
+          playlistInput.submitButton(),
         ],
       ),
     );
   }
-
-
-
 }
 
 class PlaylistInput {
@@ -98,21 +81,25 @@ class PlaylistInput {
   final Future<void> Function(PlaylistFormValues values) handleSubmitted;
   final String submitLabelButton;
 
+  PlaylistInput({
+    required this.context,
+    required this.formKey,
+    required this.titleController,
+    required this.descriptionController,
+    required this.handleSubmitted,
+    this.submitLabelButton = "Créer",
+  });
 
-
-  PlaylistInput(
-      {required this.context, required this.formKey, required this.titleController, required this.descriptionController, required this.handleSubmitted, this.submitLabelButton = "Créer"});
-
-
-  Future<void> _submitValues() async{
+  Future<void> _submitValues() async {
     try {
       if (formKey.currentState!.validate()) {
         formKey.currentState!.save();
         String title = titleController.text;
         String description = descriptionController.text;
 
-        await handleSubmitted(PlaylistFormValues(title: title, description: description));
-
+        await handleSubmitted(
+          PlaylistFormValues(title: title, description: description),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Veuillez remplir tous les champs')),
@@ -121,18 +108,19 @@ class PlaylistInput {
     } catch (e) {
       print(e);
       ScaffoldMessenger.of(context).showSnackBar(
-
-        const SnackBar(content: Text('Une erreur est survenue lors de la soumission du formulaire')),
+        const SnackBar(
+          content: Text(
+            'Une erreur est survenue lors de la soumission du formulaire',
+          ),
+        ),
       );
     }
-
   }
 
   Widget titleInput(
     FocusNode focusNode,
     TextEditingController titleController,
   ) {
-
     return TextFieldStyled(
       context,
       focusNode,
@@ -140,7 +128,7 @@ class PlaylistInput {
       null,
       "Titre de la playlist",
       titleController,
-        (value)=> PlaylistInputValidator.titleValidator(value)
+      (value) => PlaylistInputValidator.titleValidator(value),
     );
   }
 
@@ -155,17 +143,16 @@ class PlaylistInput {
       null,
       "Description de la playlist",
       descriptionController,
-       3,
-       5,
-      null
+      3,
+      5,
+      null,
     );
   }
-
 
   Widget submitButton() {
     return SizedBox(
       width: double.infinity,
-        child: ElevatedButton(
+      child: ElevatedButton(
         key: const Key("playlist_submit_button"),
         style: ElevatedButton.styleFrom(
           backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -174,27 +161,19 @@ class PlaylistInput {
             borderRadius: BorderRadius.circular(border_button),
           ),
         ),
+        onPressed: _submitValues,
 
-        child:  Text(submitLabelButton),
-        onPressed:_submitValues
-
-
-    ));
+        child: Text(submitLabelButton),
+      ),
+    );
   }
-
-
-
 }
 
-
 class PlaylistInputValidator {
-
- static String?  titleValidator(String? value){
-    if(value == null || value.isEmpty){
+  static String? titleValidator(String? value) {
+    if (value == null || value.isEmpty) {
       return "Veuillez renseigner ce champ";
     }
     return null;
-
   }
-
 }

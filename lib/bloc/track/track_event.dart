@@ -2,15 +2,13 @@ import 'package:equatable/equatable.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 
 class TrackEvent extends Equatable {
-
   final TrackItemModel? track;
 
-  const TrackEvent({ this.track});
+  const TrackEvent({this.track});
 
   @override
   List<Object?> get props => [track!];
 }
-
 
 class GetAllTrackCollections extends TrackEvent {
   const GetAllTrackCollections();
@@ -26,11 +24,13 @@ class DeleteTrack extends TrackEvent {
 }
 
 class AddTrack extends TrackEvent {
+  @override
   final TrackItemModel track;
   const AddTrack({required this.track});
 }
 
 class UpdateTrack extends TrackEvent {
+  @override
   final TrackItemModel track;
   const UpdateTrack({required this.track});
 }

@@ -1,30 +1,25 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 
 abstract class PlaylistEvent extends Equatable {
-
   final PlaylistItemModel? playlist;
 
   const PlaylistEvent({this.playlist});
 
   @override
   List<Object> get props => [playlist!];
-
 }
-
 
 class GetPlaylistCollections extends PlaylistEvent {
   const GetPlaylistCollections();
 }
 
-
 class CreatePlaylist extends PlaylistEvent {
+  @override
   final PlaylistItemModel playlist;
   const CreatePlaylist(this.playlist);
 }
-
 
 class FindPlaylist extends PlaylistEvent {
   final String playlistId;
@@ -32,20 +27,17 @@ class FindPlaylist extends PlaylistEvent {
 }
 
 class UpdatePlaylist extends PlaylistEvent {
+  @override
   final PlaylistItemModel playlist;
   const UpdatePlaylist({required this.playlist});
 }
 
 class ClearPlaylist extends PlaylistEvent {}
 
-
-
-
 class DeletePlaylist extends PlaylistEvent {
   final String playlistId;
   const DeletePlaylist({required this.playlistId});
 }
-
 
 class ClearTrackToPlaylist extends PlaylistEvent {
   final String playlistId;
@@ -66,25 +58,26 @@ class AddTrackToPlaylist extends PlaylistEvent {
 class AddMultipleTrackToPlaylist extends PlaylistEvent {
   final List<TrackItemModel> tracks;
   final List<String> playlistIds;
-  const AddMultipleTrackToPlaylist({required this.tracks, required this.playlistIds});
+  const AddMultipleTrackToPlaylist({
+    required this.tracks,
+    required this.playlistIds,
+  });
 }
-
 
 class RemoveTrackToPlaylist extends PlaylistEvent {
   final String trackId;
   final String playlistId;
-  const RemoveTrackToPlaylist({required this.playlistId, required this.trackId});
+  const RemoveTrackToPlaylist({
+    required this.playlistId,
+    required this.trackId,
+  });
 }
 
 class RemoveMultipleTrackToPlaylist extends PlaylistEvent {
   final List<String> trackIds;
   final String playlistId;
-  const RemoveMultipleTrackToPlaylist({required this.trackIds, required this.playlistId});
+  const RemoveMultipleTrackToPlaylist({
+    required this.trackIds,
+    required this.playlistId,
+  });
 }
-
-
-
-
-
-
-

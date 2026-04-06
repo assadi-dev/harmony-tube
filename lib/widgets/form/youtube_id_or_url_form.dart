@@ -96,9 +96,8 @@ class YoutubeFormHandler {
         final youtubeId = safeExtractYoutubeId(textController.text);
 
         formKey.currentState!.save();
-        print("Form is valid : ${youtubeId}");
+        print("Form is valid : $youtubeId");
         Navigator.of(context).pop();
-
       } else {
         print("Form is not valid ");
       }

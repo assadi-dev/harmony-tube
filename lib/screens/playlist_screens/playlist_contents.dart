@@ -8,32 +8,33 @@ import 'package:harmony_tube/screens/playlist_screens/playlist_screen_status.dar
 import 'package:harmony_tube/widgets/cards/playlist_card.dart';
 
 class PlaylistContents extends StatelessWidget {
-   PlaylistContents({super.key});
+  const PlaylistContents({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<PlaylistBloc, PlaylistState>(
       builder: (BuildContext context, PlaylistState state) {
         return PlaylistScreenStatus(
-            isLoading: state.isLoading,
-            isError: state.error != null ? true : false,
-            child: Padding(padding: EdgeInsets.symmetric(horizontal: 15),
-            child: playlistListItems(state.collections),),);
-      },);
-
+          isLoading: state.isLoading,
+          isError: state.error != null ? true : false,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: playlistListItems(state.collections),
+          ),
+        );
+      },
+    );
   }
 }
-
 
 Widget playlistListItems(List<PlaylistItemModel> playlists) {
   return ListView.separated(
     separatorBuilder: (context, index) =>
-    const SizedBox(height: list_spacing_icon_size,),
+        const SizedBox(height: list_spacing_icon_size),
     shrinkWrap: true,
     itemCount: playlists.length,
     itemBuilder: (context, index) {
-      return PlaylistCard(playlistItem: playlists[index],);
+      return PlaylistCard(playlistItem: playlists[index]);
     },
   );
 }

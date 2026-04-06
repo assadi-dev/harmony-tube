@@ -17,6 +17,8 @@ import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 import 'carousel/carousel_home.dart';
 
 class AllSongsContainer extends StatefulWidget {
+  const AllSongsContainer({super.key});
+
   @override
   State<StatefulWidget> createState() => _AllSongsContainerState();
 }
@@ -42,7 +44,9 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
     return BlocBuilder<TrackBloc, TrackState>(
       builder: (BuildContext context, TrackState state) {
         final StickyPosition initialPosition = StickyPosition(
-            top: 200, left: 0);
+          top: 200,
+          left: 0,
+        );
         final StickyPosition finalPosition = StickyPosition(top: 0, left: 0);
         final List<TrackItemModel> tracks = state.collections;
 
@@ -58,9 +62,7 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
                   Text(
                     "Touts les titres",
                     style: TextStyle(
-                      color: Theme
-                          .of(context)
-                          .primaryColor,
+                      color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
@@ -79,17 +81,12 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
               initialPosition: initialPosition,
               finalPosition: finalPosition,
               controller: _controller,
-              child: Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
 
                 child: Container(
                   padding: EdgeInsets.all(15),
-                  color: Theme
-                      .of(context)
-                      .scaffoldBackgroundColor,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,39 +109,46 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
                   ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
                     separatorBuilder: (context, index) =>
-                    const SizedBox(height: list_spacing_icon_size,),
+                        const SizedBox(height: list_spacing_icon_size),
                     shrinkWrap: true,
                     itemCount: tracks.length,
                     itemBuilder: (BuildContext context, int index) {
                       final String id = index.toString();
                       final moreActions = MoreActionsList(
-                          context: context, id: id, trackItem: tracks[index],from: TypeActionForMusicCard.other);
+                        context: context,
+                        id: id,
+                        trackItem: tracks[index],
+                        from: TypeActionForMusicCard.other,
+                      );
                       return MusicCard(
-                          moreOptionInstance: moreActions,
-                          trackItem: tracks[index],
-                        onLongPress: (trackItem){
+                        moreOptionInstance: moreActions,
+                        trackItem: tracks[index],
+                        onLongPress: (trackItem) {
                           final modalBottomSheet = OpenModalBottomSheet(
-                              context: context,
-                              moreOptionInstance: moreActions,
-                              trackItem: trackItem);
-                          bool selectMode = BlocProvider
-                              .of<SelectModeStateCubit>(context)
-                              .state
-                              .isActive;
+                            context: context,
+                            moreOptionInstance: moreActions,
+                            trackItem: trackItem,
+                          );
+                          bool selectMode =
+                              BlocProvider.of<SelectModeStateCubit>(
+                                context,
+                              ).state.isActive;
                           if (!selectMode) {
-                            BlocProvider.of<SelectedItemsCubit>(context).clearAll();
-                            BlocProvider.of<SelectedItemsCubit>(context).addItemToFrom(trackItem.id);
+                            BlocProvider.of<SelectedItemsCubit>(
+                              context,
+                            ).clearAll();
+                            BlocProvider.of<SelectedItemsCubit>(
+                              context,
+                            ).addItemToFrom(trackItem.id);
                             modalBottomSheet.openModal();
                           }
-
-
                         },
                         onPress: (trackItem) {
-                          BlocProvider.of<SelectedItemsCubit>(context).toggleFromItem(trackItem.id);
-                        }
-
+                          BlocProvider.of<SelectedItemsCubit>(
+                            context,
+                          ).toggleFromItem(trackItem.id);
+                        },
                       );
-
                     },
                   ),
                 ],
@@ -152,45 +156,48 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
             ),
           ),
         );
-      },);
-
-
-
-
+      },
+    );
   }
 }
 
+class TracksSelectionMode extends StatelessWidget {
+  const TracksSelectionMode({super.key});
 
-class TracksSelectionMode extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-
-   return  Padding(
-     padding: EdgeInsets.symmetric(vertical: 2,horizontal: 10),
-       child: BlocBuilder<SelectModeStateCubit,SelectModeState>(builder: (BuildContext context, state) {
-         return ShowSelectionModeWidget(state.isActive);
-       }
-         ),
-   );
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+      child: BlocBuilder<SelectModeStateCubit, SelectModeState>(
+        builder: (BuildContext context, state) {
+          return ShowSelectionModeWidget(state.isActive);
+        },
+      ),
+    );
   }
 }
 
-Widget ShowSelectionModeWidget(bool isSelectionMode){
-
-  if(isSelectionMode) {
+Widget ShowSelectionModeWidget(bool isSelectionMode) {
+  if (isSelectionMode) {
     return BlocBuilder<SelectedItemsCubit, SelectedItemsState>(
-        builder: (BuildContext context, SelectedItemsState state) {
-          int selectedLength = context.watch<SelectedItemsCubit>().state.fromItems.length;
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AppTextTheme("Selectionné: ${selectedLength}",
-                  style: TextStyle(color: Colors.grey, fontSize: 12))
-            ],
-          );
-        });
-
+      builder: (BuildContext context, SelectedItemsState state) {
+        int selectedLength = context
+            .watch<SelectedItemsCubit>()
+            .state
+            .fromItems
+            .length;
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AppTextTheme(
+              "Selectionné: $selectedLength",
+              style: TextStyle(color: Colors.grey, fontSize: 12),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  return SizedBox(height: 0,);
+  return SizedBox(height: 0);
 }

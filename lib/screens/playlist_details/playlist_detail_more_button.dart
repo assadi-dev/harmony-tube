@@ -6,36 +6,46 @@ class PlaylistDetailMoreButton extends StatelessWidget {
   final String playlistId;
   final String title;
   final PlaylistItemModel playlistItem;
-   PlaylistDetailMoreButton({super.key,required this.playlistId,required this.title, required this.playlistItem});
-
+  const PlaylistDetailMoreButton({
+    super.key,
+    required this.playlistId,
+    required this.title,
+    required this.playlistItem,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final playlistDetailMoreHandler = PlaylistDetailMoreHandler(playlistId: playlistId,context: context,playlistItem: playlistItem);
-    return IconButton(onPressed: playlistDetailMoreHandler.onPressMoreButton, icon: const Icon(Icons.more_vert));
+    final playlistDetailMoreHandler = PlaylistDetailMoreHandler(
+      playlistId: playlistId,
+      context: context,
+      playlistItem: playlistItem,
+    );
+    return IconButton(
+      onPressed: playlistDetailMoreHandler.onPressMoreButton,
+      icon: const Icon(Icons.more_vert),
+    );
   }
 }
 
 class PlaylistDetailMoreHandler {
-
   final BuildContext context;
   final String playlistId;
   final PlaylistItemModel playlistItem;
   late PlaylistModalBottomSheet modalBottomSheet;
 
-
-  PlaylistDetailMoreHandler({required this.context, required this.playlistId,required this.playlistItem}){
-     modalBottomSheet = PlaylistModalBottomSheet(
+  PlaylistDetailMoreHandler({
+    required this.context,
+    required this.playlistId,
+    required this.playlistItem,
+  }) {
+    modalBottomSheet = PlaylistModalBottomSheet(
       context: context,
       moreOptionWidget: PlaylistMoreOptionList(playlistId: playlistId),
-       playlistItem: playlistItem
+      playlistItem: playlistItem,
     );
   }
 
-
-  void onPressMoreButton(){
+  void onPressMoreButton() {
     modalBottomSheet.openModal();
-
   }
-
 }

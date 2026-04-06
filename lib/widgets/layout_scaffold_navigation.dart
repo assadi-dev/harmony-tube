@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:harmony_tube/widgets/music_player_screen.dart';
 
@@ -10,23 +9,17 @@ class LayoutScaffoldNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     final isBottomNavBarVisible = true;
-       // context.watch<BottomBarCubit>().state.isBottomNavBarVisible;
+    // context.watch<BottomBarCubit>().state.isBottomNavBarVisible;
 
     return Scaffold(
       //extendBody: true,
       body: Stack(
         children: [
           navigationShell,
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: MusicPlayerScreen(),
-          ),
+          Align(alignment: Alignment.bottomCenter, child: MusicPlayerScreen()),
         ],
       ),
-
     );
   }
 }

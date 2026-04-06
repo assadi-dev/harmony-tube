@@ -16,10 +16,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 import '../../bloc/track/track_bloc.dart';
 
-
 const double trackCardFontSize = 12.0;
-
-
 
 class MusicCard extends StatelessWidget {
   final MoreActionsList moreOptionInstance;
@@ -27,12 +24,16 @@ class MusicCard extends StatelessWidget {
   void Function(TrackItemModel)? onLongPress;
   void Function(TrackItemModel)? onPress;
 
-  MusicCard(
-      {super.key, required this.moreOptionInstance, required this.trackItem, this.onLongPress,this.onPress});
+  MusicCard({
+    super.key,
+    required this.moreOptionInstance,
+    required this.trackItem,
+    this.onLongPress,
+    this.onPress,
+  });
 
-  void handlePress(){
+  void handlePress() {
     try {
-
       if (onLongPress != null) {
         onPress!(trackItem);
       }
@@ -43,7 +44,6 @@ class MusicCard extends StatelessWidget {
 
   void handleLongPress() {
     try {
-
       if (onLongPress != null) {
         vibrate();
         onLongPress!(trackItem);
@@ -55,41 +55,38 @@ class MusicCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var selectionModeState = context.watch<SelectModeStateCubit>().state;
 
-     var selectionModeState = context.watch<SelectModeStateCubit>().state;
-
-    Widget TrailingWidget(){
-  selectionModeState.isActive;
-      if(selectionModeState.isActive){
+    Widget TrailingWidget() {
+      selectionModeState.isActive;
+      if (selectionModeState.isActive) {
         return BlocBuilder<SelectedItemsCubit, SelectedItemsState>(
-
           builder: (context, state) {
             var selectedItems = state.fromItems;
-            var  icon_selected = Icons.radio_button_off_outlined;
+            var iconSelected = Icons.radio_button_off_outlined;
             if (selectedItems.contains(trackItem.id)) {
-              icon_selected = Icons.radio_button_on_outlined;
+              iconSelected = Icons.radio_button_on_outlined;
             }
 
-            return Icon(icon_selected,  size: 18,);
-          });
-
+            return Icon(iconSelected, size: 18);
+          },
+        );
       }
 
       return MoreButton(
-          moreOptionInstance: moreOptionInstance, trackItem: trackItem);
+        moreOptionInstance: moreOptionInstance,
+        trackItem: trackItem,
+      );
     }
 
-    return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
       child: ListTile(
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(border_radius_card),
-            ),
+        ),
 
         leading: MediaPreview(),
         title: MediaInfos(track: trackItem),
@@ -98,73 +95,69 @@ class MusicCard extends StatelessWidget {
         onTap: handlePress,
       ),
     );
-
   }
 }
-
-
 
 class MoreButton extends StatelessWidget {
   final TrackItemModel trackItem;
   final MoreActionsList moreOptionInstance;
 
-  const MoreButton(
-      {super.key, required this.moreOptionInstance, required this.trackItem});
+  const MoreButton({
+    super.key,
+    required this.moreOptionInstance,
+    required this.trackItem,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final modalBottomSheet = OpenModalBottomSheet(context: context,
-        moreOptionInstance: moreOptionInstance,
-        trackItem: trackItem);
+    final modalBottomSheet = OpenModalBottomSheet(
+      context: context,
+      moreOptionInstance: moreOptionInstance,
+      trackItem: trackItem,
+    );
 
     return MoreIconButton(
       onPress: () {
-        BlocProvider.of<SelectedItemsCubit>(context).addItemToFrom(trackItem.id);
+        BlocProvider.of<SelectedItemsCubit>(
+          context,
+        ).addItemToFrom(trackItem.id);
         modalBottomSheet.openModal();
       },
-
     );
   }
 }
 
 class OpenModalBottomSheet {
-
   final MoreActionsList moreOptionInstance;
   final BuildContext context;
   final TrackItemModel trackItem;
 
-
-  OpenModalBottomSheet(
-      { required this.context, required this.moreOptionInstance, required this.trackItem});
+  OpenModalBottomSheet({
+    required this.context,
+    required this.moreOptionInstance,
+    required this.trackItem,
+  });
 
   void openModal() async {
     WoltModalSheet.show(
       context: context,
       showDragHandle: false,
       modalTypeBuilder: (context) => WoltModalType.bottomSheet(),
-        pageListBuilder: (ctx) {
-          moreOptionInstance.setContext(ctx);
-          Widget moreOptionWidget = moreOptionInstance.musicCardActions();
-          return [
-            moreActionList(ctx, trackItem,moreOptionWidget),
-            PlaylistSelect(ctx,[trackItem])
-
-          ];
-        }
+      pageListBuilder: (ctx) {
+        moreOptionInstance.setContext(ctx);
+        Widget moreOptionWidget = moreOptionInstance.musicCardActions();
+        return [
+          moreActionList(ctx, trackItem, moreOptionWidget),
+          PlaylistSelect(ctx, [trackItem]),
+        ];
+      },
     );
   }
-
-
-
-
 }
 
 class MediaPreview extends StatelessWidget {
-  
   final String? imageSrc;
-  MediaPreview({this.imageSrc});
-
-
+  const MediaPreview({super.key, this.imageSrc});
 
   Image _previewImage() {
     if (imageSrc != null) {
@@ -176,7 +169,7 @@ class MediaPreview extends StatelessWidget {
     }
     return Image.asset(no_cover_image, fit: BoxFit.cover);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -185,38 +178,29 @@ class MediaPreview extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(border_radius_card),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 8,
-            offset: Offset(0, 8),
-          ),
+          BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 8)),
         ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(border_radius_card),
-        child:  _previewImage(),
+        child: _previewImage(),
       ),
     );
   }
 }
 
 class MediaInfos extends StatefulWidget {
-
   final TrackItemModel track;
 
-  MediaInfos({required this.track});
+  const MediaInfos({super.key, required this.track});
   @override
   State<StatefulWidget> createState() => MediaInfosState();
-
 }
 
 class MediaInfosState extends State<MediaInfos> {
   late String title;
   late String artist;
   late int duration;
-
-
-
 
   @override
   void initState() {
@@ -229,69 +213,81 @@ class MediaInfosState extends State<MediaInfos> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.56,
+      width: MediaQuery.of(context).size.width * 0.56,
       child: Column(
         spacing: 4,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextHorizontalScroll(text: title, style: TextStyle(color: Theme
-              .of(context)
-              .primaryColor, fontSize: trackCardFontSize),),
-          RowArtistAndDuration(artist, duration)
-
+          TextHorizontalScroll(
+            text: title,
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: trackCardFontSize,
+            ),
+          ),
+          RowArtistAndDuration(artist, duration),
         ],
       ),
     );
   }
 }
 
-
 Widget RowArtistAndDuration(String artist, int duration) {
   final String formatDuration = formatDurationFromMilliseconds(duration);
   final Color color = Colors.grey.shade500;
   final textStyle = TextStyle(color: color, fontSize: trackCardFontSize);
-  return Row(spacing: 8,
+  return Row(
+    spacing: 8,
     crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
       Row(
-          spacing: 2,
-          children: [
-            Icon(
-                Icons.person_2_outlined, color: color, size: trackCardFontSize),
-            TextHorizontalScroll(text: artist, style: textStyle),
-          ]),
+        spacing: 2,
+        children: [
+          Icon(Icons.person_2_outlined, color: color, size: trackCardFontSize),
+          TextHorizontalScroll(text: artist, style: textStyle),
+        ],
+      ),
 
-      Row(spacing: 2, children: [
-        Icon(Icons.access_time_rounded, color: color, size: trackCardFontSize),
-        Text(formatDuration, style: textStyle)
-      ]),
-
-    ],);
+      Row(
+        spacing: 2,
+        children: [
+          Icon(
+            Icons.access_time_rounded,
+            color: color,
+            size: trackCardFontSize,
+          ),
+          Text(formatDuration, style: textStyle),
+        ],
+      ),
+    ],
+  );
 }
 
-
-SliverWoltModalSheetPage moreActionList(BuildContext modalSheetContext, TrackItemModel trackItem, Widget moreOptionWidget){
-
+SliverWoltModalSheetPage moreActionList(
+  BuildContext modalSheetContext,
+  TrackItemModel trackItem,
+  Widget moreOptionWidget,
+) {
   return SliverWoltModalSheetPage(
     hasTopBarLayer: true,
-    topBar:MusicHeaderBottomSheet(
+    topBar: MusicHeaderBottomSheet(
       title: trackItem.title,
-      description:trackItem.artist ,
+      description: trackItem.artist,
     ),
     isTopBarLayerAlwaysVisible: true,
     mainContentSliversBuilder: (context) {
+      List<SliverToBoxAdapter> childrens = [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsetsGeometry.all(15),
+            child: moreOptionWidget,
+          ),
+        ),
+      ];
 
-      List<SliverToBoxAdapter> childrens = [  SliverToBoxAdapter(
-        child:Padding(padding: EdgeInsetsGeometry.all(15),child:  moreOptionWidget),
-      )];
-
-      return  childrens;
-    });
-
-
+      return childrens;
+    },
+  );
 }
