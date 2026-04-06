@@ -22,6 +22,15 @@ class RouterBaseConfig {
               ),
             ],
           ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: RouterPath.explorer.name,
+                path: RouterPath.explorer.path,
+                builder: (context, state) => RouterPath.explorer.widget,
+              ),
+            ],
+          ),
 
           StatefulShellBranch(
             routes: [

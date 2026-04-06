@@ -8,16 +8,11 @@ import 'package:harmony_tube/cubit/selected_items.dart';
 
 import 'playlist_details/playlist_detail_silver_widgets.dart';
 
-
 class PlaylistDetailScreen extends StatefulWidget {
   final String id;
   final String? title;
 
-  const PlaylistDetailScreen({
-    super.key,
-    required this.id,
-    this.title,
-  });
+  const PlaylistDetailScreen({super.key, required this.id, this.title});
 
   @override
   State<PlaylistDetailScreen> createState() => _PlaylistDetailScreenState();
@@ -35,12 +30,9 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
       final playlistId = widget.id;
       playlistTitle = widget.title ?? "Sans titre";
 
-      context.read<PlaylistBloc>()
-           .add(FindPlaylist(playlistId: playlistId));
+      context.read<PlaylistBloc>().add(FindPlaylist(playlistId: playlistId));
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,43 +40,44 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
     final double silverPaddingSize = padding_layout;
     context.watch<PlaylistBloc>().state;
 
-
-
-    final  playlistItem = context.read<PlaylistBloc>().state.playlist as PlaylistItemModel;
+    final playlistItem =
+        context.read<PlaylistBloc>().state.playlist as PlaylistItemModel;
     final playlistTracks = playlistItem.tracks ?? [];
     final appBarTitle = playlistItem.title;
     return Scaffold(
-
       body: CustomScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        slivers: [SliverLayoutBuilder(
-          builder: (context, constraints) {
-           return silverWidget.silverHeader(context: context,constraints: constraints, playlistId: widget.id, title: appBarTitle,imageSrc: no_cover_image,playlistItem: playlistItem);
-          }
-        ),
+        slivers: [
+          SliverLayoutBuilder(
+            builder: (context, constraints) {
+              return silverWidget.silverHeader(
+                context: context,
+                constraints: constraints,
+                playlistId: widget.id,
+                title: appBarTitle,
+                imageSrc: no_cover_image,
+                playlistItem: playlistItem,
+              );
+            },
+          ),
           SliverPadding(
             padding: EdgeInsets.only(
               left: silverPaddingSize,
-              right: silverPaddingSize,),
+              right: silverPaddingSize,
+            ),
             sliver: silverWidget.sliverToBoxPlaylistActions(),
-
           ),
-
 
           SliverPadding(
             padding: EdgeInsets.only(
               left: silverPaddingSize,
               right: silverPaddingSize,
-              bottom: 70 + MediaQuery
-                  .of(context)
-                  .viewPadding
-                  .bottom,
+              bottom: 70 + MediaQuery.of(context).viewPadding.bottom,
             ),
             sliver: silverWidget.silverTrackListSliver(playlistTracks),
           ),
         ],
-      )
-      ,
+      ),
     );
   }
 }
