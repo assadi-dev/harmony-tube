@@ -8,3 +8,5 @@ class YoutubeCategory {
     return YoutubeCategory(title: json['title'], params: json['params']);
   }
 }
+
+final defaultCategory = YoutubeCategory(title: "Toutes", params: "all");

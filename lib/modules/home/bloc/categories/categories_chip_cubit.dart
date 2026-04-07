@@ -13,7 +13,7 @@ class CategoriesChipCubit extends Cubit<CategoriesChipsState> {
     : super(
         CategoriesChipsState(
           categoriesChips: categoriesChipsListMock,
-          selected: YoutubeCategory(title: "Toutes", params: "all"),
+          selected: defaultCategory,
         ),
       );
 
@@ -25,7 +25,7 @@ class CategoriesChipCubit extends Cubit<CategoriesChipsState> {
     emit(
       CategoriesChipsState(
         categoriesChips: state.categoriesChips,
-        selected: selected,
+        selected: selected ?? defaultCategory,
       ),
     );
   }
