@@ -4,7 +4,8 @@ import 'package:harmony_tube/bloc/track/track_bloc.dart';
 import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/cubit/theme_mode_cubit.dart';
 import 'package:harmony_tube/modules/bottom_navigations/bloc/bottom_bar_cubit.dart';
-import 'package:harmony_tube/modules/home/bloc/categories/categories_cubit.dart';
+import 'package:harmony_tube/modules/home/bloc/categories/categories_bloc.dart';
+import 'package:harmony_tube/modules/home/bloc/categories/categories_chip_cubit.dart';
 
 import '../cubit/select_mode_cubit.dart' show SelectModeStateCubit;
 
@@ -20,5 +21,6 @@ Future<void> blocInjector(final GetIt injector) async {
 
   injector.registerFactory<BottomBarCubit>(() => BottomBarCubit());
 
-  injector.registerFactory<CategoriesCubit>(() => CategoriesCubit());
+  injector.registerFactory<CategoriesChipCubit>(() => CategoriesChipCubit());
+  injector.registerFactory<CategoriesBloc>(() => CategoriesBloc());
 }

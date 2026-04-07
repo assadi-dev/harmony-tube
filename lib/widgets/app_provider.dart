@@ -6,7 +6,8 @@ import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/cubit/theme_mode_cubit.dart';
 import 'package:harmony_tube/injections/injector.dart';
 import 'package:harmony_tube/modules/bottom_navigations/bloc/bottom_bar_cubit.dart';
-import 'package:harmony_tube/modules/home/bloc/categories/categories_cubit.dart';
+import 'package:harmony_tube/modules/home/bloc/categories/categories_bloc.dart';
+import 'package:harmony_tube/modules/home/bloc/categories/categories_chip_cubit.dart';
 import 'package:harmony_tube/widgets/main_scaffold.dart';
 
 import '../cubit/select_mode_cubit.dart';
@@ -28,7 +29,8 @@ class _AppProvider extends State<AppProvider> {
         BlocProvider<SelectModeStateCubit>(create: (context) => injector()),
         BlocProvider<PlaylistBloc>(create: (context) => injector()),
         BlocProvider<TrackBloc>(create: (context) => injector()),
-        BlocProvider<CategoriesCubit>(create: (context) => injector()),
+        BlocProvider<CategoriesChipCubit>(create: (context) => injector()),
+        BlocProvider<CategoriesBloc>(create: (context) => injector()),
       ],
       child: MainScaffold(),
     );
