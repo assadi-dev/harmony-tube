@@ -8,7 +8,7 @@ class CategoriesSections extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoriesChipCubit, CategoriesChipState>(
+    return BlocBuilder<CategoriesChipCubit, CategoriesChipsState>(
       builder: (context, state) {
         final selectedCategory = state.selected;
 

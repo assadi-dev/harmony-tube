@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:harmony_tube/modules/home/model/youtube_categories.dart';
 
 class CategoriesEvent extends Equatable {
-  final String? selected;
+  final YoutubeCategory? selected;
   const CategoriesEvent({this.selected});
 
   @override
@@ -9,6 +10,6 @@ class CategoriesEvent extends Equatable {
 }
 
 class LoadCategoriesCollectionsEvent extends CategoriesEvent {
-  final String? category;
-  const LoadCategoriesCollectionsEvent({this.category = "all"});
+  final YoutubeCategory? category;
+  const LoadCategoriesCollectionsEvent({this.category});
 }

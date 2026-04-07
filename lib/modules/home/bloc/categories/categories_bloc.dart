@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/modules/home/bloc/categories/categories_event.dart';
 import 'package:harmony_tube/modules/home/bloc/categories/categories_state.dart';
-import 'package:harmony_tube/modules/home/services/request_categories.dart';
+import 'package:harmony_tube/modules/home/services/youtube_api_service.dart';
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   CategoriesBloc() : super(CategoriesState()) {
@@ -14,7 +14,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ) async {
     emit(state.copyWith(isLoading: true));
     try {
-      final collections = await fetchCategories(category: event.category!);
+      final collections = await fetchYoutubeCategoriesCollections(
+        category: event.category?.params ?? "all",
+      );
       emit(
         state.copyWith(
           collections: collections,

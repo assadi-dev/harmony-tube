@@ -10,17 +10,17 @@ class CategoriesChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<CategoriesBloc>().add(LoadCategoriesCollectionsEvent());
-    return BlocBuilder<CategoriesChipCubit, CategoriesChipState>(
+    return BlocBuilder<CategoriesChipCubit, CategoriesChipsState>(
       builder: (context, state) {
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: state.categoriesChip.map((category) {
+            children: state.categoriesChips.map((category) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: FilterChip(
-                  label: Text(category),
-                  selected: state.selected == category,
+                  label: Text(category.title),
+                  selected: state.selected?.params == category.params,
                   onSelected: (selected) {
                     context.read<CategoriesChipCubit>().setSelected(category);
                     context.read<CategoriesBloc>().add(

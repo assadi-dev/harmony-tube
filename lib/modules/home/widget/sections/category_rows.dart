@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/modules/home/bloc/categories/categories_bloc.dart';
 import 'package:harmony_tube/modules/home/bloc/categories/categories_state.dart';
+import 'package:harmony_tube/modules/home/model/youtube_categories.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 
 class CategoryRows extends StatelessWidget {
   const CategoryRows({super.key, required this.category});
-  final String category;
+  final YoutubeCategory? category;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,10 @@ class CategoryRows extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
-            children: [AppTextTheme(state.selected), Placeholder()],
+            children: [
+              AppTextTheme(state.selected?.title ?? "Toutes"),
+              Placeholder(),
+            ],
           ),
         );
       },

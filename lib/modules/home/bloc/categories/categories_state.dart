@@ -1,21 +1,22 @@
 import 'package:equatable/equatable.dart';
+import 'package:harmony_tube/modules/home/model/youtube_categories.dart';
 
 class CategoriesState extends Equatable {
   final List<String> collections;
-  final String selected;
+  final YoutubeCategory? selected;
   final Exception? error;
   final bool isLoading;
 
   const CategoriesState({
     this.collections = const [],
-    this.selected = "all",
+    this.selected,
     this.error,
     this.isLoading = true,
   });
 
   CategoriesState copyWith({
     List<String>? collections,
-    String? selected,
+    YoutubeCategory? selected,
     Exception? error,
     bool? isLoading,
   }) {

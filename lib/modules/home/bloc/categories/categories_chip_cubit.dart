@@ -1,24 +1,30 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:harmony_tube/modules/home/model/youtube_categories.dart';
 import 'package:harmony_tube/modules/home/mock/categories_mock.dart';
 
-class CategoriesChipState {
-  List<String> categoriesChip;
-  String selected;
-  CategoriesChipState({required this.categoriesChip, this.selected = "all"});
+class CategoriesChipsState {
+  List<YoutubeCategory> categoriesChips;
+  YoutubeCategory? selected;
+  CategoriesChipsState({required this.categoriesChips, this.selected});
 }
 
-class CategoriesChipCubit extends Cubit<CategoriesChipState> {
+class CategoriesChipCubit extends Cubit<CategoriesChipsState> {
   CategoriesChipCubit()
-    : super(CategoriesChipState(categoriesChip: categoriesChipListMock));
+    : super(
+        CategoriesChipsState(
+          categoriesChips: categoriesChipsListMock,
+          selected: YoutubeCategory(title: "Toutes", params: "all"),
+        ),
+      );
 
-  void setCategories(List<String> categories) {
-    emit(CategoriesChipState(categoriesChip: categories));
+  void setCategories(List<YoutubeCategory> categories) {
+    emit(CategoriesChipsState(categoriesChips: categories));
   }
 
-  void setSelected(String selected) {
+  void setSelected(YoutubeCategory? selected) {
     emit(
-      CategoriesChipState(
-        categoriesChip: state.categoriesChip,
+      CategoriesChipsState(
+        categoriesChips: state.categoriesChips,
         selected: selected,
       ),
     );
