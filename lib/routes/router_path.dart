@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:harmony_tube/screens/home/home_layout_tab_controller.dart';
+import 'package:harmony_tube/modules/home/screen.dart';
 import 'package:harmony_tube/screens/playlist_screen.dart';
 
 class RouterObject {
@@ -23,7 +23,7 @@ class RouterPath {
     name: "home",
     path: '/home',
     title: "Accueil",
-    widget: HomeLayoutTabController(),
+    widget: HomeScreen(),
   );
   static RouterObject explorer = RouterObject(
     name: "explorer",
