@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/modules/home/widget/categories_chip.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(app_title)),
-      body: Placeholder(),
+      body: Column(children: [CategoriesChip()]),
     );
   }
 }
