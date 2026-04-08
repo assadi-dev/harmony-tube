@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/modules/home/widget/categories_chip.dart';
 import 'package:harmony_tube/modules/home/widget/categories_sections.dart';
+import 'package:harmony_tube/modules/home/widget/google_sign_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,7 +11,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(app_title)),
-      body: Column(children: [CategoriesChip(), CategoriesSections()]),
+      body: Column(
+        children: [CategoriesChip(), CategoriesSections(), GoogleSignButton()],
+      ),
     );
   }
 }

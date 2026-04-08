@@ -60,6 +60,7 @@ dependencies:
   unique_id_generator: ^1.0.0
   flutter_hooks: ^0.21.2
   cached_network_image: ^3.2.0
+  google_sign_in: ^7.2.0
 
 
 
