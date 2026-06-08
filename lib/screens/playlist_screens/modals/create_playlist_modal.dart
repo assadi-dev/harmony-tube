@@ -13,12 +13,13 @@ class CreatePlaylistModal extends StatelessWidget {
 
 
   Future<void> createPlaylist(PlaylistFormValues values) async {
-
-    final serialized = PlaylistFormValues.toPlaylistItemModel(values);
-    final playlistModel = PlaylistItemModel.generate(serialized);
+    final playlistModel = PlaylistItemModel.generate(
+      title: values.title,
+      description: values.description,
+      cover: values.imageUrl,
+    );
     context.read<PlaylistBloc>().add(CreatePlaylist(playlistModel));
     Navigator.of(context).pop();
-
   }
 
 

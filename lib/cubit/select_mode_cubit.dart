@@ -1,25 +1,23 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SelectModeState {
+class SelectModeState extends Equatable {
+  final bool isActive;
 
-  bool isActive;
-  SelectModeState(this.isActive);
+  const SelectModeState(this.isActive);
 
+  @override
+  List<Object?> get props => [isActive];
 }
 
 class SelectModeStateCubit extends Cubit<SelectModeState> {
+  SelectModeStateCubit() : super(const SelectModeState(false));
 
-  SelectModeStateCubit() : super(SelectModeState(false));
-
- void  setSelectModeState(bool value) {
+  void setSelectModeState(bool value) {
     emit(SelectModeState(value));
   }
 
-  void  toggleModeState() {
+  void toggleModeState() {
     emit(SelectModeState(!state.isActive));
   }
 }
-
-
-
-

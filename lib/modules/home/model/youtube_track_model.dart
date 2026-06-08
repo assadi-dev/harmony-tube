@@ -1,34 +1,21 @@
-class YoutubeTrackModel {
-  final String title;
-  final String videoId;
-  final String videoType;
-  final String thumbnails;
-  final bool isExplicit;
-  final String artists;
-  final String album;
-  final String duration;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  YoutubeTrackModel({
-    required this.title,
-    required this.videoId,
-    required this.videoType,
-    required this.thumbnails,
-    required this.isExplicit,
-    required this.artists,
-    required this.album,
-    required this.duration,
-  });
+part 'youtube_track_model.freezed.dart';
+part 'youtube_track_model.g.dart';
 
-  factory YoutubeTrackModel.fromJson(Map<String, dynamic> json) {
-    return YoutubeTrackModel(
-      title: json['title'],
-      videoId: json['videoId'],
-      videoType: json['videoType'],
-      thumbnails: json['thumbnails'],
-      isExplicit: json['isExplicit'],
-      artists: json['artists'],
-      album: json['album'],
-      duration: json['duration'],
-    );
-  }
+@freezed
+class YoutubeTrackModel with _$YoutubeTrackModel {
+  const factory YoutubeTrackModel({
+    required String title,
+    required String videoId,
+    required String videoType,
+    required String thumbnails,
+    required bool isExplicit,
+    required String artists,
+    required String album,
+    required String duration,
+  }) = _YoutubeTrackModel;
+
+  factory YoutubeTrackModel.fromJson(Map<String, dynamic> json) =>
+      _$YoutubeTrackModelFromJson(json);
 }

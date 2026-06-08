@@ -1,35 +1,30 @@
-class YoutubePlaylistModel {
-  final String title;
-  final String playlistId;
-  final List<YoutubeThumbnail> thumbnails;
-  final String description;
-  final List<String> contents;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  YoutubePlaylistModel({
-    required this.title,
-    required this.playlistId,
-    required this.thumbnails,
-    required this.description,
-    required this.contents,
-  });
+part 'youtube_playlist_model.freezed.dart';
+part 'youtube_playlist_model.g.dart';
+
+@freezed
+class YoutubePlaylistModel with _$YoutubePlaylistModel {
+  const factory YoutubePlaylistModel({
+    required String title,
+    required String playlistId,
+    required List<YoutubeThumbnail> thumbnails,
+    required String description,
+    required List<String> contents,
+  }) = _YoutubePlaylistModel;
+
+  factory YoutubePlaylistModel.fromJson(Map<String, dynamic> json) =>
+      _$YoutubePlaylistModelFromJson(json);
 }
 
-class YoutubeThumbnail {
-  final String url;
-  final int width;
-  final int height;
+@freezed
+class YoutubeThumbnail with _$YoutubeThumbnail {
+  const factory YoutubeThumbnail({
+    required String url,
+    required int width,
+    required int height,
+  }) = _YoutubeThumbnail;
 
-  YoutubeThumbnail({
-    required this.url,
-    required this.width,
-    required this.height,
-  });
-
-  factory YoutubeThumbnail.fromJson(Map<String, dynamic> json) {
-    return YoutubeThumbnail(
-      url: json['url'],
-      width: json['width'],
-      height: json['height'],
-    );
-  }
+  factory YoutubeThumbnail.fromJson(Map<String, dynamic> json) =>
+      _$YoutubeThumbnailFromJson(json);
 }

@@ -1,12 +1,17 @@
-class YoutubeCategory {
-  final String title;
-  final String params;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  YoutubeCategory({required this.title, required this.params});
+part 'youtube_categories.freezed.dart';
+part 'youtube_categories.g.dart';
 
-  factory YoutubeCategory.fromJson(Map<String, dynamic> json) {
-    return YoutubeCategory(title: json['title'], params: json['params']);
-  }
+@freezed
+class YoutubeCategory with _$YoutubeCategory {
+  const factory YoutubeCategory({
+    required String title,
+    required String params,
+  }) = _YoutubeCategory;
+
+  factory YoutubeCategory.fromJson(Map<String, dynamic> json) =>
+      _$YoutubeCategoryFromJson(json);
 }
 
-final defaultCategory = YoutubeCategory(title: "Toutes", params: "all");
+const defaultCategory = YoutubeCategory(title: 'Toutes', params: 'all');

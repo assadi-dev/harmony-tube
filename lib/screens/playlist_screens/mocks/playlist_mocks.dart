@@ -56,20 +56,13 @@ List<PlaylistItemModel> playlistItemsMock() {
 
   for (int i = 0; i < 10; i++) {
     final playlistItemModel = PlaylistItemModel.generate(
-      {
-
-        'name': randomTitles[random.nextInt(randomTitles.length)],
-        'totalTracks': tracks.length,
-        'tracks': tracks,
-        'cover': 'https://picsum.photos/300/300?random=$i',
-        'description': 'Description de la playlist $i',
-
-      }
-
-);
-    items.add(
-        playlistItemModel
+      title: randomTitles[random.nextInt(randomTitles.length)],
+      tracks: tracks,
+      nbTracks: tracks.length,
+      cover: 'https://picsum.photos/300/300?random=$i',
+      description: 'Description de la playlist $i',
     );
+    items.add(playlistItemModel);
   }
   return items;
 }

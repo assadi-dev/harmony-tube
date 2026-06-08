@@ -115,7 +115,15 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     try {
       updatedCollections = updatedCollections.map((item) {
         if (item.id == playlistPayload.id) {
-          return item.copyWith(playlistPayload);
+          return item.copyWith(
+            title: playlistPayload.title,
+            description: playlistPayload.description,
+            cover: playlistPayload.cover,
+            tracks: playlistPayload.tracks,
+            nbTracks: playlistPayload.nbTracks,
+            lastPlayedAt: playlistPayload.lastPlayedAt,
+            updatedAt: DateTime.now(),
+          );
         }
         return item;
       }).toList();
@@ -137,18 +145,19 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     Emitter<PlaylistState> emit,
   ) async {
     Exception? error;
-    String playlistId = event.playlistId;
-    TrackItemModel track = event.track;
-    List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
+    final String playlistId = event.playlistId;
+    final TrackItemModel track = event.track;
+    List<PlaylistItemModel> updatedCollections = [...state.collections];
 
     try {
-      PlaylistItemModel? playlist = updatedCollections.firstWhere(
-        (item) => item.id == playlistId,
-      );
-      playlist.tracks?.add(track);
       updatedCollections = updatedCollections.map((item) {
         if (item.id == playlistId) {
-          return item.copyWith(playlist);
+          final newTracks = [...item.tracks, track];
+          return item.copyWith(
+            tracks: newTracks,
+            nbTracks: newTracks.length,
+            updatedAt: DateTime.now(),
+          );
         }
         return item;
       }).toList();
@@ -170,25 +179,22 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     Emitter<PlaylistState> emit,
   ) async {
     Exception? error;
-    List<String> playlistIds = event.playlistIds;
-    List<TrackItemModel> tracks = event.tracks;
-    List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
+    final List<String> playlistIds = event.playlistIds;
+    final List<TrackItemModel> tracks = event.tracks;
+    List<PlaylistItemModel> updatedCollections = [...state.collections];
 
     try {
-      for (String playlistId in playlistIds) {
-        PlaylistItemModel? playlist = updatedCollections.firstWhere(
-          (item) => item.id == playlistId,
-        );
-        for (TrackItemModel track in tracks) {
-          playlist.tracks?.add(track);
+      updatedCollections = updatedCollections.map((item) {
+        if (playlistIds.contains(item.id)) {
+          final newTracks = [...item.tracks, ...tracks];
+          return item.copyWith(
+            tracks: newTracks,
+            nbTracks: newTracks.length,
+            updatedAt: DateTime.now(),
+          );
         }
-        updatedCollections = updatedCollections.map((item) {
-          if (item.id == playlistId) {
-            return item.copyWith(playlist);
-          }
-          return item;
-        }).toList();
-      }
+        return item;
+      }).toList();
     } catch (e) {
       error = Exception(e);
     } finally {
@@ -202,44 +208,25 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     }
   }
 
-  PlaylistItemModel? removeTrackFromPlaylist(
-    String playlistId,
-    String trackId,
-    List<PlaylistItemModel> collections,
-  ) {
-    PlaylistItemModel? playlist = collections.firstWhere(
-      (item) => item.id == playlistId,
-    );
-
-    playlist.tracks?.removeWhere((track) => track.id == trackId);
-    return playlist;
-  }
-
   Future<void> removeMultipleTrackToPlaylist(
     RemoveMultipleTrackToPlaylist event,
     Emitter<PlaylistState> emit,
   ) async {
     Exception? error;
-    List<String> trackIds = event.trackIds;
-    String playlistId = event.playlistId;
-    List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
-    PlaylistItemModel? playlist;
-    try {
-      for (String trackId in trackIds) {
-        try {
-          playlist = removeTrackFromPlaylist(
-            playlistId,
-            trackId,
-            updatedCollections,
-          );
-        } catch (e) {
-          continue;
-        }
-      }
+    final List<String> trackIds = event.trackIds;
+    final String playlistId = event.playlistId;
+    List<PlaylistItemModel> updatedCollections = [...state.collections];
 
+    try {
       updatedCollections = updatedCollections.map((item) {
         if (item.id == playlistId) {
-          return item.copyWith(playlist);
+          final newTracks =
+              item.tracks.where((t) => !trackIds.contains(t.id)).toList();
+          return item.copyWith(
+            tracks: newTracks,
+            nbTracks: newTracks.length,
+            updatedAt: DateTime.now(),
+          );
         }
         return item;
       }).toList();

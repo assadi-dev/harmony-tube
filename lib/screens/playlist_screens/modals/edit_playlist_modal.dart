@@ -15,8 +15,12 @@ class EditPlaylistForm extends StatelessWidget {
   Future<void> editPlaylist(PlaylistFormValues values) async {
     final playlist = context.read<PlaylistBloc>().state.playlist;
     if (playlist == null) return;
-    final serialized = PlaylistFormValues.toPlaylistItemModel(values);
-    final playlistModel = playlist.copyWith(serialized);
+    final playlistModel = playlist.copyWith(
+      title: values.title,
+      description: values.description,
+      cover: values.imageUrl ?? playlist.cover,
+      updatedAt: DateTime.now(),
+    );
     context.read<PlaylistBloc>().add(UpdatePlaylist(playlist: playlistModel));
     Navigator.of(context).pop();
   }

@@ -1,57 +1,44 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/utils/generator.dart';
 
-class PlaylistItemModel {
-  final String id;
-  final String title;
-  final String? cover;
-  final List<TrackItemModel>? tracks;
-  final int nbTracks;
-  final String? description;
-  final DateTime? lastPlayedAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+part 'local_playlist.freezed.dart';
+part 'local_playlist.g.dart';
 
-  PlaylistItemModel({
-    required this.id,
-    required this.title,
-    this.description,
-    this.cover,
-    this.tracks,
-    this.nbTracks = 0,
-    this.lastPlayedAt,
-    this.createdAt,
-    this.updatedAt,
-  });
+@freezed
+class PlaylistItemModel with _$PlaylistItemModel {
+  const factory PlaylistItemModel({
+    required String id,
+    required String title,
+    String? cover,
+    @Default(<TrackItemModel>[]) List<TrackItemModel> tracks,
+    @Default(0) int nbTracks,
+    String? description,
+    DateTime? lastPlayedAt,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) = _PlaylistItemModel;
 
-  factory PlaylistItemModel.generate(dynamic entries) {
-    final DateTime now = DateTime.now();
+  factory PlaylistItemModel.fromJson(Map<String, dynamic> json) =>
+      _$PlaylistItemModelFromJson(json);
 
+  factory PlaylistItemModel.generate({
+    required String title,
+    String? description,
+    String? cover,
+    List<TrackItemModel>? tracks,
+    int? nbTracks,
+  }) {
+    final now = DateTime.now();
     return PlaylistItemModel(
       id: generateId(),
-      title: entries.title ?? 'playlist_${now.millisecond}',
-      description: entries.description,
-      cover: entries.cover,
-      tracks: entries.tracks,
-      nbTracks: entries.nbTracks ?? 0,
+      title: title.isEmpty ? 'playlist_${now.millisecondsSinceEpoch}' : title,
+      description: description,
+      cover: cover,
+      tracks: tracks ?? const [],
+      nbTracks: nbTracks ?? tracks?.length ?? 0,
       createdAt: now,
       updatedAt: now,
-    );
-  }
-
-  PlaylistItemModel copyWith(dynamic entries) {
-    final dateNow = DateTime.now();
-
-    return PlaylistItemModel(
-      id: id,
-      title: entries.title ?? title,
-      description: entries.description ?? description,
-      cover: entries.cover ?? cover,
-      tracks: entries.tracks ?? tracks,
-      nbTracks: entries.nbTracks ?? nbTracks,
-      lastPlayedAt: entries.lastPlayedAt ?? lastPlayedAt,
-      createdAt: createdAt,
-      updatedAt: dateNow,
     );
   }
 }
