@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide Card;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
+import 'package:harmony_tube/core/services/app_logger.dart';
 import 'package:harmony_tube/core/utils/files_system.dart';
 import 'package:harmony_tube/core/utils/format_duration.dart';
 import 'package:harmony_tube/core/utils/interraction.dart';
@@ -13,8 +14,6 @@ import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 import 'package:harmony_tube/widgets/text_scroll.dart';
 import 'package:harmony_tube/widgets/woltPages/PlaylistSelect.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
-
-import '../../bloc/track/track_bloc.dart';
 
 const double trackCardFontSize = 12.0;
 
@@ -37,8 +36,8 @@ class MusicCard extends StatelessWidget {
       if (onLongPress != null) {
         onPress!(trackItem);
       }
-    } catch (err) {
-      print(err);
+    } catch (err, st) {
+      appLogger.e('MusicCard onPress failed', error: err, stackTrace: st);
     }
   }
 
@@ -48,8 +47,8 @@ class MusicCard extends StatelessWidget {
         vibrate();
         onLongPress!(trackItem);
       }
-    } catch (err) {
-      print(err);
+    } catch (err, st) {
+      appLogger.e('MusicCard onLongPress failed', error: err, stackTrace: st);
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/config/app_config.dart';
+import 'package:harmony_tube/core/services/app_logger.dart';
 import 'package:harmony_tube/screens/playlist_screens/models/model.dart';
 
 import 'input_text_form.dart';
@@ -105,8 +106,9 @@ class PlaylistInput {
           const SnackBar(content: Text('Veuillez remplir tous les champs')),
         );
       }
-    } catch (e) {
-      print(e);
+    } catch (e, st) {
+      appLogger.e('PlaylistForm submit failed', error: e, stackTrace: st);
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(

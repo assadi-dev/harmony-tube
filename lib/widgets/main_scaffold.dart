@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/routes/router_base_config.dart';
 import 'package:harmony_tube/themes/app_themes.dart';
+import 'package:harmony_tube/widgets/error_listener.dart';
 
 class MainScaffold extends StatelessWidget {
   const MainScaffold({super.key});
@@ -11,10 +11,11 @@ class MainScaffold extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Harmony Flow',
-      theme:themeApp.light,
+      theme: themeApp.light,
       darkTheme: themeApp.dark,
       themeMode: ThemeMode.light,
       routerConfig: RouterBaseConfig.router,
+      builder: (context, child) => ErrorListener(child: child ?? const SizedBox.shrink()),
     );
   }
 }

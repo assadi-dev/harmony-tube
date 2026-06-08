@@ -2,35 +2,31 @@ import 'package:equatable/equatable.dart';
 import 'package:harmony_tube/core/errors/failure.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 
-class PlaylistState extends Equatable {
-  final List<PlaylistItemModel> collections;
-  final PlaylistItemModel? playlist;
+class PlaylistTracksState extends Equatable {
+  final PlaylistItemModel? lastUpdated;
   final Failure? error;
   final bool isLoading;
 
-  const PlaylistState({
-    this.collections = const [],
-    this.playlist,
+  const PlaylistTracksState({
+    this.lastUpdated,
     this.error,
     this.isLoading = false,
   });
 
-  PlaylistState copyWith({
-    List<PlaylistItemModel>? collections,
-    PlaylistItemModel? playlist,
+  PlaylistTracksState copyWith({
+    PlaylistItemModel? lastUpdated,
     Object? error = _sentinel,
     bool? isLoading,
   }) {
-    return PlaylistState(
-      collections: collections ?? this.collections,
-      playlist: playlist ?? this.playlist,
+    return PlaylistTracksState(
+      lastUpdated: lastUpdated ?? this.lastUpdated,
       error: identical(error, _sentinel) ? this.error : error as Failure?,
       isLoading: isLoading ?? this.isLoading,
     );
   }
 
   @override
-  List<Object?> get props => [collections, playlist, error, isLoading];
+  List<Object?> get props => [lastUpdated, error, isLoading];
 }
 
 const Object _sentinel = Object();

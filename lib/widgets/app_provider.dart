@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
+import 'package:harmony_tube/bloc/playlist_tracks/playlist_tracks_bloc.dart';
 import 'package:harmony_tube/bloc/track/track_bloc.dart';
+import 'package:harmony_tube/cubit/auth/auth_cubit.dart';
 import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/cubit/theme_mode_cubit.dart';
 import 'package:harmony_tube/injections/injector.dart';
@@ -28,11 +30,13 @@ class _AppProvider extends State<AppProvider> {
         BlocProvider<SelectedItemsCubit>(create: (context) => injector()),
         BlocProvider<SelectModeStateCubit>(create: (context) => injector()),
         BlocProvider<PlaylistBloc>(create: (context) => injector()),
+        BlocProvider<PlaylistTracksBloc>(create: (context) => injector()),
         BlocProvider<TrackBloc>(create: (context) => injector()),
         BlocProvider<CategoriesChipCubit>(create: (context) => injector()),
         BlocProvider<CategoriesBloc>(create: (context) => injector()),
+        BlocProvider<AuthCubit>(create: (context) => injector()),
       ],
-      child: MainScaffold(),
+      child: const MainScaffold(),
     );
   }
 }

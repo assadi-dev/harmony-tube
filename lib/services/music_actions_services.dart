@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
-import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
+import 'package:harmony_tube/bloc/playlist_tracks/playlist_tracks_bloc.dart';
+import 'package:harmony_tube/bloc/playlist_tracks/playlist_tracks_event.dart';
 import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/widgets/modals/confirm_modal.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -42,16 +43,20 @@ class MusicModalHandler {
 
 
     void confirmDelete(BuildContext context) {
-      final playlistIdCurrent = BlocProvider.of<PlaylistBloc>(context).state.playlist;
-      if(playlistIdCurrent == null) throw Exception("Playlist not found");
-      //if(tracksItems.isEmpty) throw Exception("No music selected");
-      final trackIds = [id];
-
-      final playlistId = playlistIdCurrent.id;
-      BlocProvider.of<PlaylistBloc>(context).add(RemoveMultipleTrackToPlaylist(trackIds: trackIds, playlistId: playlistId));
+      final currentPlaylist =
+          BlocProvider.of<PlaylistBloc>(context).state.playlist;
+      if (currentPlaylist == null) {
+        Navigator.pop(context);
+        return;
+      }
+      BlocProvider.of<PlaylistTracksBloc>(context).add(
+        RemoveMultipleTrackFromPlaylist(
+          trackIds: [id],
+          playlistId: currentPlaylist.id,
+        ),
+      );
       BlocProvider.of<SelectedItemsCubit>(context).clearAll();
       Navigator.pop(context);
-
     }
 
     final confirmModal = ConfirmModal(context: context,

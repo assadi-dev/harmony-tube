@@ -1,66 +1,76 @@
-import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/bloc/track/track_event.dart';
 import 'package:harmony_tube/bloc/track/track_state.dart';
-import 'package:harmony_tube/core/models/local_track.dart';
-import 'package:harmony_tube/mocks/songs.dart';
-
+import 'package:harmony_tube/core/models/track_usecase.dart';
 
 class TrackBloc extends Bloc<TrackEvent, TrackState> {
-  TrackBloc() : super(const TrackState()) {
-    on<GetAllTrackCollections>(retrieveAllTrackCollections);
-    on<AddTrack>(addTrack);
-    on<DeleteTrack>(removeTrack);
+  final TrackUsecase trackUsecase;
+
+  TrackBloc({required this.trackUsecase}) : super(const TrackState()) {
+    on<GetAllTrackCollections>(_onGetAll);
+    on<AddTrack>(_onAddTrack);
+    on<DeleteTrack>(_onDeleteTrack);
   }
 
-
-  Future<void> retrieveAllTrackCollections(TrackEvent event,
-      Emitter<TrackState> emit) async {
-     List<TrackItemModel> collections = state.collections;
-    Exception? error;
-    try {
-      emit(state.copyWith(error: null, isLoading: true));
-      //TODO Call API to retrieve all track collections
-      collections = youtubeTrackMock;
-
-    }
-    catch (e) {
-      error = Exception(e);
-    } finally {
-      emit(state.copyWith(
-          isLoading: false, collections: collections, error: error));
-    }
+  Future<void> _onGetAll(
+    GetAllTrackCollections event,
+    Emitter<TrackState> emit,
+  ) async {
+    emit(state.copyWith(error: null, isLoading: true));
+    final result = await trackUsecase.getAllTracks();
+    emit(
+      result.fold(
+        onSuccess: (tracks) => state.copyWith(
+          collections: tracks,
+          error: null,
+          isLoading: false,
+        ),
+        onFailure: (failure) => state.copyWith(
+          error: failure,
+          isLoading: false,
+        ),
+      ),
+    );
   }
 
-
-  void addTrack(AddTrack event, Emitter<TrackState> emit) {
-    final List<TrackItemModel> updatedCollections = [...state.collections];
-    Exception? error;
-    try {
-      final newTrack = event.track;
-      updatedCollections.add(newTrack);
-    } catch (e) {
-      error = Exception(e);
-    } finally {
-      emit(state.copyWith(
-          collections: updatedCollections, error: error, isLoading: false));
-    }
+  Future<void> _onAddTrack(AddTrack event, Emitter<TrackState> emit) async {
+    emit(state.copyWith(error: null, isLoading: true));
+    final result = await trackUsecase.addTrack(event.track);
+    emit(
+      result.fold(
+        onSuccess: (_) => state.copyWith(
+          collections: [...state.collections, event.track],
+          error: null,
+          isLoading: false,
+        ),
+        onFailure: (failure) => state.copyWith(
+          error: failure,
+          isLoading: false,
+        ),
+      ),
+    );
   }
 
-  void removeTrack(DeleteTrack event, Emitter<TrackState> emit) {
-
-    final List<TrackItemModel> updatedCollections = [...state.collections];
-    Exception? error;
-    try {
-     final String trackId = event.trackId;
-      updatedCollections.removeWhere((track) => track.id == trackId);
-    } catch (e) {
-      error = Exception(e);
-    } finally {
-      emit(state.copyWith(
-          collections: updatedCollections, error: error, isLoading: false));
-    }
-
+  Future<void> _onDeleteTrack(
+    DeleteTrack event,
+    Emitter<TrackState> emit,
+  ) async {
+    emit(state.copyWith(error: null, isLoading: true));
+    final result = await trackUsecase.removeTrack(event.trackId);
+    emit(
+      result.fold(
+        onSuccess: (_) => state.copyWith(
+          collections: state.collections
+              .where((t) => t.id != event.trackId)
+              .toList(growable: false),
+          error: null,
+          isLoading: false,
+        ),
+        onFailure: (failure) => state.copyWith(
+          error: failure,
+          isLoading: false,
+        ),
+      ),
+    );
   }
 }

@@ -1,14 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
-import 'package:harmony_tube/core/models/local_track.dart';
 
 abstract class PlaylistEvent extends Equatable {
-  final PlaylistItemModel? playlist;
-
-  const PlaylistEvent({this.playlist});
+  const PlaylistEvent();
 
   @override
-  List<Object> get props => [playlist!];
+  List<Object?> get props => [];
 }
 
 class GetPlaylistCollections extends PlaylistEvent {
@@ -16,68 +13,37 @@ class GetPlaylistCollections extends PlaylistEvent {
 }
 
 class CreatePlaylist extends PlaylistEvent {
-  @override
   final PlaylistItemModel playlist;
   const CreatePlaylist(this.playlist);
+
+  @override
+  List<Object?> get props => [playlist];
 }
 
 class FindPlaylist extends PlaylistEvent {
   final String playlistId;
   const FindPlaylist({required this.playlistId});
+
+  @override
+  List<Object?> get props => [playlistId];
 }
 
 class UpdatePlaylist extends PlaylistEvent {
-  @override
   final PlaylistItemModel playlist;
   const UpdatePlaylist({required this.playlist});
+
+  @override
+  List<Object?> get props => [playlist];
 }
 
-class ClearPlaylist extends PlaylistEvent {}
+class ClearPlaylist extends PlaylistEvent {
+  const ClearPlaylist();
+}
 
 class DeletePlaylist extends PlaylistEvent {
   final String playlistId;
   const DeletePlaylist({required this.playlistId});
-}
 
-class ClearTrackToPlaylist extends PlaylistEvent {
-  final String playlistId;
-  const ClearTrackToPlaylist({required this.playlistId});
-}
-
-class GetPlaylistTracks extends PlaylistEvent {
-  final String playlistId;
-  const GetPlaylistTracks({required this.playlistId});
-}
-
-class AddTrackToPlaylist extends PlaylistEvent {
-  final TrackItemModel track;
-  final String playlistId;
-  const AddTrackToPlaylist({required this.playlistId, required this.track});
-}
-
-class AddMultipleTrackToPlaylist extends PlaylistEvent {
-  final List<TrackItemModel> tracks;
-  final List<String> playlistIds;
-  const AddMultipleTrackToPlaylist({
-    required this.tracks,
-    required this.playlistIds,
-  });
-}
-
-class RemoveTrackToPlaylist extends PlaylistEvent {
-  final String trackId;
-  final String playlistId;
-  const RemoveTrackToPlaylist({
-    required this.playlistId,
-    required this.trackId,
-  });
-}
-
-class RemoveMultipleTrackToPlaylist extends PlaylistEvent {
-  final List<String> trackIds;
-  final String playlistId;
-  const RemoveMultipleTrackToPlaylist({
-    required this.trackIds,
-    required this.playlistId,
-  });
+  @override
+  List<Object?> get props => [playlistId];
 }

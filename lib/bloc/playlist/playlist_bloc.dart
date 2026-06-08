@@ -1,248 +1,137 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_state.dart';
-import 'package:harmony_tube/core/models/local_track.dart';
-import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist_usecase.dart';
 
 class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
   final PlaylistUsecase playlistUsecase;
 
-  PlaylistBloc({required this.playlistUsecase}) : super(const PlaylistState()) {
-    on<GetPlaylistCollections>(getCollections);
-    on<CreatePlaylist>(createPlaylist);
-    on<DeletePlaylist>(deletePlaylist);
-    on<UpdatePlaylist>(updatePlaylist);
-    on<FindPlaylist>(findPlaylist);
-    on<ClearPlaylist>(clearPlaylist);
-    on<AddTrackToPlaylist>(addTrackToPlaylist);
-    on<AddMultipleTrackToPlaylist>(addMultipleTrackToPlaylist);
-    on<RemoveMultipleTrackToPlaylist>(removeMultipleTrackToPlaylist);
+  PlaylistBloc({required this.playlistUsecase})
+      : super(const PlaylistState()) {
+    on<GetPlaylistCollections>(_onGetCollections);
+    on<CreatePlaylist>(_onCreatePlaylist);
+    on<DeletePlaylist>(_onDeletePlaylist);
+    on<UpdatePlaylist>(_onUpdatePlaylist);
+    on<FindPlaylist>(_onFindPlaylist);
+    on<ClearPlaylist>(_onClearPlaylist);
   }
 
-  Future<void> getCollections(
+  Future<void> _onGetCollections(
     GetPlaylistCollections event,
     Emitter<PlaylistState> emit,
   ) async {
     emit(state.copyWith(error: null, isLoading: true));
-    List<PlaylistItemModel> collections = state.collections;
-    Exception? error;
-    try {
-      //TODO Call Playlist usecase here
-    } catch (e) {
-      error = Exception(e);
-    } finally {
-      emit(
-        state.copyWith(
-          collections: collections,
-          error: error,
+    final result = await playlistUsecase.getPlaylistItems();
+    emit(
+      result.fold(
+        onSuccess: (items) => state.copyWith(
+          collections: items,
+          error: null,
           isLoading: false,
         ),
-      );
-    }
+        onFailure: (failure) => state.copyWith(
+          error: failure,
+          isLoading: false,
+        ),
+      ),
+    );
   }
 
-  Future<void> findPlaylist(
+  Future<void> _onFindPlaylist(
     FindPlaylist event,
     Emitter<PlaylistState> emit,
   ) async {
-    try {
-      final playlistId = event.playlistId;
-      final playlist = state.collections.firstWhere(
-        (item) => item.id == playlistId,
-      );
-      emit(state.copyWith(playlist: playlist, error: null, isLoading: false));
-    } catch (e) {
-      emit(state.copyWith(error: Exception(e), isLoading: false));
-    }
+    emit(state.copyWith(error: null, isLoading: true));
+    final result = await playlistUsecase.findPlaylist(event.playlistId);
+    emit(
+      result.fold(
+        onSuccess: (playlist) => state.copyWith(
+          playlist: playlist,
+          error: null,
+          isLoading: false,
+        ),
+        onFailure: (failure) => state.copyWith(
+          error: failure,
+          isLoading: false,
+        ),
+      ),
+    );
   }
 
-  clearPlaylist(ClearPlaylist event, Emitter<PlaylistState> emit) {
+  void _onClearPlaylist(ClearPlaylist event, Emitter<PlaylistState> emit) {
     emit(state.copyWith(playlist: null, error: null, isLoading: false));
   }
 
-  Future<void> createPlaylist(
+  Future<void> _onCreatePlaylist(
     CreatePlaylist event,
     Emitter<PlaylistState> emit,
   ) async {
-    List<PlaylistItemModel> updatedCollections = [...state.collections];
-    Exception? error;
-
-    try {
-      final newPlaylist = event.playlist;
-      updatedCollections.add(newPlaylist);
-    } catch (e) {
-      error = Exception(e);
-    } finally {
-      emit(
-        state.copyWith(
-          collections: updatedCollections,
-          error: error,
-          isLoading: false,
-        ),
-      );
-    }
+    emit(state.copyWith(error: null, isLoading: true));
+    final saveResult = await playlistUsecase.createPlaylist(event.playlist);
+    await saveResult.fold(
+      onSuccess: (_) async {
+        final updated = [...state.collections, event.playlist];
+        emit(
+          state.copyWith(
+            collections: updated,
+            error: null,
+            isLoading: false,
+          ),
+        );
+      },
+      onFailure: (failure) async {
+        emit(state.copyWith(error: failure, isLoading: false));
+      },
+    );
   }
 
-  Future<void> deletePlaylist(
+  Future<void> _onDeletePlaylist(
     DeletePlaylist event,
     Emitter<PlaylistState> emit,
   ) async {
-    List<PlaylistItemModel> updatedCollections = [...state.collections];
-    Exception? error;
-
-    try {
-      final playlistId = event.playlistId;
-      updatedCollections.removeWhere((item) => item.id == playlistId);
-    } catch (e) {
-      error = Exception(e);
-    } finally {
-      emit(
-        state.copyWith(
-          collections: updatedCollections,
-          error: error,
-          isLoading: false,
-        ),
-      );
-    }
+    emit(state.copyWith(error: null, isLoading: true));
+    final result = await playlistUsecase.deletePlaylist(event.playlistId);
+    emit(
+      result.fold(
+        onSuccess: (_) {
+          final updated = state.collections
+              .where((p) => p.id != event.playlistId)
+              .toList(growable: false);
+          return state.copyWith(
+            collections: updated,
+            error: null,
+            isLoading: false,
+          );
+        },
+        onFailure: (failure) =>
+            state.copyWith(error: failure, isLoading: false),
+      ),
+    );
   }
 
-  Future<void> updatePlaylist(
+  Future<void> _onUpdatePlaylist(
     UpdatePlaylist event,
     Emitter<PlaylistState> emit,
   ) async {
-    PlaylistItemModel playlistPayload = event.playlist;
-    List<PlaylistItemModel> updatedCollections = [...state.collections];
-    Exception? error;
-
-    try {
-      updatedCollections = updatedCollections.map((item) {
-        if (item.id == playlistPayload.id) {
-          return item.copyWith(
-            title: playlistPayload.title,
-            description: playlistPayload.description,
-            cover: playlistPayload.cover,
-            tracks: playlistPayload.tracks,
-            nbTracks: playlistPayload.nbTracks,
-            lastPlayedAt: playlistPayload.lastPlayedAt,
-            updatedAt: DateTime.now(),
+    emit(state.copyWith(error: null, isLoading: true));
+    final result = await playlistUsecase.updatePlaylist(event.playlist);
+    emit(
+      result.fold(
+        onSuccess: (updated) {
+          final collections = state.collections
+              .map((p) => p.id == updated.id ? updated : p)
+              .toList(growable: false);
+          return state.copyWith(
+            collections: collections,
+            playlist: updated,
+            error: null,
+            isLoading: false,
           );
-        }
-        return item;
-      }).toList();
-    } catch (e) {
-      error = Exception(e);
-    } finally {
-      emit(
-        state.copyWith(
-          collections: updatedCollections,
-          error: error,
-          isLoading: false,
-        ),
-      );
-    }
+        },
+        onFailure: (failure) =>
+            state.copyWith(error: failure, isLoading: false),
+      ),
+    );
   }
 
-  Future<void> addTrackToPlaylist(
-    AddTrackToPlaylist event,
-    Emitter<PlaylistState> emit,
-  ) async {
-    Exception? error;
-    final String playlistId = event.playlistId;
-    final TrackItemModel track = event.track;
-    List<PlaylistItemModel> updatedCollections = [...state.collections];
-
-    try {
-      updatedCollections = updatedCollections.map((item) {
-        if (item.id == playlistId) {
-          final newTracks = [...item.tracks, track];
-          return item.copyWith(
-            tracks: newTracks,
-            nbTracks: newTracks.length,
-            updatedAt: DateTime.now(),
-          );
-        }
-        return item;
-      }).toList();
-    } catch (e) {
-      error = Exception(e);
-    } finally {
-      emit(
-        state.copyWith(
-          collections: updatedCollections,
-          error: error,
-          isLoading: false,
-        ),
-      );
-    }
-  }
-
-  Future<void> addMultipleTrackToPlaylist(
-    AddMultipleTrackToPlaylist event,
-    Emitter<PlaylistState> emit,
-  ) async {
-    Exception? error;
-    final List<String> playlistIds = event.playlistIds;
-    final List<TrackItemModel> tracks = event.tracks;
-    List<PlaylistItemModel> updatedCollections = [...state.collections];
-
-    try {
-      updatedCollections = updatedCollections.map((item) {
-        if (playlistIds.contains(item.id)) {
-          final newTracks = [...item.tracks, ...tracks];
-          return item.copyWith(
-            tracks: newTracks,
-            nbTracks: newTracks.length,
-            updatedAt: DateTime.now(),
-          );
-        }
-        return item;
-      }).toList();
-    } catch (e) {
-      error = Exception(e);
-    } finally {
-      emit(
-        state.copyWith(
-          collections: updatedCollections,
-          error: error,
-          isLoading: false,
-        ),
-      );
-    }
-  }
-
-  Future<void> removeMultipleTrackToPlaylist(
-    RemoveMultipleTrackToPlaylist event,
-    Emitter<PlaylistState> emit,
-  ) async {
-    Exception? error;
-    final List<String> trackIds = event.trackIds;
-    final String playlistId = event.playlistId;
-    List<PlaylistItemModel> updatedCollections = [...state.collections];
-
-    try {
-      updatedCollections = updatedCollections.map((item) {
-        if (item.id == playlistId) {
-          final newTracks =
-              item.tracks.where((t) => !trackIds.contains(t.id)).toList();
-          return item.copyWith(
-            tracks: newTracks,
-            nbTracks: newTracks.length,
-            updatedAt: DateTime.now(),
-          );
-        }
-        return item;
-      }).toList();
-    } catch (e) {
-      error = Exception(e);
-    } finally {
-      emit(
-        state.copyWith(
-          collections: updatedCollections,
-          error: error,
-          isLoading: false,
-        ),
-      );
-    }
-  }
 }

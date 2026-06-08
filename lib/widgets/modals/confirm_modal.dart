@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/core/services/app_logger.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -23,7 +24,7 @@ class ConfirmModal {
   });
 
   void closeModal() {
-    print("action canceled");
+    appLogger.d('ConfirmModal: action canceled');
   }
 
   open() {
@@ -84,8 +85,9 @@ class ConfirmButtonRowState extends State<ConfirmButtonRow> {
         if (widget.cancelHandler != null) {
           widget.cancelHandler!();
         }
-      } catch (e) {
-        print(e);
+      } catch (e, st) {
+        appLogger.e('ConfirmModal cancel handler failed',
+            error: e, stackTrace: st);
       } finally {
         Navigator.of(context).pop();
       }
@@ -95,8 +97,9 @@ class ConfirmButtonRowState extends State<ConfirmButtonRow> {
       try {
         widget.confirmHandler(context);
         Navigator.of(context).pop();
-      } catch (e) {
-        print(e);
+      } catch (e, st) {
+        appLogger.e('ConfirmModal confirm handler failed',
+            error: e, stackTrace: st);
       }
     }
 

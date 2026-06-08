@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
-import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
+import 'package:harmony_tube/bloc/playlist_tracks/playlist_tracks_bloc.dart';
+import 'package:harmony_tube/bloc/playlist_tracks/playlist_tracks_event.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/cubit/select_mode_cubit.dart';
 import 'package:harmony_tube/cubit/selected_items.dart';
@@ -14,9 +15,8 @@ SliverWoltModalSheetPage PlaylistSelect(
   BuildContext context,
   List<TrackItemModel> trackItems,
 ) {
-  var playlists =
-      BlocProvider.of<PlaylistBloc>(context).state.collections ?? [];
-  var playlistCount = playlists.length ?? 0;
+  var playlists = BlocProvider.of<PlaylistBloc>(context).state.collections;
+  var playlistCount = playlists.length;
 
   return SliverWoltModalSheetPage(
     id: 'playlist_select',
@@ -51,25 +51,18 @@ class ConfirmButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void confirm() {
-      try {
-        final selectedItems = BlocProvider.of<SelectedItemsCubit>(
-          context,
-        ).state.toItems;
-        if (selectedItems.isNotEmpty) {
-          BlocProvider.of<PlaylistBloc>(context).add(
-            AddMultipleTrackToPlaylist(
-              tracks: trackItems,
-              playlistIds: selectedItems,
-            ),
-          );
-          print('track added to playlist succefully');
-          BlocProvider.of<SelectedItemsCubit>(context).clearAll();
-          BlocProvider.of<SelectModeStateCubit>(
-            context,
-          ).setSelectModeState(false);
-        }
-      } catch (e) {
-        print("error in confirm button: $e");
+      final selectedItems =
+          BlocProvider.of<SelectedItemsCubit>(context).state.toItems;
+      if (selectedItems.isNotEmpty) {
+        BlocProvider.of<PlaylistTracksBloc>(context).add(
+          AddMultipleTrackToPlaylist(
+            tracks: trackItems,
+            playlistIds: selectedItems,
+          ),
+        );
+        BlocProvider.of<SelectedItemsCubit>(context).clearAll();
+        BlocProvider.of<SelectModeStateCubit>(context)
+            .setSelectModeState(false);
       }
 
       Navigator.pop(context);

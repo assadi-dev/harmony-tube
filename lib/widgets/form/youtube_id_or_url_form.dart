@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harmony_tube/core/services/app_logger.dart';
 import 'package:harmony_tube/core/utils/youtube_helper.dart';
 
 class YoutubeIdOrUrlForm extends StatefulWidget {
@@ -26,7 +27,7 @@ class _YoutubeIdOrUrlFormState extends State<YoutubeIdOrUrlForm> {
     final Color primaryColor = Theme.of(context).colorScheme.primary;
 
     void handleInputChanged(String value) {
-      print(value);
+      appLogger.d('youtube_id_or_url input changed: $value');
       _textInputController.text = value;
     }
 
@@ -94,15 +95,14 @@ class YoutubeFormHandler {
     try {
       if (formKey.currentState!.validate()) {
         final youtubeId = safeExtractYoutubeId(textController.text);
-
         formKey.currentState!.save();
-        print("Form is valid : $youtubeId");
+        appLogger.i('Youtube form submitted with id: $youtubeId');
         Navigator.of(context).pop();
       } else {
-        print("Form is not valid ");
+        appLogger.w('Youtube form submitted but is not valid');
       }
-    } catch (e) {
-      print(e);
+    } catch (e, st) {
+      appLogger.e('Youtube form submit failed', error: e, stackTrace: st);
     }
   }
 

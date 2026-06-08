@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist_usecase.dart';
+import 'package:harmony_tube/core/models/track_usecase.dart';
 
 Future<void> usecasesInjector(final GetIt injector) async {
   injector.registerFactory<PlaylistUsecase>(
@@ -7,5 +8,9 @@ Future<void> usecasesInjector(final GetIt injector) async {
       playlistRepository: injector(),
       playlistTrackRepository: injector(),
     ),
+  );
+
+  injector.registerFactory<TrackUsecase>(
+    () => TrackUsecase(trackRepository: injector()),
   );
 }
