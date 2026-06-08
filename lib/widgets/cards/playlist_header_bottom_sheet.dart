@@ -52,7 +52,7 @@ class PreviewImage extends StatelessWidget {
   final String? source;
   const PreviewImage({super.key, this.source});
 
-  final double icon_size = 50;
+  final double iconSize = 50;
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +61,11 @@ class PreviewImage extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius),
       ),
-      width: icon_size,
-      height: icon_size,
+      width: iconSize,
+      height: iconSize,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
-        child: Image.asset(source ?? no_cover_image,fit: BoxFit.cover,),
+        child: Image.asset(source ?? noCoverImage,fit: BoxFit.cover,),
       ),
     );
 

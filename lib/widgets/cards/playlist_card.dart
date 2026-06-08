@@ -142,40 +142,40 @@ class PlaylistMoreOptionList extends StatelessWidget {
         TextWithIconGesture(
           text: "Informations",
           icon: Icons.info_outline,
-          onTap: () => PlaylistModalHandler.info_playlist(context, playlistId),
+          onTap: () => PlaylistModalHandler.infoPlaylist(context, playlistId),
         ),
         TextWithIconGesture(
           text: "Jouer la playlist",
           icon: Icons.play_arrow_outlined,
-          onTap: () => PlaylistModalHandler.play_playlist(context, playlistId),
+          onTap: () => PlaylistModalHandler.playPlaylist(context, playlistId),
         ),
         TextWithIconGesture(
           text: "Changer la couverture",
           icon: Icons.image_outlined,
-          onTap: () => PlaylistModalHandler.edit_playlist(context, playlistId),
+          onTap: () => PlaylistModalHandler.editPlaylist(context, playlistId),
         ),
         TextWithIconGesture(
           text: "Modifier",
           icon: Icons.edit_outlined,
-          onTap: () => PlaylistModalHandler.edit_playlist(context, playlistId),
+          onTap: () => PlaylistModalHandler.editPlaylist(context, playlistId),
         ),
         TextWithIconGesture(
           text: "Réorganiser",
           icon: Icons.drag_handle_outlined,
           onTap: () =>
-              PlaylistModalHandler.reorder_playlist_tracks(context, playlistId),
+              PlaylistModalHandler.reorderPlaylistTracks(context, playlistId),
         ),
         TextWithIconGesture(
           text: "Télécharger",
           icon: Icons.download_outlined,
           onTap: () =>
-              PlaylistModalHandler.download_playlist(context, playlistId),
+              PlaylistModalHandler.downloadPlaylist(context, playlistId),
         ),
         TextWithIconGesture(
           text: "Supprimer",
           icon: Icons.delete_outline,
           onTap: () =>
-              PlaylistModalHandler.delete_playlist(context, playlistId),
+              PlaylistModalHandler.deletePlaylist(context, playlistId),
         ),
       ],
     );

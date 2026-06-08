@@ -12,7 +12,7 @@ import 'package:harmony_tube/widgets/Buttons/more_button.dart';
 import 'package:harmony_tube/widgets/cards/music_header_bottom_sheet.dart';
 import 'package:harmony_tube/widgets/modals/more_actions_list.dart';
 import 'package:harmony_tube/widgets/text_scroll.dart';
-import 'package:harmony_tube/widgets/woltPages/PlaylistSelect.dart';
+import 'package:harmony_tube/widgets/woltPages/playlist_select_page.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 const double trackCardFontSize = 12.0;
@@ -84,7 +84,7 @@ class MusicCard extends StatelessWidget {
         dense: true,
         contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(border_radius_card),
+          borderRadius: BorderRadius.circular(borderRadiusCard),
         ),
 
         leading: MediaPreview(),
@@ -147,7 +147,7 @@ class OpenModalBottomSheet {
         Widget moreOptionWidget = moreOptionInstance.musicCardActions();
         return [
           moreActionList(ctx, trackItem, moreOptionWidget),
-          PlaylistSelect(ctx, [trackItem]),
+          playlistSelectPage(ctx, [trackItem]),
         ];
       },
     );
@@ -166,22 +166,22 @@ class MediaPreview extends StatelessWidget {
       //TODO Load image from local storage
       return Image.asset(imageSrc!, fit: BoxFit.cover);
     }
-    return Image.asset(no_cover_image, fit: BoxFit.cover);
+    return Image.asset(noCoverImage, fit: BoxFit.cover);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: preview_picture_small,
-      height: preview_picture_small,
+      width: previewPictureSmall,
+      height: previewPictureSmall,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(border_radius_card),
+        borderRadius: BorderRadius.circular(borderRadiusCard),
         boxShadow: [
           BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 8)),
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(border_radius_card),
+        borderRadius: BorderRadius.circular(borderRadiusCard),
         child: _previewImage(),
       ),
     );

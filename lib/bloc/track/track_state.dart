@@ -17,13 +17,15 @@ class TrackState extends Equatable {
 
   TrackState copyWith({
     List<TrackItemModel>? collections,
-    TrackItemModel? track,
+    Object? track = _sentinel,
     Object? error = _sentinel,
     bool? isLoading,
   }) {
     return TrackState(
       collections: collections ?? this.collections,
-      track: track ?? this.track,
+      track: identical(track, _sentinel)
+          ? this.track
+          : track as TrackItemModel?,
       error: identical(error, _sentinel) ? this.error : error as Failure?,
       isLoading: isLoading ?? this.isLoading,
     );

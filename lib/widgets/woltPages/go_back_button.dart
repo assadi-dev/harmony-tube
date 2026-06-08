@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-Widget GoBack(BuildContext context){
+Widget goBackButton(BuildContext context){
 
   void goBack() {
     WoltModalSheet.of(context).showPrevious();

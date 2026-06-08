@@ -10,7 +10,7 @@ class CarouselHome extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(border_radius),
+      borderRadius: BorderRadius.circular(borderRadiusConst),
         gradient: LinearGradient(
           colors: [AppColors.bluePrimary, AppColors.blueSecondary],
           stops: [0, 1],

@@ -14,31 +14,31 @@ class MusicModalHandler {
   final String  id;
   MusicModalHandler({required this.context, required this.id});
 
- void  add_favorite() {
+ void  addFavorite() {
     //TODO Implement add favorite logic
     Navigator.of(context).pop();
   }
 
-  void  add_to_playlist() {
+  void  addToPlaylist() {
     WoltModalSheet.of(context).showPageWithId("playlist_select");
   }
 
- void  edit_music() {
+ void  editMusic() {
     //TODO Implement edit music logic
     Navigator.pop(context);
   }
 
- void  share_music() {
+ void  shareMusic() {
     //TODO Implement share music logic
     Navigator.pop(context);
   }
 
- void  delete_music() {
+ void  deleteMusic() {
     //TODO Implement delete music logic
     Navigator.pop(context);
  }
 
-  void delete_music_from_playlist() {
+  void deleteMusicFromPlaylist() {
 
 
 
@@ -67,7 +67,7 @@ class MusicModalHandler {
     confirmModal.open();
   }
 
-void  download_music() {
+void  downloadMusic() {
     //TODO Implement download music logic
     Navigator.pop(context);
   }

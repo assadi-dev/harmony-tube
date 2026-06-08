@@ -13,7 +13,7 @@ class AppCard extends StatelessWidget {
     final shadowColor = Color(Colors.black.value).withAlpha(100);
 
     return Container(
-      padding: EdgeInsets.all(padding_card),
+      padding: EdgeInsets.all(paddingCard),
 
       decoration: BoxDecoration(
         border: Border.all(
@@ -21,7 +21,7 @@ class AppCard extends StatelessWidget {
           style: BorderStyle.solid,
           width: 1,
         ),
-        borderRadius: BorderRadius.circular(border_radius_card),
+        borderRadius: BorderRadius.circular(borderRadiusCard),
         boxShadow: [
           BoxShadow(color: shadowColor, spreadRadius: 0, blurRadius: 1),
           BoxShadow(color: backgroundColor, spreadRadius: 5, blurRadius: 8),

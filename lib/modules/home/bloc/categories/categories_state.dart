@@ -17,13 +17,15 @@ class CategoriesState extends Equatable {
 
   CategoriesState copyWith({
     List<String>? collections,
-    YoutubeCategory? selected,
+    Object? selected = _sentinel,
     Object? error = _sentinel,
     bool? isLoading,
   }) {
     return CategoriesState(
       collections: collections ?? this.collections,
-      selected: selected ?? this.selected,
+      selected: identical(selected, _sentinel)
+          ? this.selected
+          : selected as YoutubeCategory?,
       error: identical(error, _sentinel) ? this.error : error as Failure?,
       isLoading: isLoading ?? this.isLoading,
     );

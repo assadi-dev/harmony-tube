@@ -31,7 +31,7 @@ class HomeLayoutTabState extends State<HomeLayoutTabController>
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(app_title),
+          title: Text(appTitle),
         ),
 
         body: TabBarView(

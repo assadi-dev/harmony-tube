@@ -101,7 +101,7 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
           child: SingleChildScrollView(
             controller: _controller,
             child: Padding(
-              padding: EdgeInsets.all(padding_layout),
+              padding: EdgeInsets.all(paddingLayout),
               child: Column(
                 children: [
                   CarouselHome(),
@@ -109,7 +109,7 @@ class _AllSongsContainerState extends State<AllSongsContainer> {
                   ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
                     separatorBuilder: (context, index) =>
-                        const SizedBox(height: list_spacing_icon_size),
+                        const SizedBox(height: listSpacingIconSize),
                     shrinkWrap: true,
                     itemCount: tracks.length,
                     itemBuilder: (BuildContext context, int index) {

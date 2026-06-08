@@ -160,7 +160,7 @@ class PlaylistInput {
           backgroundColor: Theme.of(context).colorScheme.secondary,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(border_button),
+            borderRadius: BorderRadius.circular(borderButton),
           ),
         ),
         onPressed: _submitValues,

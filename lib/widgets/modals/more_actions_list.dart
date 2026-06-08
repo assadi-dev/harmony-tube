@@ -13,27 +13,27 @@ List<Widget> basicActions(BuildContext context, String id) {
     TextWithIconGesture(
       text: "Ajouter aux favoris",
       icon: Icons.favorite_border,
-      onTap: () => trackHandler.add_favorite(),
+      onTap: () => trackHandler.addFavorite(),
     ),
     TextWithIconGesture(
       text: "Ajouter à la playlist",
       icon: Icons.playlist_add_outlined,
-      onTap: () => trackHandler.add_to_playlist(),
+      onTap: () => trackHandler.addToPlaylist(),
     ),
     TextWithIconGesture(
       text: "Modifier",
       icon: Icons.edit_outlined,
-      onTap: () => trackHandler.edit_music(),
+      onTap: () => trackHandler.editMusic(),
     ),
     TextWithIconGesture(
       text: "Partager",
       icon: Icons.share_outlined,
-      onTap: () => trackHandler.share_music(),
+      onTap: () => trackHandler.shareMusic(),
     ),
     TextWithIconGesture(
       text: "Télécharger",
       icon: Icons.download_outlined,
-      onTap: () => trackHandler.download_music(),
+      onTap: () => trackHandler.downloadMusic(),
     ),
   ];
 }

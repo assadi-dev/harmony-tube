@@ -30,7 +30,7 @@ class PlaylistContents extends StatelessWidget {
 Widget playlistListItems(List<PlaylistItemModel> playlists) {
   return ListView.separated(
     separatorBuilder: (context, index) =>
-        const SizedBox(height: list_spacing_icon_size),
+        const SizedBox(height: listSpacingIconSize),
     shrinkWrap: true,
     itemCount: playlists.length,
     itemBuilder: (context, index) {

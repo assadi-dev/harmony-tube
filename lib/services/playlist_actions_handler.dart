@@ -7,17 +7,17 @@ import 'package:harmony_tube/widgets/modals/confirm_modal.dart';
 
 class PlaylistModalHandler  {
 
-  static info_playlist(BuildContext context, String id) {
+  static infoPlaylist(BuildContext context, String id) {
     //TODO Implement show info logic
     Navigator.pop(context);
   }
 
-  static play_playlist(BuildContext context, String id) {
+  static playPlaylist(BuildContext context, String id) {
     //TODO Implement play music logic
     Navigator.pop(context);
   }
 
-  static edit_playlist(BuildContext context, String id) {
+  static editPlaylist(BuildContext context, String id) {
 
     Navigator.pop(context);
    context.read<PlaylistBloc>().add(FindPlaylist(playlistId: id));
@@ -27,7 +27,7 @@ class PlaylistModalHandler  {
 
   }
 
-  static delete_playlist(BuildContext context, String id) {
+  static deletePlaylist(BuildContext context, String id) {
     Navigator.of(context).pop();
     void  confirmDelete(BuildContext context)  {
       context.read<PlaylistBloc>().add(DeletePlaylist(playlistId: id));
@@ -38,17 +38,17 @@ class PlaylistModalHandler  {
     confirmModal.open();
   }
 
-  static download_playlist(BuildContext context, String id) {
+  static downloadPlaylist(BuildContext context, String id) {
     //TODO Implement download music logic
     Navigator.pop(context);
   }
 
-  static add_or_edit_cover(BuildContext context, String id) {
+  static addOrEditCover(BuildContext context, String id) {
     //TODO Implement download music logic
     Navigator.pop(context);
   }
 
-  static reorder_playlist_tracks(BuildContext context, String id) {
+  static reorderPlaylistTracks(BuildContext context, String id) {
     //TODO Implement reorder music logic
     Navigator.pop(context);
   }

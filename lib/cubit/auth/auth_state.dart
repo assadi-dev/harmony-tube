@@ -17,12 +17,14 @@ class AuthState extends Equatable {
 
   AuthState copyWith({
     AuthStatus? status,
-    GoogleSignInAccount? account,
+    Object? account = _sentinel,
     Object? error = _sentinel,
   }) {
     return AuthState(
       status: status ?? this.status,
-      account: account ?? this.account,
+      account: identical(account, _sentinel)
+          ? this.account
+          : account as GoogleSignInAccount?,
       error: identical(error, _sentinel) ? this.error : error as Failure?,
     );
   }

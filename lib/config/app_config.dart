@@ -2,18 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:harmony_tube/themes/app_colors.dart';
 
-const  String  app_title = "Harmony Tube";
-const double  padding_layout = 15.0;
-const double border_radius = 10.0;
-const double border_radius_card = 5.0;
-const double padding_card = 5;
-const Color shadow_color_card = AppColors.black;
-const String no_cover_image =  "assets/images/no-cover.jpg";
-const double preview_picture_small = 50;
-const double close_icon_size = 18;
-const double border_button = 5.00;
-const double more_icon_size = 18;
-const double list_spacing_icon_size = 5;
+const  String  appTitle = "Harmony Tube";
+const double  paddingLayout = 15.0;
+const double borderRadiusConst = 10.0;
+const double borderRadiusCard = 5.0;
+const double paddingCard = 5;
+const Color shadowColorCard = AppColors.black;
+const String noCoverImage =  "assets/images/no-cover.jpg";
+const double previewPictureSmall = 50;
+const double closeIconSize = 18;
+const double borderButton = 5.00;
+const double moreIconSize = 18;
+const double listSpacingIconSize = 5;
 
 const String googleWebClientId =
     '1016049156687-gcb66au67oir8lgtlqst42ms17o19agv.apps.googleusercontent.com';

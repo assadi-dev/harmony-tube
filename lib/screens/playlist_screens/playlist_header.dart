@@ -58,7 +58,7 @@ class AddPlaylistButtonState extends State<AddPlaylistButton> {
           SliverWoltModalSheetPage(
             trailingNavBarWidget: IconButton(
               padding: const EdgeInsets.all(3),
-              icon: const Icon(Icons.close, size: close_icon_size),
+              icon: const Icon(Icons.close, size: closeIconSize),
               onPressed: Navigator.of(context).pop,
             ),
             mainContentSliversBuilder: (context) => [

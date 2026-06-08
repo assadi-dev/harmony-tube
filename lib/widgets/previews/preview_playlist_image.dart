@@ -17,8 +17,8 @@ class _PreviewPlaylistImageState extends State<PreviewPlaylistImage> {
     //selectedplaylist = context.read<PlaylistBloc>().state;
 
     return Container(
-      height: preview_picture_small,
-      width: preview_picture_small,
+      height: previewPictureSmall,
+      width: previewPictureSmall,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -26,7 +26,7 @@ class _PreviewPlaylistImageState extends State<PreviewPlaylistImage> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(border_radius_card),
+        borderRadius: BorderRadius.circular(borderRadiusCard),
         boxShadow: [
           BoxShadow(
             color: Colors.black26,

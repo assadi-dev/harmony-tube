@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(app_title)),
+      appBar: AppBar(title: Text(appTitle)),
       body: Column(
         children: [CategoriesChip(), CategoriesSections(), GoogleSignButton()],
       ),

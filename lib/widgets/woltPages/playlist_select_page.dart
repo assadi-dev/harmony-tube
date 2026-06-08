@@ -8,10 +8,10 @@ import 'package:harmony_tube/cubit/select_mode_cubit.dart';
 import 'package:harmony_tube/cubit/selected_items.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/playlist_select_radio.dart';
-import 'package:harmony_tube/widgets/woltPages/GoBackModal.dart';
+import 'package:harmony_tube/widgets/woltPages/go_back_button.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-SliverWoltModalSheetPage PlaylistSelect(
+SliverWoltModalSheetPage playlistSelectPage(
   BuildContext context,
   List<TrackItemModel> trackItems,
 ) {
@@ -21,7 +21,7 @@ SliverWoltModalSheetPage PlaylistSelect(
   return SliverWoltModalSheetPage(
     id: 'playlist_select',
     topBarTitle: AppTextTheme('Ajouter à la playlist'),
-    leadingNavBarWidget: GoBack(context),
+    leadingNavBarWidget: goBackButton(context),
     isTopBarLayerAlwaysVisible: true,
     mainContentSliversBuilder: (BuildContext context) {
       return [

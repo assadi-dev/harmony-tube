@@ -103,7 +103,7 @@ class playlist_detail_silver_widgets {
   SliverList silverTrackListSliver(List<TrackItemModel> trackItems) {
     return SliverList.separated(
       separatorBuilder: (context, index) =>
-          const SizedBox(height: list_spacing_icon_size),
+          const SizedBox(height: listSpacingIconSize),
       itemBuilder: (ctx, index) {
         final TrackItemModel trackItem = trackItems[index];
         final moreActions = MoreActionsList(

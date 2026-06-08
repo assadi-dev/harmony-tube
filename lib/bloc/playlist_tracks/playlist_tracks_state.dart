@@ -14,12 +14,14 @@ class PlaylistTracksState extends Equatable {
   });
 
   PlaylistTracksState copyWith({
-    PlaylistItemModel? lastUpdated,
+    Object? lastUpdated = _sentinel,
     Object? error = _sentinel,
     bool? isLoading,
   }) {
     return PlaylistTracksState(
-      lastUpdated: lastUpdated ?? this.lastUpdated,
+      lastUpdated: identical(lastUpdated, _sentinel)
+          ? this.lastUpdated
+          : lastUpdated as PlaylistItemModel?,
       error: identical(error, _sentinel) ? this.error : error as Failure?,
       isLoading: isLoading ?? this.isLoading,
     );

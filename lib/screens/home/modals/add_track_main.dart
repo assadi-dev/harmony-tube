@@ -5,7 +5,7 @@ import 'package:harmony_tube/widgets/form/youtube_id_or_url_form.dart';
 import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-SliverWoltModalSheetPage AddTrackMain(BuildContext context) {
+SliverWoltModalSheetPage addTrackMainPage(BuildContext context) {
   void goBack() {
     WoltModalSheet.of(context).showPrevious();
   }

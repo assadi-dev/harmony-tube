@@ -37,7 +37,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final silverWidget = playlist_detail_silver_widgets(context: context);
-    final double silverPaddingSize = padding_layout;
+    final double silverPaddingSize = paddingLayout;
     context.watch<PlaylistBloc>().state;
 
     final playlistItem =
@@ -55,7 +55,7 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
                 constraints: constraints,
                 playlistId: widget.id,
                 title: appBarTitle,
-                imageSrc: no_cover_image,
+                imageSrc: noCoverImage,
                 playlistItem: playlistItem,
               );
             },

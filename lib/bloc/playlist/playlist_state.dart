@@ -17,13 +17,15 @@ class PlaylistState extends Equatable {
 
   PlaylistState copyWith({
     List<PlaylistItemModel>? collections,
-    PlaylistItemModel? playlist,
+    Object? playlist = _sentinel,
     Object? error = _sentinel,
     bool? isLoading,
   }) {
     return PlaylistState(
       collections: collections ?? this.collections,
-      playlist: playlist ?? this.playlist,
+      playlist: identical(playlist, _sentinel)
+          ? this.playlist
+          : playlist as PlaylistItemModel?,
       error: identical(error, _sentinel) ? this.error : error as Failure?,
       isLoading: isLoading ?? this.isLoading,
     );

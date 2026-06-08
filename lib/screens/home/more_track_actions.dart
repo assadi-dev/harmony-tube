@@ -5,7 +5,7 @@ import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/screens/home/modals/add_track_main.dart';
 import 'package:harmony_tube/screens/home/modals/track_more_action_view.dart';
 import 'package:harmony_tube/widgets/Buttons/more_button.dart';
-import 'package:harmony_tube/widgets/woltPages/PlaylistSelect.dart';
+import 'package:harmony_tube/widgets/woltPages/playlist_select_page.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 import '../../cubit/selected_items.dart';
@@ -24,9 +24,9 @@ class MoreTrackActions extends StatelessWidget {
         pageListBuilder: (context) {
           List<TrackItemModel> trackItems = getTrackItemsFromSelection(context);
           return [
-            TrackMoreAction(context),
-            AddTrackMain(context),
-            PlaylistSelect(context, trackItems),
+            trackMoreActionPage(context),
+            addTrackMainPage(context),
+            playlistSelectPage(context, trackItems),
           ];
         },
       );

@@ -4,7 +4,7 @@ import 'package:harmony_tube/config/app_config.dart';
 class MoreIconButton extends StatelessWidget {
   final void Function()? onPress;
   final double? size;
-  const MoreIconButton({super.key, required this.onPress,this.size=more_icon_size});
+  const MoreIconButton({super.key, required this.onPress,this.size=moreIconSize});
 
   @override
   Widget build(BuildContext context) {
