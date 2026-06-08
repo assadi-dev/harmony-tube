@@ -14,3 +14,6 @@ const double close_icon_size = 18;
 const double border_button = 5.00;
 const double more_icon_size = 18;
 const double list_spacing_icon_size = 5;
+
+const String googleWebClientId =
+    '1016049156687-gcb66au67oir8lgtlqst42ms17o19agv.apps.googleusercontent.com';

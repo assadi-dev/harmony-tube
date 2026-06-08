@@ -17,7 +17,7 @@ class TrackBloc extends Bloc<TrackEvent, TrackState> {
 
   Future<void> retrieveAllTrackCollections(TrackEvent event,
       Emitter<TrackState> emit) async {
-     List<TrackItemModel> collections = state.collections ?? [];
+     List<TrackItemModel> collections = state.collections;
     Exception? error;
     try {
       emit(state.copyWith(error: null, isLoading: true));
@@ -35,9 +35,7 @@ class TrackBloc extends Bloc<TrackEvent, TrackState> {
 
 
   void addTrack(AddTrack event, Emitter<TrackState> emit) {
-    final List<TrackItemModel> updatedCollections = [
-      ...state.collections ?? []
-    ];
+    final List<TrackItemModel> updatedCollections = [...state.collections];
     Exception? error;
     try {
       final newTrack = event.track;
@@ -52,9 +50,7 @@ class TrackBloc extends Bloc<TrackEvent, TrackState> {
 
   void removeTrack(DeleteTrack event, Emitter<TrackState> emit) {
 
-    final List<TrackItemModel> updatedCollections = [
-      ...state.collections ?? []
-    ];
+    final List<TrackItemModel> updatedCollections = [...state.collections];
     Exception? error;
     try {
      final String trackId = event.trackId;

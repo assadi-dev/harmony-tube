@@ -1,33 +1,36 @@
+import 'package:harmony_tube/core/errors/result.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 
-abstract class PlaylistItemRepository {
-  Future<void> save(PlaylistItemModel playlistItem);
+abstract class PlaylistRepository {
+  Future<Result<void>> save(PlaylistItemModel playlistItem);
 
-  Future<void> delete({required String playlistId});
+  Future<Result<void>> delete({required String playlistId});
 
-  Future<void> update(PlaylistItemModel playlistItem);
+  Future<Result<PlaylistItemModel>> update(PlaylistItemModel playlistItem);
 
-  Future<List<PlaylistItemModel>> all();
+  Future<Result<List<PlaylistItemModel>>> all();
 
-  Future<PlaylistItemModel?> find({required String playlistId});
+  Future<Result<PlaylistItemModel>> find({required String playlistId});
 
-  Future<List<PlaylistItemModel>> filter({
+  Future<Result<List<PlaylistItemModel>>> filter({
     String? search,
     List<String>? column,
     String? order,
     int limit,
     int page,
   });
+}
 
-  Future<void> getTracks({required String playlistId});
+abstract class PlaylistTrackRepository {
+  Future<Result<List<TrackItemModel>>> getTracks({required String playlistId});
 
-  Future<void> addTrack({
+  Future<Result<PlaylistItemModel>> addTrack({
     required String playlistId,
     required TrackItemModel track,
   });
 
-  Future<void> removeTrack({
+  Future<Result<PlaylistItemModel>> removeTrack({
     required String playlistId,
     required String trackId,
   });

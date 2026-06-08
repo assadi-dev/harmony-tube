@@ -3,9 +3,12 @@ import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_state.dart';
 import 'package:harmony_tube/core/models/local_track.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
+import 'package:harmony_tube/core/models/playlist/local_playlist_usecase.dart';
 
 class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
-  PlaylistBloc() : super(const PlaylistState()) {
+  final PlaylistUsecase playlistUsecase;
+
+  PlaylistBloc({required this.playlistUsecase}) : super(const PlaylistState()) {
     on<GetPlaylistCollections>(getCollections);
     on<CreatePlaylist>(createPlaylist);
     on<DeletePlaylist>(deletePlaylist);
@@ -22,7 +25,7 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     Emitter<PlaylistState> emit,
   ) async {
     emit(state.copyWith(error: null, isLoading: true));
-    List<PlaylistItemModel> collections = state.collections ?? [];
+    List<PlaylistItemModel> collections = state.collections;
     Exception? error;
     try {
       //TODO Call Playlist usecase here
@@ -62,7 +65,7 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     CreatePlaylist event,
     Emitter<PlaylistState> emit,
   ) async {
-    List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
+    List<PlaylistItemModel> updatedCollections = [...state.collections];
     Exception? error;
 
     try {
@@ -85,7 +88,7 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     DeletePlaylist event,
     Emitter<PlaylistState> emit,
   ) async {
-    List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
+    List<PlaylistItemModel> updatedCollections = [...state.collections];
     Exception? error;
 
     try {
@@ -109,7 +112,7 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     Emitter<PlaylistState> emit,
   ) async {
     PlaylistItemModel playlistPayload = event.playlist;
-    List<PlaylistItemModel> updatedCollections = [...state.collections ?? []];
+    List<PlaylistItemModel> updatedCollections = [...state.collections];
     Exception? error;
 
     try {

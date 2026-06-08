@@ -15,7 +15,9 @@ Future<void> blocInjector(final GetIt injector) async {
   injector.registerFactory<SelectedItemsCubit>(() => SelectedItemsCubit());
   injector.registerFactory<SelectModeStateCubit>(() => SelectModeStateCubit());
 
-  injector.registerFactory<PlaylistBloc>(() => PlaylistBloc());
+  injector.registerFactory<PlaylistBloc>(
+    () => PlaylistBloc(playlistUsecase: injector()),
+  );
 
   injector.registerFactory<TrackBloc>(() => TrackBloc());
 
