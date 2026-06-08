@@ -47,7 +47,7 @@ class _PlaylistSelectRadioState extends State<PlaylistSelectRadio> {
   elevation: 0,
         color: backgroundColor,
         child: ListTile(
-          leading: PlaylistCardPreview(widget.playlist),
+          leading: playlistCardPreview(widget.playlist),
           title: Text(title, style: TextStyle(fontSize: 14)),
           subtitle: Text('Subtitle', style: TextStyle(fontSize: 10)),
            trailing: Icon(icon),

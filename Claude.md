@@ -65,6 +65,7 @@ Selon la tâche, invoque proactivement l'un des skills suivants :
 - **Avant de créer un nouveau widget** : vérifier qu'il n'existe pas déjà dans `lib/widgets/cards/`, `lib/widgets/modals/`, `lib/widgets/forms/`. Préférer la composition / l'extraction.
 - **Avant de toucher à un modèle freezed** : prévenir qu'il faudra relancer `build_runner`.
 - **Avant de toucher à un BLoC existant** : vérifier les tests dans `test/bloc/<feature>/` et les adapter dans le même PR.
+- **Après un renommage d'identifiant exporté** (fonction, classe, constante publique) : faire un `grep` global de l'ancien nom dans `lib/` ET lancer `flutter analyze` à la racine (pas sur un seul fichier) avant de considérer la tâche terminée. `flutter analyze <file>` ne voit pas les call sites externes.
 - **Ne jamais désactiver une règle de lint** sans justification explicite et accord de l'utilisateur.
 
 ## Commandes utiles
