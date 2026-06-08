@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_bloc.dart';
 import 'package:harmony_tube/bloc/playlist/playlist_event.dart';
+import 'package:harmony_tube/bloc/playlist/playlist_state.dart';
 import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 import 'package:harmony_tube/cubit/selected_items.dart';
@@ -19,31 +20,67 @@ class PlaylistDetailScreen extends StatefulWidget {
 }
 
 class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
-  String playlistTitle = "";
+  PlaylistBloc? _playlistBloc;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _playlistBloc = context.read<PlaylistBloc>();
+  }
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       BlocProvider.of<SelectedItemsCubit>(context).clearAll();
-      final playlistId = widget.id;
-      playlistTitle = widget.title ?? "Sans titre";
-
-      context.read<PlaylistBloc>().add(FindPlaylist(playlistId: playlistId));
+      context.read<PlaylistBloc>().add(FindPlaylist(playlistId: widget.id));
     });
   }
+
+  @override
+  void dispose() {
+    _playlistBloc?.add(const ClearPlaylist());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PlaylistBloc, PlaylistState>(
+      buildWhen: (prev, curr) =>
+          prev.playlist != curr.playlist ||
+          prev.isLoading != curr.isLoading ||
+          prev.error != curr.error,
+      builder: (context, state) {
+        if (state.playlist == null) {
+          return Scaffold(
+            appBar: AppBar(title: Text(widget.title ?? 'Playlist')),
+            body: Center(
+              child: state.error != null
+                  ? Text('Erreur : ${state.error!.message}')
+                  : const CircularProgressIndicator(),
+            ),
+          );
+        }
+        return _PlaylistDetailBody(playlistItem: state.playlist!, id: widget.id);
+      },
+    );
+  }
+}
+
+class _PlaylistDetailBody extends StatelessWidget {
+  final PlaylistItemModel playlistItem;
+  final String id;
+
+  const _PlaylistDetailBody({required this.playlistItem, required this.id});
 
   @override
   Widget build(BuildContext context) {
     final silverWidget = playlist_detail_silver_widgets(context: context);
     final double silverPaddingSize = paddingLayout;
-    context.watch<PlaylistBloc>().state;
+    final playlistTracks = playlistItem.tracks;
 
-    final playlistItem =
-        context.read<PlaylistBloc>().state.playlist as PlaylistItemModel;
-    final playlistTracks = playlistItem.tracks ?? [];
-    final appBarTitle = playlistItem.title;
     return Scaffold(
       body: CustomScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -53,8 +90,8 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
               return silverWidget.silverHeader(
                 context: context,
                 constraints: constraints,
-                playlistId: widget.id,
-                title: appBarTitle,
+                playlistId: id,
+                title: playlistItem.title,
                 imageSrc: noCoverImage,
                 playlistItem: playlistItem,
               );
@@ -67,7 +104,6 @@ class _PlaylistDetailScreenState extends State<PlaylistDetailScreen> {
             ),
             sliver: silverWidget.sliverToBoxPlaylistActions(),
           ),
-
           SliverPadding(
             padding: EdgeInsets.only(
               left: silverPaddingSize,

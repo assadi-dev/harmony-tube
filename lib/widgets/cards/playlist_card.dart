@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:harmony_tube/config/app_config.dart';
 import 'package:harmony_tube/core/models/playlist/local_playlist.dart';
 import 'package:harmony_tube/routes/models/router_args.dart';
 import 'package:harmony_tube/routes/router_path.dart';
-import 'package:harmony_tube/screens/playlist_screens/models/model.dart';
 import 'package:harmony_tube/services/playlist_actions_handler.dart';
 import 'package:harmony_tube/widgets/Buttons/more_button.dart';
 import 'package:harmony_tube/widgets/app_text_theme.dart';
 import 'package:harmony_tube/widgets/cards/card.dart';
 import 'package:harmony_tube/widgets/previews/preview_playlist_image.dart';
 import 'package:harmony_tube/widgets/text_with_icon_gesture.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 import 'playlist_modal_action.dart';
 
@@ -33,7 +32,7 @@ class PlaylistCard extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: getToDetail,
-            child: PlaylistCardRow(playlistItem),
+            child: playlistCardRow(playlistItem),
           ),
           Spacer(),
           MoreButton(playlistId: playlistItem.id, playlistItem: playlistItem),
@@ -43,7 +42,7 @@ class PlaylistCard extends StatelessWidget {
   }
 }
 
-Widget PlaylistCardPreview(PlaylistItemModel playlistItem) {
+Widget playlistCardPreview(PlaylistItemModel playlistItem) {
   final String? imageSrc = playlistItem.cover;
   return PreviewPlaylistImage(source: imageSrc);
 }
@@ -64,11 +63,11 @@ Widget playlistCardColumn(PlaylistItemModel playlistItem) {
   );
 }
 
-Widget PlaylistCardRow(PlaylistItemModel playlistItem) {
+Widget playlistCardRow(PlaylistItemModel playlistItem) {
   return Row(
     spacing: 8,
     children: [
-      PlaylistCardPreview(playlistItem),
+      playlistCardPreview(playlistItem),
       playlistCardColumn(playlistItem),
     ],
   );
@@ -86,22 +85,26 @@ class PlaylistModalBottomSheet {
   });
 
   void openModal() async {
-    await showModalBottomSheet(
-      useRootNavigator: true,
-      backgroundColor: Colors.transparent,
+    await WoltModalSheet.show(
       context: context,
-      builder: (ctx) => Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: Colors.white,
+      useRootNavigator: true,
+      showDragHandle: false,
+      modalTypeBuilder: (context) => WoltModalType.bottomSheet(),
+      pageListBuilder: (ctx) => [
+        SliverWoltModalSheetPage(
+          mainContentSliversBuilder: (ctx) => [
+            SliverToBoxAdapter(
+              child: PlaylistModalAction(
+                title: playlistItem.title,
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: moreOptionWidget,
+                ),
+              ),
+            ),
+          ],
         ),
-
-        width: MediaQuery.of(ctx).size.width * 0.95,
-        child: PlaylistModalAction(
-          title: playlistItem.title,
-          child: Padding(padding: EdgeInsets.all(15), child: moreOptionWidget),
-        ),
-      ),
+      ],
     );
   }
 }
