@@ -94,3 +94,4 @@ flutter run -d <deviceId>
 - Migration `withOpacity` → `withValues` (Flutter récent).
 - Suite la migration de naming `bottom_bar_list_Items.dart`, `layout_scrollView.dart`, `AlertCard.dart`, `PlaylistDetailScreen.dart` vers `snake_case`.
 - Couverture de tests pour `TrackBloc`, `CategoriesBloc`, et widgets clés.
+- **Installer `lucide_icons`** (ou `lucide_icons_flutter`, plus à jour) : les maquettes Pencil (accueil ×3, lecteur, détail playlist) utilisent des icônes Lucide — à installer avant d'implémenter ces écrans en Flutter.
